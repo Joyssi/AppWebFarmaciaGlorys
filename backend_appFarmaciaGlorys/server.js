@@ -11,7 +11,7 @@ app.use(express.json());
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'dayana2005',
+    password: 'gitdev2051',
     database: 'farmaciaglorys'
 });
 
@@ -36,4 +36,4 @@ app.listen(port, () => {
 });
 
 //Revision en proceso.
-
+//Estas rutas estan completas.
