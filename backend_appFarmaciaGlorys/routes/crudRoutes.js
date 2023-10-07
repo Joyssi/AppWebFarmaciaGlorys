@@ -13,41 +13,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla categoria:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla categoria' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readCategoria
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla Categoria------------
   router.post('/createCategoria', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idCategoria, nombreCategoria } = req.body;
+    const { nombreCategoria } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idCategoria || !nombreCategoria) {
+    if (!nombreCategoria) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO categoria (IDCategoria, NombreCategoria) VALUES (?, ?)`;
-    const values = [idCategoria, nombreCategoria];
+    const sql = `INSERT INTO categoria (NombreCategoria) VALUES (?)`;
+    const values = [nombreCategoria];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla categoria:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla categoria' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idCategoria });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+  
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreCategoria\":\"Fitofármaco\"}" http://localhost:5000/crud/createCategoria
   //----------------------------------------------------------------------------------------
 
     // Ruta para actualizar un registro existente por ID en la tabla Categoria--------------
@@ -75,14 +81,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
+        console.error('Error al actualizar el registro de la tabla categoria:', err);
         res.status(500).json({ error: 'Error al actualizar el registro' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"nombreCategoria\":\"Biológico\"}" http://localhost:5000/crud/updateCategoria/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Categoria---------------
@@ -97,13 +106,16 @@ module.exports = (db) => {
     db.query(sql, [idCategoria], (err, result) => {
       if (err) {
         console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        res.status(500).json({ error: 'Error al eliminar el registro de la tabla categoria' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteCategoria/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -117,40 +129,46 @@ module.exports = (db) => {
     db.query(sql, (err, result) => {
       if (err) {
         console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        res.status(500).json({ error: 'Error al leer registros de la tabla marca' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia 
+  //curl http://localhost:5000/crud/readMarca
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla Marca------------
   router.post('/createMarca', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idMarca, nombreMarca } = req.body;
+    const {nombreMarca } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idMarca || !nombreMarca) {
+    if (!nombreMarca) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO marca (IDMarca, NombreMarca) VALUES (?, ?)`;
-    const values = [idMarca, nombreMarca];
+    const sql = `INSERT INTO marca (NombreMarca) VALUES (?)`;
+    const values = [nombreMarca];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla marca:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla marca' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idMarca });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreMarca\":\"RAMOS\"}" http://localhost:5000/crud/createMarca
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Marca--------------------
@@ -178,14 +196,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar el registro de la tabla marca:', err);
+        res.status(500).json({ error: 'Error al actualizar el registro de la tabla marca' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"nombreMarca\":\"PASHA S.A\"}" http://localhost:5000/crud/updateMarca/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Marca-------------------
@@ -199,14 +220,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idMarca], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla marca:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla marca' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteMarca/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -219,41 +243,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla presentación:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla presentación' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readPresentacion
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla Presentación------------
   router.post('/createPresentacion', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idPresentacion, formaDosificacion } = req.body;
+    const {formaDosificacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idPresentacion || !formaDosificacion) {
+    if (!formaDosificacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO presentacion (IDPresentacion, FormaDosificacion) VALUES (?, ?)`;
-    const values = [idPresentacion, formaDosificacion];
+    const sql = `INSERT INTO presentacion (FormaDosificacion) VALUES (?)`;
+    const values = [formaDosificacion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla presentación:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla presentación' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idPresentacion });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"formaDosificacion\":\"Tableta\"}" http://localhost:5000/crud/createPresentacion
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Presentación--------------
@@ -281,14 +311,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar un registro de la tabla presentacion:', err);
+        res.status(500).json({ error: 'Error al actualizar un registro de la tabla presentacion' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"formaDosificacion\":\"Crema\"}" http://localhost:5000/crud/updatePresentacion/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Presentación-------------------
@@ -302,14 +335,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idPresentacion], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla presentación:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla presentación' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deletePresentacion/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -322,41 +358,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla cliente:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla cliente' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+  
+  //Sentencia
+  //curl http://localhost:5000/crud/readCliente
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla Cliente------------
   router.post('/createCliente', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idCliente, nombreUsuarioC, contraseñaC, correoC, telefonoC } = req.body;
+    const {nombreUsuarioC, contraseñaC, correoC, telefonoC } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idCliente || !nombreUsuarioC || !contraseñaC || !correoC || !telefonoC) {
+    if (!nombreUsuarioC || !contraseñaC || !correoC || !telefonoC) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO cliente (IDCliente, NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC) VALUES (?, ?, ?, ?, ?)`;
-    const values = [idCliente, nombreUsuarioC, contraseñaC, correoC, telefonoC];
+    const sql = `INSERT INTO cliente (NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC) VALUES (?, ?, ?, ?)`;
+    const values = [nombreUsuarioC, contraseñaC, correoC, telefonoC];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla cliente:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla cliente' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idCliente });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     }); 
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreUsuarioC\":\"Joy\",\"contraseñaC\":\"123joy\",\"correoC\":\"joyssicruz5@gmail.com\",\"telefonoC\":\"86962747\"}" http://localhost:5000/crud/createCliente
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Cliente--------------
@@ -384,14 +426,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar un registro de la tabla cliente:', err);
+        res.status(500).json({ error: 'Error al actualizar un registro de la tabla cliente' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+  
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"nombreUsuarioC\":\"Elieth\",\"contraseñaC\":\"elieth12\",\"correoC\":\"izaduartes2214@gmail.com\",\"telefonoC\":\"57736281\"}" http://localhost:5000/crud/updateCliente/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Cliente-------------------
@@ -405,14 +450,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idCliente], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla cliente:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla cliente' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteCliente/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -425,41 +473,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla empleado:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla empleado' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readEmpleado
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla Empleado------------
   router.post('/createEmpleado', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idEmpleado, nombreUsuario, contraseña, correo, telefono } = req.body;
+    const {nombreUsuario, contraseña, correo, telefono } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idEmpleado || !nombreUsuario || !contraseña || !correo || !telefono) {
+    if (!nombreUsuario || !contraseña || !correo || !telefono) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO empleado (IDEmpleado, NombreUsuario, Contraseña, Correo, Telefono) VALUES (?, ?, ?, ?, ?)`;
-    const values = [idEmpleado, nombreUsuario, contraseña, correo, telefono];
+    const sql = `INSERT INTO empleado (NombreUsuario, Contraseña, Correo, Telefono) VALUES (?, ?, ?, ?)`;
+    const values = [nombreUsuario, contraseña, correo, telefono];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla empleado:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla empleado' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idEmpleado });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreUsuario\":\"Flor\",\"contraseña\":\"5423F\",\"correo\":\"flor123@gmail.com\",\"telefono\":\"57395726\"}" http://localhost:5000/crud/createEmpleado
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Empleado--------------
@@ -487,14 +541,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar un registro de la tabla empleado:', err);
+        res.status(500).json({ error: 'Error al actualizar un registro de la tabla empleado' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"nombreUsuario\":\"Heysel\",\"contraseña\":\"muchi345\",\"correo\":\"heyselsmith@gmail.com\",\"telefono\":\"87673073\"}" http://localhost:5000/crud/updateEmpleado/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Empleado-------------------
@@ -508,14 +565,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idEmpleado], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla empleado:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla empleado' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteEmpleado/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -528,41 +588,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla producto:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla producto' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readProducto
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla Producto------------
   router.post('/createProducto', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idProducto, nomProducto, descripProducto, precioProducto, estado, cantProducto, idMarca, idCategoria, idPresentacion } = req.body;
+    const {nomProducto, descripProducto, precioProducto, estado, cantProducto, idMarca, idCategoria, idPresentacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idProducto || !nomProducto || !descripProducto || !precioProducto || !estado || !cantProducto || !idMarca || !idCategoria || !idPresentacion) {
+    if (!nomProducto || !descripProducto || !precioProducto || !estado || !cantProducto || !idMarca || !idCategoria || !idPresentacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO producto (IDProducto, NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    const values = [idProducto, nomProducto, descripProducto, precioProducto, estado, cantProducto, idMarca, idCategoria, idPresentacion];
+    const sql = `INSERT INTO producto (NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    const values = [nomProducto, descripProducto, precioProducto, estado, cantProducto, idMarca, idCategoria, idPresentacion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla producto:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla producto' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idProducto });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"nomProducto\":\"Ambroxol\",\"descripProducto\":\"Producto sabor a banana\",\"precioProducto\":40.5,\"estado\":\"DISPONIBLE\",\"cantProducto\":500,\"idMarca\":1,\"idCategoria\":1,\"idPresentacion\":1}" http://localhost:5000/crud/createProducto
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Producto--------------
@@ -590,14 +656,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar un registro de la tabla producto:', err);
+        res.status(500).json({ error: 'Error al actualizar un registro de la tabla producto' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"nomProducto\":\"Loratadina\",\"descripProducto\":\"Producto para la alergia\",\"precioProducto\":5.5,\"estado\":\"AGOTADO\",\"cantProducto\":50,\"idMarca\":1,\"idCategoria\":1,\"idPresentacion\":1}" http://localhost:5000/crud/updateProducto/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Producto-------------------
@@ -611,14 +680,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idProducto], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla producto:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla producto' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteProducto/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -631,41 +703,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla servicio:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla servicio' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readServicio
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla Servicio------------
   router.post('/createServicio', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idServicio, nombreS, estadoS, descripcion } = req.body;
+    const {nombreS, estadoS, descripcion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idServicio || !nombreS || !estadoS || !descripcion) {
+    if (!nombreS || !estadoS || !descripcion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO  servicio (IDServicio, NombreS, EstadoS, Descripcion) VALUES (?, ?, ?, ?)`;
-    const values = [idServicio, nombreS, estadoS, descripcion];
+    const sql = `INSERT INTO  servicio (NombreS, EstadoS, Descripcion) VALUES (?, ?, ?)`;
+    const values = [nombreS, estadoS, descripcion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla servicio:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla servicio' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idServicio });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreS\":\"Ultrasonidos\",\"estadoS\":\"DISPONIBLE\",\"descripcion\":\"Aprovecha la oferta ya, agenda tu cita ahora mismo\"}"  http://localhost:5000/crud/createServicio
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Servicio--------------
@@ -693,14 +771,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar un registro de la tabla servicio:', err);
+        res.status(500).json({ error: 'Error al actualizar un registro de la tabla servicio' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"nombreS\":\"Consulta médica\",\"estadoS\":\"EN ESPERA\",\"descripcion\":\"Consultas médicas gratis, agenda tu cita ahora mismo\"}" http://localhost:5000/crud/updateServicio/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Servicio-------------------
@@ -714,14 +795,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idServicio], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla servicio:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla servicio' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteServicio/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -734,41 +818,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla servicio_cliente:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla servicio_cliente' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readServicioCliente
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla ServicioCliente------------
   router.post('/createServicioCliente', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idServicioCliente, idCliente, idServicio, fechaSolicitud, fechaCita } = req.body;
+    const {idCliente, idServicio,fechaCita } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idServicioCliente || !idCliente || !idServicio || !fechaSolicitud || !fechaCita) {
+    if (!idCliente || !idServicio || !fechaCita) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO serviciocliente (IDServicioCliente, IDCliente, IDServicio, FechaSolicitud, FechaCita) VALUES (?, ?, ?, ?, ?)`;
-    const values = [idServicioCliente, idCliente, idServicio, fechaSolicitud, fechaCita];
+    const sql = `INSERT INTO serviciocliente (IDCliente, IDServicio, FechaCita) VALUES (?, ?, ?)`;
+    const values = [idCliente, idServicio, fechaCita];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla servicio_cliente:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla servicio_cliente' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idServicioCliente });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"idCliente\":1,\"idServicio\":1,\"fechaCita\":\"2023-09-13 08:50:00\"}" http://localhost:5000/crud/createServicioCliente
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla ServicioCliente--------------
@@ -777,33 +867,36 @@ module.exports = (db) => {
     const idServicioCliente = req.params.idServicioCliente;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { idCliente, idServicio, fechaSolicitud, fechaCita } = req.body;
+    const { idCliente, idServicio, fechaCita } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idCliente || !idServicio || !fechaSolicitud || !fechaCita) {
+    if (!idCliente || !idServicio || !fechaCita) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para actualizar el registro por ID
     const sql = `
       UPDATE serviciocliente
-      SET IDCliente = ?, IDServicio = ?, FechaSolicitud = ?, FechaCita = ?
+      SET IDCliente = ?, IDServicio = ?, FechaCita = ?
       WHERE IDServicioCliente = ?
     `;
 
-    const values = [idCliente, idServicio, fechaSolicitud, fechaCita, idServicioCliente];
+    const values = [idCliente, idServicio, fechaCita, idServicioCliente];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar un registro de la tabla servicio_cliente:', err);
+        res.status(500).json({ error: 'Error al actualizar un registro de la tabla servicio_cliente' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"idCliente\":1,\"idServicio\":1,\"fechaCita\":\"2023-10-15 01:30:00\"}" http://localhost:5000/crud/updateServicioCliente/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla ServicioCliente-------------------
@@ -817,14 +910,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idServicioCliente], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla servicio_cliente:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla servicio_cliente' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteServicioCliente/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -837,41 +933,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla pago:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla pago' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readPago
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla Pago------------
   router.post('/createPago', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idPago, fechaHoraPago, totalPago } = req.body;
+    const {totalPago } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idPago || !fechaHoraPago || !totalPago) {
+    if (!totalPago) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO pago (IDPago, FechaHoraPago, TotalPago) VALUES (?, ?, ?)`;
-    const values = [idPago, fechaHoraPago, totalPago];
+    const sql = `INSERT INTO pago (TotalPago) VALUES (?)`;
+    const values = [totalPago];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla pago:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla pago' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idPago });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"totalPago\":450}" http://localhost:5000/crud/createPago
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Pago--------------
@@ -899,14 +1001,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar un registro de la tabla pago:', err);
+        res.status(500).json({ error: 'Error al actualizar un registro de la tabla pago' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"totalPago\":500}" http://localhost:5000/crud/updatePago/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Pago-------------------
@@ -920,14 +1025,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idPago], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla pago:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla pago' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deletePago/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -940,41 +1048,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla compra:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla compra' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readCompra
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla Compra------------
   router.post('/createCompra', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idCompra, idEmpleado, idCliente, fechaHoraCompra, direcCompra, idPago, estadoC } = req.body;
+    const {idEmpleado, idCliente,direcCompra, idPago, estadoC } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idCompra || !idEmpleado || !idCliente || !fechaHoraCompra || !direcCompra || !idPago || !estadoC) {
+    if (!idEmpleado || !idCliente || !direcCompra || !idPago || !estadoC) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO compra (IDCompra, IDEmpleado, IDCliente, FechaHoraCompra, DirecCompra, IDPago, EstadoC) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const values = [idCompra, idEmpleado, idCliente, fechaHoraCompra, direcCompra, idPago, estadoC];
+    const sql = `INSERT INTO compra (IDEmpleado, IDCliente, DirecCompra, IDPago, EstadoC) VALUES (?, ?, ?, ?, ?)`;
+    const values = [idEmpleado, idCliente,  direcCompra, idPago, estadoC];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla compra:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla compra' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idCompra });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"idEmpleado\":1,\"idCliente\":1,\"direcCompra\":\"Frente al complejo judicial\",\"idPago\":1,\"estadoC\":\"EN PROCESO\"}" http://localhost:5000/crud/createCompra
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Compra--------------
@@ -1002,14 +1116,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar un registro de la tabla compra:', err);
+        res.status(500).json({ error: 'Error al actualizar un registro de la tabla compra' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"idEmpleado\":1,\"idCliente\":1,\"direcCompra\":\"Iglesia Divino Niño 2 cuadras al Oeste\",\"idPago\":1,\"estadoC\":\"ENTREGADA\"}" http://localhost:5000/crud/updateCompra/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Compra-------------------
@@ -1023,14 +1140,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idCompra], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla compra:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla compra' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteCompra/1
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
@@ -1043,41 +1163,47 @@ module.exports = (db) => {
     // Ejecutar la consulta
     db.query(sql, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros' });
+        console.error('Error al leer los registros de la tabla compra_producto:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla compra_producto' });
       } else {
         // Devolver los registros en formato JSON como respuesta
         res.status(200).json(result);
       }
     });
   });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readCompraProducto
   //--------------------------------------------------------------------------------------
 
   // Ruta para crear un nuevo registro con ID específico en la tabla CompraProducto------------
   router.post('/createCompraProducto', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { idCompraProducto, idProducto, idCompra, cantProductos, precio } = req.body;
+    const {idProducto, idCompra, cantProductos, precio } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!idCompraProducto || !idProducto || !idCompra || !cantProductos || !precio) {
+    if (!idProducto || !idCompra || !cantProductos || !precio) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO compraproducto (IDCompraProducto, IDProducto, IDCompra, CantProductos, Precio) VALUES (?, ?, ?, ?, ?)`;
-    const values = [idCompraProducto, idProducto, idCompra, cantProductos, precio];
+    const sql = `INSERT INTO compraproducto (IDProducto, IDCompra, CantProductos, Precio) VALUES (?, ?, ?, ?)`;
+    const values = [idProducto, idCompra, cantProductos, precio];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al insertar registro:', err);
-        res.status(500).json({ error: 'Error al insertar registro' });
+        console.error('Error al insertar un registro en la tabla compra_producto:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla compra_producto' });
       } else {
-        // Devuelve el ID del nuevo registro como respuesta
-        res.status(201).json({ idCompraProducto });
+        // Devuelve un mensaje como respuesta
+        res.status(201).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"idProducto\":2,\"idCompra\":1,\"cantProductos\":35,\"precio\":340}" http://localhost:5000/crud/createCompraProducto
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla CompraProducto--------------
@@ -1105,14 +1231,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error al actualizar el registro:', err);
-        res.status(500).json({ error: 'Error al actualizar el registro' });
+        console.error('Error al actualizar un registro de la tabla compra_producto:', err);
+        res.status(500).json({ error: 'Error al actualizar un registro de la tabla compra_producto' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro actualizado con éxito' });
+        res.status(200).json({ message: 'Registro actualizado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"idProducto\":1,\"idCompra\":1,\"cantProductos\":3,\"precio\":150}" http://localhost:5000/crud/updateCompraProducto/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla CompraProducto-------------------
@@ -1126,14 +1255,17 @@ module.exports = (db) => {
     // Ejecuta la consulta
     db.query(sql, [idCompraProducto], (err, result) => {
       if (err) {
-        console.error('Error al eliminar el registro:', err);
-        res.status(500).json({ error: 'Error al eliminar el registro' });
+        console.error('Error al eliminar un registro de la tabla compra_producto:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla compra_producto' });
       } else {
         // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado con éxito' });
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteCompraProducto/1
   //---------------------------------------------------------------------------------------
 
   return router;
