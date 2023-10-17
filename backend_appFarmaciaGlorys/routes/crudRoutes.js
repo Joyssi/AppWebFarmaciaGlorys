@@ -719,16 +719,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Servicio------------
   router.post('/createServicio', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {nombreS, estadoS, descripcion } = req.body;
+    const {NombreS, EstadoS, Descripcion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreS || !estadoS || !descripcion) {
+    if (!NombreS || !EstadoS || !Descripcion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
     const sql = `INSERT INTO  servicio (NombreS, EstadoS, Descripcion) VALUES (?, ?, ?)`;
-    const values = [nombreS, estadoS, descripcion];
+    const values = [NombreS, EstadoS, Descripcion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -743,7 +743,7 @@ module.exports = (db) => {
   });
 
   //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreS\":\"Ultrasonidos\",\"estadoS\":\"DISPONIBLE\",\"descripcion\":\"Aprovecha la oferta ya, agenda tu cita ahora mismo\"}"  http://localhost:5000/crud/createServicio
+  //curl -X POST -H "Content-Type: application/json" -d "{\"NombreS\":\"Ultrasonidos\",\"EstadoS\":\"DISPONIBLE\",\"Descripcion\":\"Aprovecha la oferta ya, agenda tu cita ahora mismo\"}"  http://localhost:5000/crud/createServicio
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Servicio--------------

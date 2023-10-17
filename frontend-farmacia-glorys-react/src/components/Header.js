@@ -6,6 +6,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas'; // Importa el componente Offc
 import Button from 'react-bootstrap/Button'; // Importa el componente Button de Bootstrap
 import NavDropdown from 'react-bootstrap/NavDropdown'; // Importa el componente NavDropDown de Bootstrap
 import Container from 'react-bootstrap/Container'; // Importa el componente Container de Bootstrap
+import { Link } from 'react-router-dom';
 
 
 function Header() {
@@ -21,72 +22,50 @@ function Header() {
       <Navbar className="navbar-color" variant="dark" expand="md">
         <Container>
           <Navbar.Brand href="#home">Farmacia Glorys</Navbar.Brand>
-          <Navbar.Toggle 
+          <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             style={{ display: 'none' }}
             className="d-sm-none d-xs-none"
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Link href="#home">Inicio</Nav.Link>
-              <NavDropdown title="Clientes" id="clientes">
-                <NavDropdown.Item href="#">Registrar Cliente</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Cliente
+
+              <Nav.Link>
+                <Link to="/" className="link-unstyled">Inicio</Link>
+              </Nav.Link>
+
+              <NavDropdown title="Marcas" id="marcas">
+                <NavDropdown.Item>
+                  <Link to="/marca" className="link-unstyled">Nueva Marca</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Cliente</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Cliente
-                </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="Empleados" id="empleados">
-                <NavDropdown.Item href="#">Registrar Empleado</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Empleado
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Empleado</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Empleado
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-marca" className="link-unstyled">Listar Marcas</Link>
                 </NavDropdown.Item>
               </NavDropdown>
+
               <NavDropdown title="Productos" id="productos">
-                <NavDropdown.Item href="#">Registrar Producto</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Producto
+                <NavDropdown.Item>
+                  <Link to="/producto" className="link-unstyled">Nuevo Producto</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Producto</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Producto
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-producto" className="link-unstyled">Listar Productos</Link>
                 </NavDropdown.Item>
                 </NavDropdown>
-              <NavDropdown title="Servicios" id="servicios">
-                <NavDropdown.Item href="#">Registrar Servicio</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Servicio
+
+                <NavDropdown title="Servicios" id="servicios">
+                <NavDropdown.Item>
+                  <Link to="/servicio" className="link-unstyled">Nuevo Servicio</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Servicio</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Servicio
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-servicio" className="link-unstyled">Listar Servicios</Link>
                 </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="Categoria" id="categoria">
-                <NavDropdown.Item href="#">Registrar Categoria</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Categoria
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Categoria</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Categoria
-                </NavDropdown.Item>
-              </NavDropdown>
+                </NavDropdown>
+
             </Nav>
           </Navbar.Collapse>
-          {/* Botón para mostrar/ocultar el menú lateral */}
           <Button
             variant="outline-light"
             onClick={toggleMenu}
@@ -99,7 +78,6 @@ function Header() {
         </Container>
       </Navbar>
 
-
       {/* Menú lateral (Offcanvas) */}
       <Offcanvas show={showMenu} onHide={toggleMenu} placement="start">
         <Offcanvas.Header closeButton>
@@ -107,51 +85,21 @@ function Header() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
-            <Nav.Link href="#home">Inicio</Nav.Link>
-            <NavDropdown title="Clientes" id="clientes">
-              <NavDropdown.Item href="#">Registrar Cliente</NavDropdown.Item>
-              <NavDropdown.Item href="#">
-                Actualizar Cliente
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#">Ver Cliente</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#">
-                Eliminar Cliente
-              </NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="Empleados" id="empleados">
-              <NavDropdown.Item href="#">Registrar Empleado</NavDropdown.Item>
-              <NavDropdown.Item href="#">
-                Actualizar Empleado
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#">Ver Empleado</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#">
-                Eliminar Empleado
-              </NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="Productos" id="productos">
-              <NavDropdown.Item href="#">Registrar Producto</NavDropdown.Item>
-              <NavDropdown.Item href="#">
-                Actualizar Producto
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#">Ver Producto</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#">
-                Eliminar Producto
-              </NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="Categoria" id="categoria">
-                <NavDropdown.Item href="#">Registrar Categoria</NavDropdown.Item>
-                <NavDropdown.Item href="#">
-                  Actualizar Categoria
+
+          <Nav.Link>
+                <Link to="/" className="link-unstyled">Inicio</Link>
+              </Nav.Link>
+
+              <NavDropdown title="Marcas" id="marcas">
+                <NavDropdown.Item>
+                  <Link to="/customer" className="link-unstyled">Registrar Marca</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#">Ver Categoria</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#">
-                  Eliminar Categoria
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-marca" className="link-unstyled">Actualizar Marca</Link>
                 </NavDropdown.Item>
               </NavDropdown>
+
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
