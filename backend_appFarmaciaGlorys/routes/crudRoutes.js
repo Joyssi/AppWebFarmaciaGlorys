@@ -47,7 +47,7 @@ module.exports = (db) => {
         res.status(500).json({ error: 'Error al insertar un registro en la tabla categoria' });
       } else {
         // Devuelve un mensaje como respuesta
-        res.status(201).json({ message: 'Registro agregado exitosamente' });
+        res.status(200).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
@@ -737,7 +737,7 @@ module.exports = (db) => {
         res.status(500).json({ error: 'Error al insertar un registro en la tabla servicio' });
       } else {
         // Devuelve un mensaje como respuesta
-        res.status(201).json({ message: 'Registro agregado exitosamente' });
+        res.status(200).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
@@ -747,15 +747,15 @@ module.exports = (db) => {
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Servicio--------------
-  router.put('/updateServicio/:idServicio', (req, res) => {
+  router.put('/updateServicio/:IDServicio', (req, res) => {
     // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idServicio = req.params.idServicio;
+    const IDServicio = req.params.IDServicio;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { nombreS, estadoS, descripcion } = req.body;
+    const { NombreS, EstadoS, Descripcion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreS || !estadoS || !descripcion) {
+    if (!NombreS || !EstadoS || !Descripcion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
@@ -766,7 +766,7 @@ module.exports = (db) => {
       WHERE IDServicio = ?
     `;
 
-    const values = [nombreS, estadoS, descripcion, idServicio];
+    const values = [NombreS, EstadoS, Descripcion, IDServicio];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
