@@ -29,16 +29,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Categoria------------
   router.post('/createCategoria', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { nombreCategoria } = req.body;
+    const { NombreCategoria } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreCategoria) {
+    if (!NombreCategoria) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
     const sql = `INSERT INTO categoria (NombreCategoria) VALUES (?)`;
-    const values = [nombreCategoria];
+    const values = [NombreCategoria];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -53,19 +53,19 @@ module.exports = (db) => {
   });
   
   //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreCategoria\":\"Fitofármaco\"}" http://localhost:5000/crud/createCategoria
+  //curl -X POST -H "Content-Type: application/json" -d "{\"NombreCategoria\":\"Fitofármaco\"}" http://localhost:5000/crud/createCategoria
   //----------------------------------------------------------------------------------------
 
     // Ruta para actualizar un registro existente por ID en la tabla Categoria--------------
-  router.put('/updateCategoria/:idCategoria', (req, res) => {
+  router.put('/updateCategoria/:IDCategoria', (req, res) => {
     // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idCategoria = req.params.idCategoria;
+    const IDCategoria = req.params.IDCategoria;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { nombreCategoria } = req.body;
+    const { NombreCategoria } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreCategoria) {
+    if (!NombreCategoria) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
@@ -76,7 +76,7 @@ module.exports = (db) => {
       WHERE IDCategoria = ?
     `;
 
-    const values = [nombreCategoria, idCategoria];
+    const values = [NombreCategoria, IDCategoria];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -91,7 +91,7 @@ module.exports = (db) => {
   });
 
   //Sentencia
-  //curl -X PUT -H "Content-Type: application/json" -d "{\"nombreCategoria\":\"Biológico\"}" http://localhost:5000/crud/updateCategoria/1
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"NombreCategoria\":\"Biológico\"}" http://localhost:5000/crud/updateCategoria/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Categoria---------------
@@ -144,16 +144,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Marca------------
   router.post('/createMarca', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {nombreMarca } = req.body;
+    const {NombreMarca } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreMarca) {
+    if (!NombreMarca) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
     const sql = `INSERT INTO marca (NombreMarca) VALUES (?)`;
-    const values = [nombreMarca];
+    const values = [NombreMarca];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -162,25 +162,25 @@ module.exports = (db) => {
         res.status(500).json({ error: 'Error al insertar un registro en la tabla marca' });
       } else {
         // Devuelve un mensaje como respuesta
-        res.status(201).json({ message: 'Registro agregado exitosamente' });
+        res.status(200).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
 
   //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreMarca\":\"RAMOS\"}" http://localhost:5000/crud/createMarca
+  //curl -X POST -H "Content-Type: application/json" -d "{\"NombreMarca\":\"RAMOS\"}" http://localhost:5000/crud/createMarca
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Marca--------------------
-  router.put('/updateMarca/:idMarca', (req, res) => {
+  router.put('/updateMarca/:IDMarca', (req, res) => {
     // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idMarca = req.params.idMarca;
+    const IDMarca = req.params.IDMarca;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { nombreMarca } = req.body;
+    const { NombreMarca } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreMarca) {
+    if (!NombreMarca) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
@@ -191,7 +191,7 @@ module.exports = (db) => {
       WHERE IDMarca = ?
     `;
 
-    const values = [nombreMarca, idMarca];
+    const values = [NombreMarca, IDMarca];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -206,7 +206,7 @@ module.exports = (db) => {
   });
 
   //Sentencia
-  //curl -X PUT -H "Content-Type: application/json" -d "{\"nombreMarca\":\"PASHA S.A\"}" http://localhost:5000/crud/updateMarca/1
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"NombreMarca\":\"PASHA S.A\"}" http://localhost:5000/crud/updateMarca/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Marca-------------------
@@ -259,16 +259,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Presentación------------
   router.post('/createPresentacion', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {formaDosificacion } = req.body;
+    const {FormaDosificacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!formaDosificacion) {
+    if (!FormaDosificacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
     const sql = `INSERT INTO presentacion (FormaDosificacion) VALUES (?)`;
-    const values = [formaDosificacion];
+    const values = [FormaDosificacion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -277,25 +277,25 @@ module.exports = (db) => {
         res.status(500).json({ error: 'Error al insertar un registro en la tabla presentación' });
       } else {
         // Devuelve un mensaje como respuesta
-        res.status(201).json({ message: 'Registro agregado exitosamente' });
+        res.status(200).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
 
   //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"formaDosificacion\":\"Tableta\"}" http://localhost:5000/crud/createPresentacion
+  //curl -X POST -H "Content-Type: application/json" -d "{\"FormaDosificacion\":\"Tableta\"}" http://localhost:5000/crud/createPresentacion
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Presentación--------------
-  router.put('/updatePresentacion/:idPresentacion', (req, res) => {
+  router.put('/updatePresentacion/:IDPresentacion', (req, res) => {
     // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idPresentacion = req.params.idPresentacion;
+    const IDPresentacion = req.params.IDPresentacion;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { formaDosificacion } = req.body;
+    const { FormaDosificacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!formaDosificacion) {
+    if (!FormaDosificacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
@@ -306,7 +306,7 @@ module.exports = (db) => {
       WHERE IDPresentacion = ?
     `;
 
-    const values = [formaDosificacion, idPresentacion];
+    const values = [FormaDosificacion, IDPresentacion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -321,7 +321,7 @@ module.exports = (db) => {
   });
 
   //Sentencia
-  //curl -X PUT -H "Content-Type: application/json" -d "{\"formaDosificacion\":\"Crema\"}" http://localhost:5000/crud/updatePresentacion/1
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"FormaDosificacion\":\"Crema\"}" http://localhost:5000/crud/updatePresentacion/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Presentación-------------------
@@ -604,16 +604,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Producto------------
   router.post('/createProducto', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {nomProducto, descripProducto, precioProducto, estado, cantProducto, idMarca, idCategoria, idPresentacion } = req.body;
+    const {NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nomProducto || !descripProducto || !precioProducto || !estado || !cantProducto || !idMarca || !idCategoria || !idPresentacion) {
+    if (!NomProducto || !DescripProducto || !PrecioProducto || !Estado || !CantProducto || !IDMarca || !IDCategoria || !IDPresentacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
     const sql = `INSERT INTO producto (NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-    const values = [nomProducto, descripProducto, precioProducto, estado, cantProducto, idMarca, idCategoria, idPresentacion];
+    const values = [NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -622,25 +622,25 @@ module.exports = (db) => {
         res.status(500).json({ error: 'Error al insertar un registro en la tabla producto' });
       } else {
         // Devuelve un mensaje como respuesta
-        res.status(201).json({ message: 'Registro agregado exitosamente' });
+        res.status(200).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
 
   //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"nomProducto\":\"Ambroxol\",\"descripProducto\":\"Producto sabor a banana\",\"precioProducto\":40.5,\"estado\":\"DISPONIBLE\",\"cantProducto\":500,\"idMarca\":1,\"idCategoria\":1,\"idPresentacion\":1}" http://localhost:5000/crud/createProducto
+  //curl -X POST -H "Content-Type: application/json" -d "{\"NomProducto\":\"Ambroxol\",\"DescripProducto\":\"Producto sabor a banana\",\"PrecioProducto\":40.5,\"Estado\":\"DISPONIBLE\",\"CantProducto\":500,\"IDMarca\":1,\"IDCategoria\":1,\"IDPresentacion\":1}" http://localhost:5000/crud/createProducto
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Producto--------------
-  router.put('/updateProducto/:idProducto', (req, res) => {
+  router.put('/updateProducto/:IDProducto', (req, res) => {
     // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idProducto = req.params.idProducto;
+    const IDProducto = req.params.IDProducto;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { nomProducto, descripProducto, precioProducto, estado, cantProducto, idMarca, idCategoria, idPresentacion } = req.body;
+    const { NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nomProducto || !descripProducto || !precioProducto || !estado || !cantProducto || !idMarca || !idCategoria || !idPresentacion) {
+    if (!NomProducto || !DescripProducto || !PrecioProducto || !Estado || !CantProducto || !IDMarca || !IDCategoria || !IDPresentacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
@@ -651,7 +651,7 @@ module.exports = (db) => {
       WHERE IDProducto = ?
     `;
 
-    const values = [nomProducto, descripProducto, precioProducto, estado, cantProducto, idMarca, idCategoria, idPresentacion, idProducto];
+    const values = [NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion, IDProducto];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -666,7 +666,7 @@ module.exports = (db) => {
   });
 
   //Sentencia
-  //curl -X PUT -H "Content-Type: application/json" -d "{\"nomProducto\":\"Loratadina\",\"descripProducto\":\"Producto para la alergia\",\"precioProducto\":5.5,\"estado\":\"AGOTADO\",\"cantProducto\":50,\"idMarca\":1,\"idCategoria\":1,\"idPresentacion\":1}" http://localhost:5000/crud/updateProducto/1
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"NomProducto\":\"Loratadina\",\"DescripProducto\":\"Producto para la alergia\",\"PrecioProducto\":5.5,\"Estado\":\"AGOTADO\",\"CantProducto\":50,\"IDMarca\":1,\"IDCategoria\":1,\"IDPresentacion\":1}" http://localhost:5000/crud/updateProducto/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Producto-------------------

@@ -44,6 +44,26 @@ function Header() {
                 </NavDropdown.Item>
               </NavDropdown>
 
+              <NavDropdown title="Categorias" id="categorias">
+                <NavDropdown.Item>
+                  <Link to="/categoria" className="link-unstyled">Nueva Categoria</Link>
+                </NavDropdown.Item>
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-categoria" className="link-unstyled">Listar Categoria</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+
+              <NavDropdown title="Presentaciones" id="presentaciones">
+                <NavDropdown.Item>
+                  <Link to="/presentacion" className="link-unstyled">Nueva Presentacion</Link>
+                </NavDropdown.Item>
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-presentacion" className="link-unstyled">Listar Presentaciones</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+
               <NavDropdown title="Productos" id="productos">
                 <NavDropdown.Item>
                   <Link to="/producto" className="link-unstyled">Nuevo Producto</Link>

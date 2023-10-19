@@ -3,10 +3,10 @@ import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bo
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function CreateMarca() {
+function CreatePresentacion() {
 
   // Crear un estado para cada campo del formulario
-    const [NombreMarca, setNombreMarca] = useState('');
+    const [FormaDosificacion, setFormaDosificacion] = useState('');
 
     // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
@@ -14,12 +14,12 @@ function CreateMarca() {
 
         // Crear un objeto con los datos del formulario
         const formData = {
-        NombreMarca,
+        FormaDosificacion,
         };
 
         try {
         // Realizar una solicitud HTTP al backend para enviar los datos
-        const response = await fetch('http://localhost:5000/crud/createMarca', {
+        const response = await fetch('http://localhost:5000/crud/createPresentacion', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -31,9 +31,9 @@ function CreateMarca() {
             // El registro se creó exitosamente
             alert('Registro exitoso');
             // Reiniciar los campos del formulario
-            setNombreMarca('');
+            setFormaDosificacion('');
         } else {
-            alert('Error al registrar la Marca');
+            alert('Error al registrar la Presentación');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);
@@ -48,17 +48,17 @@ function CreateMarca() {
         <Container>
             <Card className="mt-3">
             <Card.Body>
-                <Card.Title>Registro de Marca</Card.Title>
+                <Card.Title>Registro de Presentación</Card.Title>
                 <Form className="mt-3" onSubmit={handleSubmit}>
                 <Row className="g-3">
 
                     <Col sm="6" md="6" lg="12">
-                    <FloatingLabel controlId="NombreMarca" label="Nombre de Marca">
+                    <FloatingLabel controlId="FormaDosificacion" label="Nombre de Presentación">
                         <Form.Control
                         type="text"
-                        placeholder="Ingrese el nombre de la Marca"
-                        value={NombreMarca}
-                        onChange={(e) => setNombreMarca(e.target.value)}
+                        placeholder="Ingrese el nombre de la Presentacion"
+                        value={FormaDosificacion}
+                        onChange={(e) => setFormaDosificacion(e.target.value)}
                         />
                     </FloatingLabel>
                     </Col>
@@ -78,4 +78,4 @@ function CreateMarca() {
     );
 }
 
-export default CreateMarca;
+export default CreatePresentacion;
