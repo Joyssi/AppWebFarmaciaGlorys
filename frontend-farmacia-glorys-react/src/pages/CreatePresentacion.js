@@ -6,7 +6,7 @@ import '../styles/App.css';
 function CreatePresentacion() {
 
   // Crear un estado para cada campo del formulario
-    const [FormaDosificacion, setFormaDosificacion] = useState('');
+    const [NombrePresentacion, setNombrePresentacion] = useState('');
 
     // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
@@ -14,7 +14,7 @@ function CreatePresentacion() {
 
         // Crear un objeto con los datos del formulario
         const formData = {
-        FormaDosificacion,
+        NombrePresentacion,
         };
 
         try {
@@ -31,7 +31,7 @@ function CreatePresentacion() {
             // El registro se creó exitosamente
             alert('Registro exitoso');
             // Reiniciar los campos del formulario
-            setFormaDosificacion('');
+            setNombrePresentacion('');
         } else {
             alert('Error al registrar la Presentación');
         }
@@ -57,8 +57,8 @@ function CreatePresentacion() {
                         <Form.Control
                         type="text"
                         placeholder="Ingrese el nombre de la Presentacion"
-                        value={FormaDosificacion}
-                        onChange={(e) => setFormaDosificacion(e.target.value)}
+                        value={NombrePresentacion}
+                        onChange={(e) => setNombrePresentacion(e.target.value)}
                         />
                     </FloatingLabel>
                     </Col>

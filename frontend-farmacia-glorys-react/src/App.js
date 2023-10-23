@@ -10,6 +10,8 @@ import ListPresentacion from './pages/PresentacionList';
 import Producto from './pages/CreateProducto';
 import Servicio from './pages/CreateServicio';
 import ListaServicio from './pages/ServicioList';
+import Cliente from './pages/CreateCliente';
+import ListCliente from './pages/ClienteList';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
       <Route path="/producto" element={<Producto />} />
       <Route path="/servicio" element={<Servicio />} />
       <Route path="/actualizar-servicio" element={<ListaServicio />} />
+      <Route path="/cliente" element={<Cliente />} />
+      <Route path="/actualizar-cliente" element={<ListCliente />} />
     </Routes>
   </Router>
   );

@@ -259,16 +259,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Presentación------------
   router.post('/createPresentacion', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {FormaDosificacion } = req.body;
+    const {NombrePresentacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!FormaDosificacion) {
+    if (!NombrePresentacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO presentacion (FormaDosificacion) VALUES (?)`;
-    const values = [FormaDosificacion];
+    const sql = `INSERT INTO presentacion (NombrePresentacion) VALUES (?)`;
+    const values = [NombrePresentacion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -283,7 +283,7 @@ module.exports = (db) => {
   });
 
   //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"FormaDosificacion\":\"Tableta\"}" http://localhost:5000/crud/createPresentacion
+  //curl -X POST -H "Content-Type: application/json" -d "{\"NombrePresentacion\":\"Tableta\"}" http://localhost:5000/crud/createPresentacion
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Presentación--------------
@@ -292,21 +292,21 @@ module.exports = (db) => {
     const IDPresentacion = req.params.IDPresentacion;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { FormaDosificacion } = req.body;
+    const { NombrePresentacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!FormaDosificacion) {
+    if (!NombrePresentacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para actualizar el registro por ID
     const sql = `
       UPDATE presentacion
-      SET FormaDosificacion = ?
+      SET NombrePresentacion = ?
       WHERE IDPresentacion = ?
     `;
 
-    const values = [FormaDosificacion, IDPresentacion];
+    const values = [NombrePresentacion, IDPresentacion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -321,7 +321,7 @@ module.exports = (db) => {
   });
 
   //Sentencia
-  //curl -X PUT -H "Content-Type: application/json" -d "{\"FormaDosificacion\":\"Crema\"}" http://localhost:5000/crud/updatePresentacion/1
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"NombrePresentacion\":\"Crema\"}" http://localhost:5000/crud/updatePresentacion/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Presentación-------------------
@@ -374,16 +374,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Cliente------------
   router.post('/createCliente', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {nombreUsuarioC, contraseñaC, correoC, telefonoC } = req.body;
+    const {NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreUsuarioC || !contraseñaC || !correoC || !telefonoC) {
+    if (!NombreUsuarioC || !ContraseñaC || !CorreoC || !TelefonoC) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
     const sql = `INSERT INTO cliente (NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC) VALUES (?, ?, ?, ?)`;
-    const values = [nombreUsuarioC, contraseñaC, correoC, telefonoC];
+    const values = [NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -392,25 +392,25 @@ module.exports = (db) => {
         res.status(500).json({ error: 'Error al insertar un registro en la tabla cliente' });
       } else {
         // Devuelve un mensaje como respuesta
-        res.status(201).json({ message: 'Registro agregado exitosamente' });
+        res.status(200).json({ message: 'Registro agregado exitosamente' });
       }
     }); 
   });
 
   //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreUsuarioC\":\"Joy\",\"contraseñaC\":\"123joy\",\"correoC\":\"joyssicruz5@gmail.com\",\"telefonoC\":\"86962747\"}" http://localhost:5000/crud/createCliente
+  //curl -X POST -H "Content-Type: application/json" -d "{\"NombreUsuarioC\":\"Joy\",\"ContraseñaC\":\"123joy\",\"CorreoC\":\"joyssicruz5@gmail.com\",\"TelefonoC\":\"86962747\"}" http://localhost:5000/crud/createCliente
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Cliente--------------
-  router.put('/updateCliente/:idCliente', (req, res) => {
+  router.put('/updateCliente/:IDCliente', (req, res) => {
     // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idCliente = req.params.idCliente;
+    const IDCliente = req.params.IDCliente;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { nombreUsuarioC, contraseñaC, correoC, telefonoC } = req.body;
+    const { NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreUsuarioC || !contraseñaC || !correoC || !telefonoC) {
+    if (!NombreUsuarioC || !ContraseñaC || !CorreoC || !TelefonoC) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
@@ -421,7 +421,7 @@ module.exports = (db) => {
       WHERE IDCliente = ?
     `;
 
-    const values = [nombreUsuarioC, contraseñaC, correoC, telefonoC, idCliente];
+    const values = [NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC, IDCliente];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -436,7 +436,7 @@ module.exports = (db) => {
   });
   
   //Sentencia
-  //curl -X PUT -H "Content-Type: application/json" -d "{\"nombreUsuarioC\":\"Elieth\",\"contraseñaC\":\"elieth12\",\"correoC\":\"izaduartes2214@gmail.com\",\"telefonoC\":\"57736281\"}" http://localhost:5000/crud/updateCliente/1
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"NombreUsuarioC\":\"Elieth\",\"ContraseñaC\":\"elieth12\",\"CorreoC\":\"izaduartes2214@gmail.com\",\"TelefonoC\":\"57736281\"}" http://localhost:5000/crud/updateCliente/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Cliente-------------------

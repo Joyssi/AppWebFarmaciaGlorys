@@ -7,7 +7,7 @@ function PresentacionList() {
     const [showModal, setShowModal] = useState(false);
     const [selectedPresentacion, setSelectedPresentacion] = useState({});
     const [formData, setFormData] = useState({
-        FormaDosificacion: '',
+        NombrePresentacion: '',
     });
 
     // Función para abrir el modal y pasar los datos de la marca seleccionada
@@ -15,7 +15,7 @@ function PresentacionList() {
         setSelectedPresentacion(presentacion);
 
         setFormData({
-        FormaDosificacion: presentacion.FormaDosificacion,
+        NombrePresentacion: presentacion.NombrePresentacion,
         });
         setShowModal(true);
     };
@@ -101,7 +101,7 @@ function PresentacionList() {
                 {presentaciones.map((presentacion) => (
                     <tr key={presentacion.IDPresentacion}>
                     <td>{presentacion.IDPresentacion}</td>
-                    <td>{presentacion.FormaDosificacion}</td>
+                    <td>{presentacion.NombrePresentacion}</td>
                     <td>
                         <Button variant="primary" onClick={() => openModal(presentacion)}>Actualizar</Button>
                         <Button variant="danger" onClick={() => handleDelete(presentacion.IDPresentacion)}>Eliminar</Button>
@@ -125,12 +125,12 @@ function PresentacionList() {
                     <Row className="g-3">
 
                     <Col sm="6" md="6" lg="12">
-                        <FloatingLabel controlId="FormaDosificacion" label="Nombre de Presentación">
+                        <FloatingLabel controlId="NombrePresentacion" label="Nombre de Presentación">
                         <Form.Control
                             type="text"
                             placeholder="Ingrese el nombre de la presentación"
-                            name="FormaDosificacion"
-                            value={formData.FormaDosificacion}
+                            name="NombrePresentacion"
+                            value={formData.NombrePresentacion}
                             onChange={handleFormChange}
                         />
                         </FloatingLabel>

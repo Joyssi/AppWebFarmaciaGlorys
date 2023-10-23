@@ -64,7 +64,7 @@ function Header() {
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <NavDropdown title="Productos" id="productos">
+              <NavDropdown title="Gestión de Productos" id="productos">
                 <NavDropdown.Item>
                   <Link to="/producto" className="link-unstyled">Nuevo Producto</Link>
                 </NavDropdown.Item>
@@ -74,7 +74,7 @@ function Header() {
                 </NavDropdown.Item>
                 </NavDropdown>
 
-                <NavDropdown title="Servicios" id="servicios">
+                <NavDropdown title="Gestión de Servicios" id="servicios">
                 <NavDropdown.Item>
                   <Link to="/servicio" className="link-unstyled">Nuevo Servicio</Link>
                 </NavDropdown.Item>
@@ -83,6 +83,42 @@ function Header() {
                   <Link to="/actualizar-servicio" className="link-unstyled">Listar Servicios</Link>
                 </NavDropdown.Item>
                 </NavDropdown>
+
+                <NavDropdown title="Empleados" id="empleados">
+                <NavDropdown.Item>
+                  <Link to="/empleado" className="link-unstyled">Nuevo Empleado</Link>
+                </NavDropdown.Item>
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-empleado" className="link-unstyled">Listar Empleados</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+
+                <NavDropdown title="Clientes" id="clientes">
+                <NavDropdown.Item>
+                  <Link to="/cliente" className="link-unstyled">Nuevo Cliente</Link>
+                </NavDropdown.Item>
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-cliente" className="link-unstyled">Listar Clientes</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+
+              <NavDropdown title="Carrito" id="compras">
+                <NavDropdown.Item>
+                  <Link to="/compra" className="link-unstyled">Nueva Compra</Link>
+                </NavDropdown.Item>
+
+                <NavDropdown.Item>
+                  <Link to="/actualizar-cliente" className="link-unstyled">Listar Clientes</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+
+              <NavDropdown title="Servicios" id="servicioscliente">
+                <NavDropdown.Item>
+                  <Link to="/servicio-cliente" className="link-unstyled">Solicitar Servicio</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
 
             </Nav>
           </Navbar.Collapse>

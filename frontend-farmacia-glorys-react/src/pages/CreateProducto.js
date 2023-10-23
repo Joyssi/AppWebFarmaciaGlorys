@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../styles/App.css';
@@ -11,9 +11,18 @@ function CreateProducto() {
     const [PrecioProducto, setPrecioProducto] = useState('');
     const [Estado, setEstado] = useState('');
     const [CantProducto, setCantProducto] = useState('');
-    const [IDMarca, setIDMarca] = useState('');
-    const [IDCategoria, setIDCategoria] = useState('');
-    const [IDPresentacion, setIDPresentacion] = useState('');
+
+    //Variables de estado de categoria
+    const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorias
+    const [Categoria, setCategoria] = useState(''); // Estado para el valor seleccionado
+
+    //Variables de estado de marca
+    const [marcas, setMarcas] = useState([]); // Estado para almacenar las marcas
+    const [Marca, setMarca] = useState(''); // Estado para el valor seleccionado
+
+    //Variables de estado de presentacion
+    const [presentaciones, setPresentaciones] = useState([]); // Estado para almacenar las presentaciones
+    const [Presentacion, setPresentacion] = useState(''); // Estado para el valor seleccionado
 
     // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
@@ -26,9 +35,9 @@ function CreateProducto() {
         PrecioProducto,
         Estado,
         CantProducto,
-        IDMarca,
-        IDCategoria,
-        IDPresentacion,
+        Marca,
+        Categoria,
+        Presentacion,
         };
 
         try {
@@ -50,9 +59,9 @@ function CreateProducto() {
             setPrecioProducto('');
             setEstado('');
             setCantProducto('');
-            setIDMarca('');
-            setIDCategoria('');
-            setIDPresentacion('');
+            setMarca('');
+            setCategoria('');
+            setPresentacion('');
         } else {
             alert('Error al registrar el Producto');
         }
@@ -61,6 +70,49 @@ function CreateProducto() {
         alert('Error en la solicitud al servidor');
         }
     };
+
+    //petición al servidor y almacenar los daros en la variable de estado de la tabla categoria
+    useEffect(() => {
+        // Realiza una solicitud a tu ruta para obtener las categorias
+        fetch('http://localhost:5000/crud/readCategoria')
+            .then(response => response.json())
+            .then(data => {
+            // Actualiza el estado con las categorias obtenidas
+            setCategorias(data);
+            })
+            .catch(error => {
+            console.error('Error al obtener las categorias', error);
+            });
+        }, []);
+
+        //petición al servidor y almacenar los daros en la variable de estado de la tabla marca
+    useEffect(() => {
+        // Realiza una solicitud a tu ruta para obtener las marcas
+        fetch('http://localhost:5000/crud/readMarca')
+            .then(response => response.json())
+            .then(data => {
+            // Actualiza el estado con las marcas obtenidas
+            setMarcas(data);
+            })
+            .catch(error => {
+            console.error('Error al obtener las marcas', error);
+            });
+        }, []);
+
+        //petición al servidor y almacenar los daros en la variable de estado de la tabla presentacion
+    useEffect(() => {
+        // Realiza una solicitud a tu ruta para obtener las presentaciones
+        fetch('http://localhost:5000/crud/readPresentacion')
+            .then(response => response.json())
+            .then(data => {
+            // Actualiza el estado con las presentaciones obtenidas
+            setPresentaciones(data);
+            })
+            .catch(error => {
+            console.error('Error al obtener las presentaciones', error);
+            });
+        }, []);
+
 
     return(
         <div>
@@ -112,7 +164,7 @@ function CreateProducto() {
                     <Col sm="6" md="6" lg="6">
                     <FloatingLabel controlId="PrecioProducto" label="Precio del producto">
                         <Form.Control
-                        type="text"
+                        type="number"
                         placeholder="Ingrese el precio del producto"
                         value={PrecioProducto}
                         onChange={(e) => setPrecioProducto(e.target.value)}
@@ -123,7 +175,7 @@ function CreateProducto() {
                     <Col sm="6" md="6" lg="6">
                     <FloatingLabel controlId="CantProducto" label="Cantidad">
                         <Form.Control
-                        type="text"
+                        type="number"
                         placeholder="Escriba aquí"
                         value={CantProducto}
                         onChange={(e) => setCantProducto(e.target.value)}
@@ -132,46 +184,56 @@ function CreateProducto() {
                     </Col>
                     
                     <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="IDMarca" label="Marca">
-                        <Form.Select 
+                    <FloatingLabel controlId="Marca" label="Marca">
+                        <Form.Select
                         aria-label="Marca"
-                        value={IDMarca}
-                        onChange={(e) => setIDMarca(e.target.value)}
+                        value={Marca}
+                        onChange={(e) => setMarca(e.target.value)}
                         >
                         <option>Seleccione la marca</option>
-                        <option value="RAMOS">RAMOS</option>
-                        <option value="PASHA S.A">PASHA S.A</option>
+                        {marcas.map((marca) => (
+                            <option key={marca.IDMarca} value={marca.NombreMarca}>
+                            {marca.NombreMarca}
+                            </option>
+                        ))}
                         </Form.Select>
                     </FloatingLabel>
                     </Col>
 
                     <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="IDCategoria" label="Categoria">
-                        <Form.Select 
+                    <FloatingLabel controlId="Categoria" label="Categoria">
+                        <Form.Select
                         aria-label="Categoria"
-                        value={IDCategoria}
-                        onChange={(e) => setIDCategoria(e.target.value)}
+                        value={Categoria}
+                        onChange={(e) => setCategoria(e.target.value)}
                         >
                         <option>Seleccione la categoria</option>
-                        <option value="Fitofármaco">Fitofármaco</option>
-                        <option value="Biológico">Biológico</option>
+                        {categorias.map((categoria) => (
+                            <option key={categoria.IDCategoria} value={categoria.NombreCategoria}>
+                            {categoria.NombreCategoria}
+                            </option>
+                        ))}
                         </Form.Select>
                     </FloatingLabel>
                     </Col>
 
                     <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="IDPresentacion" label="Presentacion">
-                        <Form.Select 
+                    <FloatingLabel controlId="Presentacion" label="Presentacion">
+                        <Form.Select
                         aria-label="Presentacion"
-                        value={IDPresentacion}
-                        onChange={(e) => setIDPresentacion(e.target.value)}
+                        value={Presentacion}
+                        onChange={(e) => setPresentacion(e.target.value)}
                         >
                         <option>Seleccione la presentacion</option>
-                        <option value="Tableta">Tableta</option>
-                        <option value="Jarabe">Jarabe</option>
+                        {presentaciones.map((presentacion) => (
+                            <option key={presentacion.IDPresentacion} value={presentacion.NombrePresentacion}>
+                            {presentacion.NombrePresentacion}
+                            </option>
+                        ))}
                         </Form.Select>
                     </FloatingLabel>
                     </Col>
+
 
                 </Row>
                 <div className="center-button">
