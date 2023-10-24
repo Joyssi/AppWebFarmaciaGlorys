@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'; // Importa el componente Button de 
 import NavDropdown from 'react-bootstrap/NavDropdown'; // Importa el componente NavDropDown de Bootstrap
 import Container from 'react-bootstrap/Container'; // Importa el componente Container de Bootstrap
 import { Link } from 'react-router-dom';
+import { FaHome } from 'react-icons/fa';
 
 
 function Header() {
@@ -31,7 +32,7 @@ function Header() {
             <Nav className="ml-auto">
 
               <Nav.Link>
-                <Link to="/" className="link-unstyled">Inicio</Link>
+                <Link to="/" className="link-unstyled"><FaHome/></Link>
               </Nav.Link>
 
               <NavDropdown title="Marcas" id="marcas">
