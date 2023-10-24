@@ -152,18 +152,18 @@
   /*Procedimientos almacenados de la tabla Presentación---------------------------------------------*/
   /*Procedimiento almacenado para insertar un nuevo registro*/
   DELIMITER $
-  CREATE PROCEDURE InsertarPresentacion (IN formaD VARCHAR(20))
+  CREATE PROCEDURE InsertarPresentacion (IN NomPresentacion VARCHAR(20))
   BEGIN
-  INSERT INTO presentacion (FormaDosificacion)
-  VALUES (formaD);
+  INSERT INTO presentacion (NombrePresentacion)
+  VALUES (NomPresentacion);
   END $
   
   /*Procedimiento almacenado para actualizar un registro de la tabla Presentación*/
   DELIMITER $
-  CREATE PROCEDURE ActualizarPresentacion (IN idPresentacion INT ,IN formaD VARCHAR(20))
+  CREATE PROCEDURE ActualizarPresentacion (IN idPresentacion INT ,IN NomPresentacion VARCHAR(20))
   BEGIN
   UPDATE presentacion
-  SET FormaDosificacion = formaD
+  SET NombrePresentacion = NomPresentacion
   WHERE IDPresentacion = idPresentacion;
   END $
   
@@ -179,7 +179,7 @@
  DELIMITER $
  CREATE PROCEDURE MostrarPresentacion()
  BEGIN
- SELECT IDPresentacion, FormaDosificacion
+ SELECT IDPresentacion, NombrePresentacion
  FROM presentacion;
  END $
  
@@ -219,7 +219,7 @@
  DELIMITER $
  CREATE PROCEDURE MostrarProducto()
  BEGIN
- SELECT IDProducto, NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, NombreMarca, NombreCategoria, FormaDosificacion
+ SELECT IDProducto, NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, NombreMarca, NombreCategoria, NombrePresentacion
  FROM producto AS prod
  INNER JOIN marca AS mrc
  ON prod.IDMarca = mrc.IDMarca
