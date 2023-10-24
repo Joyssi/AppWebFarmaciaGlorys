@@ -14,15 +14,15 @@ function CreateProducto() {
 
     //Variables de estado de categoria
     const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorias
-    const [Categoria, setCategoria] = useState(''); // Estado para el valor seleccionado
+    const [IDCategoria, setIDCategoria] = useState(''); // Estado para el valor seleccionado
 
     //Variables de estado de marca
     const [marcas, setMarcas] = useState([]); // Estado para almacenar las marcas
-    const [Marca, setMarca] = useState(''); // Estado para el valor seleccionado
+    const [IDMarca, setIDMarca] = useState(''); // Estado para el valor seleccionado
 
     //Variables de estado de presentacion
     const [presentaciones, setPresentaciones] = useState([]); // Estado para almacenar las presentaciones
-    const [Presentacion, setPresentacion] = useState(''); // Estado para el valor seleccionado
+    const [IDPresentacion, setIDPresentacion] = useState(''); // Estado para el valor seleccionado
 
     // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
@@ -35,9 +35,9 @@ function CreateProducto() {
         PrecioProducto,
         Estado,
         CantProducto,
-        Marca,
-        Categoria,
-        Presentacion,
+        IDMarca,
+        IDCategoria,
+        IDPresentacion,
         };
 
         try {
@@ -59,9 +59,9 @@ function CreateProducto() {
             setPrecioProducto('');
             setEstado('');
             setCantProducto('');
-            setMarca('');
-            setCategoria('');
-            setPresentacion('');
+            setIDMarca('');
+            setIDCategoria('');
+            setIDPresentacion('');
         } else {
             alert('Error al registrar el Producto');
         }
@@ -86,7 +86,7 @@ function CreateProducto() {
         }, []);
 
         //petición al servidor y almacenar los daros en la variable de estado de la tabla marca
-    useEffect(() => {
+        useEffect(() => {
         // Realiza una solicitud a tu ruta para obtener las marcas
         fetch('http://localhost:5000/crud/readMarca')
             .then(response => response.json())
@@ -100,7 +100,7 @@ function CreateProducto() {
         }, []);
 
         //petición al servidor y almacenar los daros en la variable de estado de la tabla presentacion
-    useEffect(() => {
+        useEffect(() => {
         // Realiza una solicitud a tu ruta para obtener las presentaciones
         fetch('http://localhost:5000/crud/readPresentacion')
             .then(response => response.json())
@@ -187,12 +187,12 @@ function CreateProducto() {
                     <FloatingLabel controlId="Marca" label="Marca">
                         <Form.Select
                         aria-label="Marca"
-                        value={Marca}
-                        onChange={(e) => setMarca(e.target.value)}
+                        value={IDMarca}
+                        onChange={(e) => setIDMarca(e.target.value)}
                         >
                         <option>Seleccione la marca</option>
                         {marcas.map((marca) => (
-                            <option key={marca.IDMarca} value={marca.NombreMarca}>
+                            <option key={marca.IDMarca} value={marca.IDMarca}>
                             {marca.NombreMarca}
                             </option>
                         ))}
@@ -204,12 +204,12 @@ function CreateProducto() {
                     <FloatingLabel controlId="Categoria" label="Categoria">
                         <Form.Select
                         aria-label="Categoria"
-                        value={Categoria}
-                        onChange={(e) => setCategoria(e.target.value)}
+                        value={IDCategoria}
+                        onChange={(e) => setIDCategoria(e.target.value)}
                         >
                         <option>Seleccione la categoria</option>
                         {categorias.map((categoria) => (
-                            <option key={categoria.IDCategoria} value={categoria.NombreCategoria}>
+                            <option key={categoria.IDCategoria} value={categoria.IDCategoria}>
                             {categoria.NombreCategoria}
                             </option>
                         ))}
@@ -221,12 +221,12 @@ function CreateProducto() {
                     <FloatingLabel controlId="Presentacion" label="Presentacion">
                         <Form.Select
                         aria-label="Presentacion"
-                        value={Presentacion}
-                        onChange={(e) => setPresentacion(e.target.value)}
+                        value={IDPresentacion}
+                        onChange={(e) => setIDPresentacion(e.target.value)}
                         >
                         <option>Seleccione la presentacion</option>
                         {presentaciones.map((presentacion) => (
-                            <option key={presentacion.IDPresentacion} value={presentacion.NombrePresentacion}>
+                            <option key={presentacion.IDPresentacion} value={presentacion.IDPresentacion}>
                             {presentacion.NombrePresentacion}
                             </option>
                         ))}
