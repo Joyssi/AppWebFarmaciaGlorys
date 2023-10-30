@@ -8,10 +8,13 @@ import ListCategoria from './pages/CategoriaList';
 import Presentacion from './pages/CreatePresentacion';
 import ListPresentacion from './pages/PresentacionList';
 import Producto from './pages/CreateProducto';
+import ListProducto from './pages/ProductoList';
 import Servicio from './pages/CreateServicio';
 import ListaServicio from './pages/ServicioList';
 import Cliente from './pages/CreateCliente';
 import ListCliente from './pages/ClienteList';
+import Empleado from './pages/CreateEmpleado';
+import ListEmpleado from './pages/EmpleadoList';
 
 function App() {
   return (
@@ -25,10 +28,13 @@ function App() {
       <Route path="/presentacion" element={<Presentacion />} />
       <Route path="/actualizar-presentacion" element={<ListPresentacion />} />
       <Route path="/producto" element={<Producto />} />
+      <Route path="/actualizar-producto" element={<ListProducto />} />
       <Route path="/servicio" element={<Servicio />} />
       <Route path="/actualizar-servicio" element={<ListaServicio />} />
       <Route path="/cliente" element={<Cliente />} />
       <Route path="/actualizar-cliente" element={<ListCliente />} />
+      <Route path="/empleado" element={<Empleado />} />
+      <Route path="/actualizar-empleado" element={<ListEmpleado />} />
     </Routes>
   </Router>
   );

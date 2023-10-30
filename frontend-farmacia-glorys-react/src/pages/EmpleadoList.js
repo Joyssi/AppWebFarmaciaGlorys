@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
 
-function ClienteList() {
-    const [clientes, setClientes] = useState([]);
+function EmpleadoList() {
+    const [empleados, setEmpleados] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [selectedCliente, setSelectedCliente] = useState({});
+    const [selectedEmpleado, setSelectedEmpleado] = useState({});
     const [formData, setFormData] = useState({
-        NombreUsuarioC: '',
-        ContraseñaC: '',
-        CorreoC: '',
-        TelefonoC: '',
+        NombreUsuario: '',
+        Contraseña: '',
+        Correo: '',
+        Telefono: '',
     });
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -19,30 +19,30 @@ function ClienteList() {
         setSearchQuery(e.target.value);
     };
 
-    const filteredClientes = clientes.filter((cliente) => {
+    const filteredEmpleados = empleados.filter((empleado) => {
         // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
-        const nombreusuarioc = cliente.NombreUsuarioC.toLowerCase();
-        const correoc = cliente.CorreoC.toLowerCase();
-        const telefonoc = cliente.TelefonoC.toLowerCase();
+        const nombreusuario = empleado.NombreUsuario.toLowerCase();
+        const correo = empleado.Correo.toLowerCase();
+        const telefono = empleado.Telefono.toLowerCase();
         const search = searchQuery.toLowerCase();
     
         // Verifica si la cadena de búsqueda se encuentra en algún campo
         return (
-        nombreusuarioc.includes(search) ||
-        correoc.includes(search) ||
-        telefonoc.includes(search) 
+        nombreusuario.includes(search) ||
+        correo.includes(search) ||
+        telefono.includes(search) 
         );
     });
 
-    // Función para abrir el modal y pasar los datos de la marca seleccionada
-    const openModal = (cliente) => {
-        setSelectedCliente(cliente);
+    // Función para abrir el modal y pasar los datos del empleado seleccionada
+    const openModal = (empleado) => {
+        setSelectedEmpleado(empleado);
 
         setFormData({
-        NombreUsuarioC: cliente.NombreUsuarioC,
-        ContraseñaC: cliente.ContraseñaC,
-        CorreoC: cliente.CorreoC,
-        TelefonoC: cliente.TelefonoC,
+        NombreUsuario: empleado.NombreUsuario,
+        Contraseña: empleado.Contraseña,
+        Correo: empleado.Correo,
+        Telefono: empleado.Telefono,
         });
         setShowModal(true);
     };
@@ -56,18 +56,18 @@ function ClienteList() {
         });
     };
 
-    const loadClientes = () => {
-        fetch('http://localhost:5000/crud/readCliente')
+    const loadEmpleados = () => {
+        fetch('http://localhost:5000/crud/readEmpleado')
         .then((response) => response.json())
-        .then((data) => setClientes(data))
-        .catch((error) => console.error('Error al obtener los clientes:', error));
+        .then((data) => setEmpleados(data))
+        .catch((error) => console.error('Error al obtener los empleados:', error));
     };
 
 
     // Función para enviar el formulario de actualización
     const handleUpdate = () => {
         // Realiza la solicitud PUT al servidor para actualizar el registro
-        fetch(`http://localhost:5000/crud/updateCliente/${selectedCliente.IDCliente}`, {
+        fetch(`http://localhost:5000/crud/updateEmpleado/${selectedEmpleado.IDEmpleado}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -76,38 +76,38 @@ function ClienteList() {
         })
         .then((response) => {
             if (response.ok) {
-            // La actualización fue exitosa, puedes cerrar el modal y refrescar la lista de clientes
+            // La actualización fue exitosa, puedes cerrar el modal y refrescar la lista de empleados
             setShowModal(false);
-            loadClientes(); // Cargar la lista de clientes actualizada
+            loadEmpleados(); // Cargar la lista de empleados actualizada
             }
         })
         .catch((error) => console.error('Error al actualizar el registro:', error));
     };
 
     // Función para eliminar un servicio
-    const handleDelete = (idCliente) => {
-        const confirmation = window.confirm('¿Seguro que deseas eliminar este cliente?');
+    const handleDelete = (idEmpleado) => {
+        const confirmation = window.confirm('¿Seguro que deseas eliminar este empleado?');
         if (confirmation) {
         // Realiza la solicitud DELETE al servidor para eliminar el cliente
-        fetch(`http://localhost:5000/crud/deleteCliente/${idCliente}`, {
+        fetch(`http://localhost:5000/crud/deleteEmpleado/${idEmpleado}`, {
             method: 'DELETE',
         })
             .then((response) => {
             if (response.ok) {
                 // La eliminación fue exitosa, refresca la lista de clientes
-                loadClientes();
+                loadEmpleados();
             }
             })
-            .catch((error) => console.error('Error al eliminar el cliente:', error));
+            .catch((error) => console.error('Error al eliminar el empleado:', error));
         }
     };
 
-    // Realiza una solicitud GET al servidor para obtener los clientes
+    // Realiza una solicitud GET al servidor para obtener los empleados
     useEffect(() => {
-        fetch('http://localhost:5000/crud/readCliente')
+        fetch('http://localhost:5000/crud/readEmpleado')
         .then((response) => response.json())
-        .then((data) => setClientes(data))
-        .catch((error) => console.error('Error al obtener los clientes:', error));
+        .then((data) => setEmpleados(data))
+        .catch((error) => console.error('Error al obtener los empleados:', error));
     }, []);
 
     return (
@@ -116,7 +116,7 @@ function ClienteList() {
 
         <Card className="m-3">
             <Card.Body>
-            <Card.Title className="mb-3">Clientes</Card.Title>
+            <Card.Title className="mb-3">Empleados</Card.Title>
 
             <Row className="mb-3">
             <Col sm="6" md="6" lg="12">
@@ -142,16 +142,16 @@ function ClienteList() {
                 </tr>
                 </thead>
                 <tbody>
-                {filteredClientes.map((cliente) => (
-                    <tr key={cliente.IDCliente}>
-                    <td>{cliente.IDCliente}</td>
-                    <td>{cliente.NombreUsuarioC}</td>
-                    <td>{cliente.ContraseñaC}</td>
-                    <td>{cliente.CorreoC}</td>
-                    <td>{cliente.TelefonoC}</td>
+                {filteredEmpleados.map((empleado) => (
+                    <tr key={empleado.IDEmpleado}>
+                    <td>{empleado.IDEmpleado}</td>
+                    <td>{empleado.NombreUsuario}</td>
+                    <td>{empleado.Contraseña}</td>
+                    <td>{empleado.Correo}</td>
+                    <td>{empleado.Telefono}</td>
                     <td>
-                        <Button variant="primary" onClick={() => openModal(cliente)}>Actualizar</Button>
-                        <Button variant="danger" onClick={() => handleDelete(cliente.IDMarca)}>Eliminar</Button>
+                        <Button variant="primary" onClick={() => openModal(empleado)}>Actualizar</Button>
+                        <Button variant="danger" onClick={() => handleDelete(empleado.IDEmpleado)}>Eliminar</Button>
                     </td>
                     </tr>
                 ))}
@@ -162,58 +162,58 @@ function ClienteList() {
 
         <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
             <Modal.Header closeButton>
-            <Modal.Title>Actualizar Cliente</Modal.Title>
+            <Modal.Title>Actualizar Empleado</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Card className="mt-3">
                 <Card.Body>
-                <Card.Title>Registro de Cliente</Card.Title>
+                <Card.Title>Registro de Empleado</Card.Title>
                 <Form className="mt-3">
                     <Row className="g-3">
 
                     <Col sm="6" md="6" lg="12">
-                        <FloatingLabel controlId="NombreUsuarioC" label="Nombre de Usuario">
+                        <FloatingLabel controlId="NombreUsuario" label="Nombre de Usuario">
                         <Form.Control
                             type="text"
                             placeholder="Ingrese el nombre de usuario"
-                            name="NombreUsuarioC"
-                            value={formData.NombreUsuarioC}
+                            name="NombreUsuario"
+                            value={formData.NombreUsuario}
                             onChange={handleFormChange}
                         />
                         </FloatingLabel>
                     </Col>
 
                     <Col sm="6" md="6" lg="12">
-                        <FloatingLabel controlId="ContraseñaC" label="Contraseña de Usuario">
+                        <FloatingLabel controlId="Contraseña" label="Contraseña de Usuario">
                         <Form.Control
                             type="text"
                             placeholder="Ingrese su contraseña"
-                            name="ContraseñaC"
-                            value={formData.ContraseñaC}
+                            name="Contraseña"
+                            value={formData.Contraseña}
                             onChange={handleFormChange}
                         />
                         </FloatingLabel>
                     </Col>
 
                     <Col sm="6" md="6" lg="12">
-                        <FloatingLabel controlId="CorreoC" label="Correo">
+                        <FloatingLabel controlId="Correo" label="Correo">
                         <Form.Control
                             type="text"
                             placeholder="Ingrese su correo"
-                            name="CorreoC"
-                            value={formData.CorreoC}
+                            name="Correo"
+                            value={formData.Correo}
                             onChange={handleFormChange}
                         />
                         </FloatingLabel>
                     </Col>
 
                     <Col sm="6" md="6" lg="12">
-                        <FloatingLabel controlId="TelefonoC" label="Número de teléfono">
+                        <FloatingLabel controlId="Telefono" label="Número de teléfono">
                         <Form.Control
                             type="number"
                             placeholder="Ingrese su teléfono"
-                            name="TelefonoC"
-                            value={formData.TelefonoC}
+                            name="Telefono"
+                            value={formData.Telefono}
                             onChange={handleFormChange}
                         />
                         </FloatingLabel>
@@ -238,4 +238,4 @@ function ClienteList() {
     );
 }
 
-export default ClienteList;
+export default EmpleadoList;

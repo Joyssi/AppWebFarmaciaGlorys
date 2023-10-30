@@ -489,16 +489,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Empleado------------
   router.post('/createEmpleado', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {nombreUsuario, contraseña, correo, telefono } = req.body;
+    const {NombreUsuario, Contraseña, Correo, Telefono } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreUsuario || !contraseña || !correo || !telefono) {
+    if (!NombreUsuario || !Contraseña || !Correo || !Telefono) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
     const sql = `INSERT INTO empleado (NombreUsuario, Contraseña, Correo, Telefono) VALUES (?, ?, ?, ?)`;
-    const values = [nombreUsuario, contraseña, correo, telefono];
+    const values = [NombreUsuario, Contraseña, Correo, Telefono];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -507,25 +507,25 @@ module.exports = (db) => {
         res.status(500).json({ error: 'Error al insertar un registro en la tabla empleado' });
       } else {
         // Devuelve un mensaje como respuesta
-        res.status(201).json({ message: 'Registro agregado exitosamente' });
+        res.status(200).json({ message: 'Registro agregado exitosamente' });
       }
     });
   });
 
   //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"nombreUsuario\":\"Flor\",\"contraseña\":\"5423F\",\"correo\":\"flor123@gmail.com\",\"telefono\":\"57395726\"}" http://localhost:5000/crud/createEmpleado
+  //curl -X POST -H "Content-Type: application/json" -d "{\"NombreUsuario\":\"Flor\",\"Contraseña\":\"5423F\",\"Correo\":\"flor123@gmail.com\",\"Telefono\":\"57395726\"}" http://localhost:5000/crud/createEmpleado
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Empleado--------------
-  router.put('/updateEmpleado/:idEmpleado', (req, res) => {
+  router.put('/updateEmpleado/:IDEmpleado', (req, res) => {
     // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const idEmpleado = req.params.idEmpleado;
+    const IDEmpleado = req.params.IDEmpleado;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { nombreUsuario, contraseña, correo, telefono } = req.body;
+    const { NombreUsuario, Contraseña, Correo, Telefono } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!nombreUsuario || !contraseña || !correo || !telefono) {
+    if (!NombreUsuario || !Contraseña || !Correo || !Telefono) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
@@ -536,7 +536,7 @@ module.exports = (db) => {
       WHERE IDEmpleado = ?
     `;
 
-    const values = [nombreUsuario, contraseña, correo, telefono, idEmpleado];
+    const values = [NombreUsuario, Contraseña, Correo, Telefono, IDEmpleado];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -551,7 +551,7 @@ module.exports = (db) => {
   });
 
   //Sentencia
-  //curl -X PUT -H "Content-Type: application/json" -d "{\"nombreUsuario\":\"Heysel\",\"contraseña\":\"muchi345\",\"correo\":\"heyselsmith@gmail.com\",\"telefono\":\"87673073\"}" http://localhost:5000/crud/updateEmpleado/1
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"NombreUsuario\":\"Heysel\",\"Contraseña\":\"muchi345\",\"Correo\":\"heyselsmith@gmail.com\",\"Telefono\":\"87673073\"}" http://localhost:5000/crud/updateEmpleado/1
   //-------------------------------------------------------------------------------------
 
   // Ruta para eliminar un registro existente por ID en la tabla Empleado-------------------
@@ -579,20 +579,19 @@ module.exports = (db) => {
   //---------------------------------------------------------------------------------------
 
   // Ruta para leer registros
-  //Ruta para leer la tabla Producto de la Base de Datos--------------------------------
+  // Ruta para leer la tabla Producto de la Base de Datos, empleando sentencias SQL
   router.get('/readProducto', (req, res) => {
-    // Utiliza la instancia de la base de datos pasada como parámetro
-    // Realizar una consulta SQL para seleccionar todos los registros
-    const sql = 'SELECT * FROM producto';
-
-    // Ejecutar la consulta
-    db.query(sql, (err, result) => {
+    // Nombre del procedimiento almacenado
+    const storedProcedure = 'MostrarProducto';
+  
+    // Llama al procedimiento almacenado
+    db.query(`CALL ${storedProcedure}`, (err, result) => {
       if (err) {
-        console.error('Error al leer los registros de la tabla producto:', err);
-        res.status(500).json({ error: 'Error al leer los registros de la tabla producto' });
+        console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
+        res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
       } else {
         // Devolver los registros en formato JSON como respuesta
-        res.status(200).json(result);
+        res.status(200).json(result[0]); // Los resultados están en el primer elemento del array result
       }
     });
   });

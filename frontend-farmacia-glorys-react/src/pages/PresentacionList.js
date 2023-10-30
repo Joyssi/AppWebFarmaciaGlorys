@@ -10,6 +10,23 @@ function PresentacionList() {
         NombrePresentacion: '',
     });
 
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredPresentaciones = presentaciones.filter((presentacion) => {
+        // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
+        const nombrepresentacion = presentacion.NombrePresentacion.toLowerCase();
+        const search = searchQuery.toLowerCase();
+    
+        // Verifica si la cadena de búsqueda se encuentra en algún campo
+        return (
+        nombrepresentacion.includes(search)
+        );
+    });
+
     // Función para abrir el modal y pasar los datos de la marca seleccionada
     const openModal = (presentacion) => {
         setSelectedPresentacion(presentacion);
@@ -90,6 +107,20 @@ function PresentacionList() {
         <Card className="m-3">
             <Card.Body>
             <Card.Title className="mb-3">Presentaciones</Card.Title>
+
+            <Row className="mb-3">
+            <Col sm="6" md="6" lg="12">
+                <FloatingLabel controlId="search" label="Buscar">
+                    <Form.Control
+                    type="text"
+                    placeholder="Buscar"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    />
+                </FloatingLabel>
+                </Col>
+            </Row>
+
             <Table striped bordered hover>
                 <thead>
                 <tr>
@@ -98,7 +129,7 @@ function PresentacionList() {
                 </tr>
                 </thead>
                 <tbody>
-                {presentaciones.map((presentacion) => (
+                {filteredPresentaciones.map((presentacion) => (
                     <tr key={presentacion.IDPresentacion}>
                     <td>{presentacion.IDPresentacion}</td>
                     <td>{presentacion.NombrePresentacion}</td>

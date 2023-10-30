@@ -80,7 +80,7 @@ function ProductoList() {
         .catch((error) => console.error('Error al obtener los productos:', error));
     };
 
-    //petición al servidor y almacenar los daros en la variable de estado de la tabla marca
+    //petición al servidor y almacenar los datos en la variable de estado de la tabla marca
     useEffect(() => {
         // Realiza una solicitud a tu ruta para obtener las marcas
         fetch('http://localhost:5000/crud/readMarca')
@@ -161,7 +161,7 @@ function ProductoList() {
         }
     };
 
-    // Realiza una solicitud GET al servidor para obtener las marcas
+    // Realiza una solicitud GET al servidor para obtener los productos
     useEffect(() => {
         fetch('http://localhost:5000/crud/readProducto')
         .then((response) => response.json())
@@ -179,7 +179,7 @@ function ProductoList() {
             <Card.Title className="mb-3">Productos</Card.Title>
             
             <Row className="mb-3">
-            <Col sm="6" md="6" lg="4">
+            <Col sm="6" md="6" lg="12">
                 <FloatingLabel controlId="search" label="Buscar">
                     <Form.Control
                     type="text"
@@ -214,9 +214,9 @@ function ProductoList() {
                     <td>{producto.PrecioProducto}</td>
                     <td>{producto.Estado}</td>
                     <td>{producto.CantProducto}</td>
-                    <td>{producto.IDMarca}</td>
-                    <td>{producto.IDCategoria}</td>
-                    <td>{producto.IDPresentacion}</td>
+                    <td>{producto.NombreMarca}</td>
+                    <td>{producto.NombreCategoria}</td>
+                    <td>{producto.NombrePresentacion}</td>
                     <td>
                         <Button variant="primary" onClick={() => openModal(producto)}>Actualizar</Button>
                         <Button variant="danger" onClick={() => handleDelete(producto.IDProducto)}>Eliminar</Button>
@@ -239,37 +239,13 @@ function ProductoList() {
                 <Form className="mt-3">
                     <Row className="g-3">
 
-                    <Col sm="6" md="6" lg="12">
+                    <Col sm="6" md="6" lg="8">
                         <FloatingLabel controlId="NomProducto" label="Nombre de Producto">
                         <Form.Control
                             type="text"
                             placeholder="Ingrese el nombre del producto"
                             name="NomProducto"
                             value={formData.NomProducto}
-                            onChange={handleFormChange}
-                        />
-                        </FloatingLabel>
-                    </Col>
-
-                    <Col sm="6" md="6" lg="12">
-                        <FloatingLabel controlId="DescripProducto" label="Descripción de Producto">
-                        <Form.Control
-                            type="text"
-                            placeholder="Escriba aquí"
-                            name="DescripProducto"
-                            value={formData.DescripProducto}
-                            onChange={handleFormChange}
-                        />
-                        </FloatingLabel>
-                    </Col>
-
-                    <Col sm="6" md="6" lg="12">
-                        <FloatingLabel controlId="PrecioProducto" label="Precio de Producto">
-                        <Form.Control
-                            type="number"
-                            placeholder="Escriba aquí"
-                            name="PrecioProducto"
-                            value={formData.PrecioProducto}
                             onChange={handleFormChange}
                         />
                         </FloatingLabel>
@@ -291,6 +267,30 @@ function ProductoList() {
                     </Col>
 
                     <Col sm="6" md="6" lg="12">
+                        <FloatingLabel controlId="DescripProducto" label="Descripción de Producto">
+                        <Form.Control
+                            type="text"
+                            placeholder="Escriba aquí"
+                            name="DescripProducto"
+                            value={formData.DescripProducto}
+                            onChange={handleFormChange}
+                        />
+                        </FloatingLabel>
+                    </Col>
+
+                    <Col sm="6" md="6" lg="6">
+                        <FloatingLabel controlId="PrecioProducto" label="Precio de Producto">
+                        <Form.Control
+                            type="number"
+                            placeholder="Escriba aquí"
+                            name="PrecioProducto"
+                            value={formData.PrecioProducto}
+                            onChange={handleFormChange}
+                        />
+                        </FloatingLabel>
+                    </Col>
+
+                    <Col sm="6" md="6" lg="6">
                         <FloatingLabel controlId="CantProducto" label="Cantidad de Producto">
                         <Form.Control
                             type="number"
@@ -303,7 +303,7 @@ function ProductoList() {
                     </Col>
 
                     <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="Marca" label="Marca">
+                    <FloatingLabel controlId="IDMarca" label="Marca">
                         <Form.Select 
                             aria-label="Marca"
                             value={formData.IDMarca}
@@ -321,7 +321,7 @@ function ProductoList() {
                     </Col>
 
                     <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="Categoria" label="Categoria">
+                    <FloatingLabel controlId="IDCategoria" label="Categoria">
                         <Form.Select 
                             aria-label="Categoria"
                             value={formData.IDCategoria}
@@ -339,7 +339,7 @@ function ProductoList() {
                     </Col>
 
                     <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="Presentacion" label="Presentacion">
+                    <FloatingLabel controlId="IDPresentacion" label="Presentacion">
                         <Form.Select 
                             aria-label="Presentacion"
                             value={formData.IDPresentacion}

@@ -10,6 +10,23 @@ function MarcaList() {
         NombreMarca: '',
     });
 
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredMarcas = marcas.filter((marca) => {
+        // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
+        const nombremarca = marca.NombreMarca.toLowerCase();
+        const search = searchQuery.toLowerCase();
+    
+        // Verifica si la cadena de búsqueda se encuentra en algún campo
+        return (
+        nombremarca.includes(search)
+        );
+    });
+
     // Función para abrir el modal y pasar los datos de la marca seleccionada
     const openModal = (marca) => {
         setSelectedMarca(marca);
@@ -90,6 +107,20 @@ function MarcaList() {
         <Card className="m-3">
             <Card.Body>
             <Card.Title className="mb-3">Marcas</Card.Title>
+
+            <Row className="mb-3">
+            <Col sm="6" md="6" lg="12">
+                <FloatingLabel controlId="search" label="Buscar">
+                    <Form.Control
+                    type="text"
+                    placeholder="Buscar"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    />
+                </FloatingLabel>
+                </Col>
+            </Row>
+
             <Table striped bordered hover>
                 <thead>
                 <tr>
@@ -98,7 +129,7 @@ function MarcaList() {
                 </tr>
                 </thead>
                 <tbody>
-                {marcas.map((marca) => (
+                {filteredMarcas.map((marca) => (
                     <tr key={marca.IDMarca}>
                     <td>{marca.IDMarca}</td>
                     <td>{marca.NombreMarca}</td>

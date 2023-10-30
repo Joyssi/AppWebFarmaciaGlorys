@@ -10,6 +10,23 @@ function CategoriaList() {
         NombreMarca: '',
     });
 
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredCategorias = categorias.filter((categoria) => {
+        // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
+        const nombrecategoria = categoria.NombreCategoria.toLowerCase();
+        const search = searchQuery.toLowerCase();
+    
+        // Verifica si la cadena de búsqueda se encuentra en algún campo
+        return (
+        nombrecategoria.includes(search)
+        );
+    });
+
     // Función para abrir el modal y pasar los datos de la marca seleccionada
     const openModal = (categoria) => {
         setSelectedCategoria(categoria);
@@ -90,6 +107,20 @@ function CategoriaList() {
         <Card className="m-3">
             <Card.Body>
             <Card.Title className="mb-3">Categorias</Card.Title>
+            
+            <Row className="mb-3">
+            <Col sm="6" md="6" lg="12">
+                <FloatingLabel controlId="search" label="Buscar">
+                    <Form.Control
+                    type="text"
+                    placeholder="Buscar"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    />
+                </FloatingLabel>
+                </Col>
+            </Row>
+
             <Table striped bordered hover>
                 <thead>
                 <tr>
@@ -98,7 +129,7 @@ function CategoriaList() {
                 </tr>
                 </thead>
                 <tbody>
-                {categorias.map((categoria) => (
+                {filteredCategorias.map((categoria) => (
                     <tr key={categoria.IDCategoria}>
                     <td>{categoria.IDCategoria}</td>
                     <td>{categoria.NombreCategoria}</td>

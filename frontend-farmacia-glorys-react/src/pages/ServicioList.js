@@ -12,6 +12,27 @@ function ServicioList() {
         Descripcion: '',
     });
 
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredServicios = servicios.filter((servicio) => {
+        // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
+        const nombres = servicio.NombreS.toLowerCase();
+        const estados = servicio.EstadoS.toLowerCase();
+        const descripcion = servicio.Descripcion.toLowerCase();
+        const search = searchQuery.toLowerCase();
+    
+        // Verifica si la cadena de búsqueda se encuentra en algún campo
+        return (
+        nombres.includes(search) ||
+        estados.includes(search) ||
+        descripcion.includes(search)
+        );
+    });
+
     // Función para abrir el modal y pasar los datos del servicio seleccionado
     const openModal = (servicio) => {
         setSelectedServicio(servicio);
@@ -94,6 +115,20 @@ function ServicioList() {
         <Card className="m-3">
             <Card.Body>
             <Card.Title className="mb-3">Servicios</Card.Title>
+
+            <Row className="mb-3">
+            <Col sm="6" md="6" lg="12">
+                <FloatingLabel controlId="search" label="Buscar">
+                    <Form.Control
+                    type="text"
+                    placeholder="Buscar"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    />
+                </FloatingLabel>
+                </Col>
+            </Row>
+
             <Table striped bordered hover>
                 <thead>
                 <tr>
@@ -104,7 +139,7 @@ function ServicioList() {
                 </tr>
                 </thead>
                 <tbody>
-                {servicios.map((servicio) => (
+                {filteredServicios.map((servicio) => (
                     <tr key={servicio.IDServicio}>
                     <td>{servicio.IDServicio}</td>
                     <td>{servicio.NombreS}</td>
