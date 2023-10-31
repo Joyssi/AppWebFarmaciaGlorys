@@ -8,6 +8,7 @@ function CreateEmpleado() {
   // Crear un estado para cada campo del formulario
     const [NombreUsuario, setNombreUsuario] = useState('');
     const [Contraseña, setContraseña] = useState('');
+    const [Rol, setRol] = useState('');
     const [Correo, setCorreo] = useState('');   
     const [Telefono, setTelefono] = useState('');
 
@@ -19,6 +20,7 @@ function CreateEmpleado() {
         const formData = {
         NombreUsuario,
         Contraseña,
+        Rol,
         Correo,
         Telefono,
         };
@@ -39,6 +41,7 @@ function CreateEmpleado() {
             // Reiniciar los campos del formulario
             setNombreUsuario('');
             setContraseña('');
+            setRol('');
             setCorreo('');
             setTelefono('');
         } else {
@@ -57,7 +60,7 @@ function CreateEmpleado() {
         <Container>
             <Card className="mt-3">
             <Card.Body>
-                <Card.Title>Nuevo Empleado</Card.Title>
+                <Card.Title>Crear Cuenta</Card.Title>
                 <Form className="mt-3" onSubmit={handleSubmit}>
                 <Row className="g-3">
 
@@ -80,6 +83,20 @@ function CreateEmpleado() {
                         value={Contraseña}
                         onChange={(e) => setContraseña(e.target.value)}
                         />
+                    </FloatingLabel>
+                    </Col>
+
+                    <Col sm="12" md="6" lg="4">
+                    <FloatingLabel controlId="Rol" label="Rol">
+                        <Form.Select 
+                        aria-label="Rol"
+                        value={Rol}
+                        onChange={(e) => setRol(e.target.value)}
+                        >
+                        <option>Seleccione el rol</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Vendedor">Vendedor</option>
+                        </Form.Select>
                     </FloatingLabel>
                     </Col>
 

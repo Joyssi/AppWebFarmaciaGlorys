@@ -5,26 +5,33 @@ USE FarmaciaGlorys;
 
 /*Entidades --Tablas*/
 
+/*Tabla Usuario*/
+CREATE TABLE Usuario (
+IDUsuario INT AUTO_INCREMENT NOT NULL, /*Autoincrementable*/
+NombreUsuario VARCHAR(20) NOT NULL,
+Contraseña VARCHAR(8) NOT NULL,
+Rol VARCHAR (20) NOT NULL,
+PRIMARY KEY (IDUsuario)
+);
+
 /*Tabla Empleado*/
 CREATE TABLE Empleado (
  IDEmpleado INT AUTO_INCREMENT NOT NULL, /*Autoincrementable*/
- NombreUsuario   VARCHAR(18) NOT NULL,
- Contraseña VARCHAR(8) NOT NULL,
  Correo NVARCHAR(30) NOT NULL,
  Telefono VARCHAR(8) NOT NULL,
+ IDUsuario INT UNIQUE,
  PRIMARY KEY (IDEmpleado), /*Clave Primaria*/
- UNIQUE KEY (NombreUsuario)
+ FOREIGN KEY (IDUsuario) REFERENCES Usuario (IDUsuario) /*Relaciones*/
  );
  
  /*Tabla Cliente*/
  CREATE TABLE Cliente (
  IDCliente INT	AUTO_INCREMENT NOT NULL,  /*Autoincrementable*/
- NombreUsuarioC   VARCHAR(18) NOT NULL,
- ContraseñaC VARCHAR(8) NOT NULL,
  CorreoC NVARCHAR(30) NOT NULL,
  TelefonoC VARCHAR(8) NOT NULL,
+ IDUsuario INT UNIQUE,
  PRIMARY KEY (IDCliente), /*Clave Primaria*/
- UNIQUE KEY (NombreUsuarioC)
+ FOREIGN KEY (IDUsuario) REFERENCES Usuario (IDUsuario) /*Relaciones*/
  );
  
  /*Tabla Marca*/

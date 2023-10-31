@@ -3,6 +3,31 @@ const router = express.Router();
 
 module.exports = (db) => {
   
+  // Ruta para verificar las credenciales y obtener el rol del usuario
+  router.post('/login', (req, res) => {
+    const { NombreUsuario, Contraseña } = req.body;
+
+    if (!NombreUsuario || !Contraseña) {
+      return res.status(400).json({ error: 'Nombre de usuario y contraseña son obligatorios' });
+    }
+
+    // Realizar la consulta para verificar las credenciales en la base de datos
+    const sql = `SELECT Rol FROM usuario WHERE NombreUsuario = ? AND Contraseña = ?`;
+    db.query(sql, [NombreUsuario, Contraseña], (err, result) => {
+      if (err) {
+        console.error('Error al verificar credenciales:', err);
+        return res.status(500).json({ error: 'Error al verificar credenciales' });
+      }
+
+      if (result.length === 1) {
+        const { rol } = result[0];
+        res.json({ rol }); // Devolver el rol si las credenciales son correctas
+      } else {
+        res.status(401).json({ error: 'Credenciales incorrectas' });
+      }
+    });
+  });
+
   // Ruta para leer registros
   //Ruta para leer la tabla Categoria de la Base de Datos--------------------------------
   router.get('/readCategoria', (req, res) => {
@@ -489,31 +514,56 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Empleado------------
   router.post('/createEmpleado', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {NombreUsuario, Contraseña, Correo, Telefono } = req.body;
+    const {
+        NombreUsuario,
+        Contraseña,
+        Rol,
+        Correo,
+        Telefono,
+    } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!NombreUsuario || !Contraseña || !Correo || !Telefono) {
-      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    if (!NombreUsuario || !Contraseña || !Rol || !Correo || !Telefono) {
+        return res.status(400).json({ error: 'Los campos "NombreUsuario", "Contraseña", "Rol", "Correo" y "Telefono" son obligatorios' });
     }
 
-    // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO empleado (NombreUsuario, Contraseña, Correo, Telefono) VALUES (?, ?, ?, ?)`;
-    const values = [NombreUsuario, Contraseña, Correo, Telefono];
+    // Realiza la consulta SQL para insertar un nuevo registro en la tabla "Usuario"
+    const usuarioSql = `
+        INSERT INTO usuario (NombreUsuario, Contraseña, Rol)
+        VALUES (?, ?, ?)
+    `;
+    const usuarioValues = [NombreUsuario, Contraseña, Rol];
 
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-      if (err) {
-        console.error('Error al insertar un registro en la tabla empleado:', err);
-        res.status(500).json({ error: 'Error al insertar un registro en la tabla empleado' });
-      } else {
-        // Devuelve un mensaje como respuesta
-        res.status(200).json({ message: 'Registro agregado exitosamente' });
-      }
+    // Ejecuta la consulta para insertar en la tabla "Persona"
+    db.query(usuarioSql, usuarioValues, (err, usuarioResult) => {
+        if (err) {
+            console.error('Error al insertar registro de Usuario:', err);
+            res.status(500).json({ error: 'Error al insertar registro de Usuario' });
+        } else {
+            const IDUsuario = usuarioResult.insertId; // Obtenemos el IDUsuario recién insertado
+
+            // Realiza la consulta SQL para insertar un nuevo registro de Empleado
+            const empleadoSql = `INSERT INTO empleado (IDUsuario, Correo, Telefono)
+                VALUES (?, ?, ?)
+            `;
+            const empleadoValues = [IDUsuario, Correo, Telefono];
+
+            // Ejecuta la consulta para insertar en la tabla "Cliente"
+            db.query(empleadoSql, empleadoValues, (err, empleadoResult) => {
+                if (err) {
+                    console.error('Error al insertar registro de Empleado:', err);
+                    res.status(500).json({ error: 'Error al insertar registro de Empleado' });
+                } else {
+                    // Devuelve el ID del nuevo registro de Empleado como respuesta
+                    res.status(201).json({ IDEmpleado: empleadoResult.insertId });
+                }
+            });
+        }
     });
-  });
+});
 
   //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"NombreUsuario\":\"Flor\",\"Contraseña\":\"5423F\",\"Correo\":\"flor123@gmail.com\",\"Telefono\":\"57395726\"}" http://localhost:5000/crud/createEmpleado
+  //curl -X POST -H "Content-Type: application/json" -d "{\"NombreUsuario\":\"Flor\",\"Contraseña\":\"5423F\",\"Rol\":\"Administrador\",\"Correo\":\"flor123@gmail.com\",\"Telefono\":\"57395726\"}" http://localhost:5000/crud/createEmpleado
   //----------------------------------------------------------------------------------------
 
   // Ruta para actualizar un registro existente por ID en la tabla Empleado--------------

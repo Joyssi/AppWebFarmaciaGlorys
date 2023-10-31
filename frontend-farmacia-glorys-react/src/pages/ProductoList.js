@@ -12,9 +12,9 @@ function ProductoList() {
         PrecioProducto: '',
         Estado: '',
         CantProducto: '',
-        IDMarca: '',
-        IDCategoria: '',
-        IDPresentacion: '',
+        NombreMarca: '',
+        NombreCategoria: '',
+        NombrePresentacion: '',
     });
 
      //Variables de estado de marca
@@ -57,9 +57,9 @@ function ProductoList() {
         PrecioProducto: producto.PrecioProducto,
         Estado: producto.Estado,
         CantProducto: producto.CantProducto,
-        IDMarca: producto.IDMarca,
-        IDCategoria: producto.IDCategoria,
-        IDPresentacion: producto.IDPresentacion,
+        NombreMarca: producto.IDMarca,
+        NombreCategoria: producto.IDCategoria,
+        NombrePresentacion: producto.IDPresentacion,
         });
         setShowModal(true);
     };
