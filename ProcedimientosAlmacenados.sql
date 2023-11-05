@@ -4,12 +4,13 @@
  /*Procedimientos almacenados de la tabla Empleado--------------------------------------------------*/
  /*Procedimiento almacenado para insertar un nuevo registro*/
  DELIMITER $
- CREATE PROCEDURE InsertarEmpleado (IN nombre VARCHAR(18), IN contraseña VARCHAR(8),
- IN correo NVARCHAR(30), IN telefono VARCHAR(8))
+ CREATE PROCEDURE InsertarEmpleado (IN correo NVARCHAR(30), IN telefono VARCHAR(8))
  BEGIN
  INSERT INTO empleado (NombreUsuario, Contraseña, Correo, Telefono)
  VALUES (nombre, contraseña, correo, telefono);
  END $
+ 
+ CALL InsertarEmpleado ( 'Heysel', '123H', 'heysel@gmail.com', '86962747');
  
  /*Procedimiento almacenado para actualizar un registro de la tabla Empleado*/
  DELIMITER $
@@ -21,6 +22,8 @@
  WHERE IDEmpleado = idEmpleado;
  END $
  
+CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
+ 
  /*Procedimiento almacenado para eliminar un registro de la tabla Empleado*/
  DELIMITER $
  CREATE PROCEDURE EliminarEmpleado (IN idEmpleado INT)
@@ -28,6 +31,8 @@
  DELETE FROM empleado 
  WHERE IDEmpleado = idEmpleado;
  END $
+ 
+ CALL EliminarEmpleado (1);
  
  /*Procedimiento almacenado para mostrar los registro de la tabla Empleado*/
  DELIMITER $
@@ -49,6 +54,8 @@
   VALUES (nombreC, contraseñaC, correoC, telefonoC);
   END $
   
+  CALL InsertarCliente ('María', 'my456', 'mariaS@gmail.com', '88569875');
+  
   /*Procedimiento almacenado para actualizar un registro de la tabla Cliente*/
   DELIMITER $
   CREATE PROCEDURE ActualizarCliente (IN idCliente INT ,IN nombreC VARCHAR(18), IN contraseñaC VARCHAR(8),
@@ -59,6 +66,8 @@
   WHERE IDCliente = idCliente;
   END $
   
+  CALL ActualizarCliente (1, 'julio', '43267J', 'julito23@gmail.com', '43568790');
+  
   /*Procedimiento almacenado para eliminar un registro de la tabla Cliente*/
  DELIMITER $
  CREATE PROCEDURE EliminarCliente (IN idCliente INT)
@@ -66,6 +75,8 @@
  DELETE FROM cliente
  WHERE IDCliente = idCliente;
  END $
+ 
+ CALL EliminarCliente (1);
  
  /*Procedimiento almacenado para mostrar los registro de la tabla Cliente*/
  DELIMITER $
@@ -86,6 +97,8 @@
   VALUES (nombreM);
   END $
   
+  CALL InsertarMarca ('RAMOS');
+  
   /*Procedimiento almacenado para actualizar un registro de la tabla Marca*/
   DELIMITER $
   CREATE PROCEDURE ActualizarMarca (IN idMarca INT ,IN nombreM VARCHAR(20))
@@ -93,7 +106,9 @@
   UPDATE marca
   SET NombreMarca = nombreM
   WHERE IDMarca = idMarca;
-  END $
+  END $ 
+  
+  CALL ActualizarMarca (1, 'REMOX');
   
   /*Procedimiento almacenado para eliminar un registro de la tabla Marca*/
  DELIMITER $
@@ -102,6 +117,8 @@
  DELETE FROM marca
  WHERE IDMarca = idMarca;
  END $
+ 
+ CALL EliminarMarca (1);
  
  /*Procedimiento almacenado para mostrar los registro de la tabla Marca*/
  DELIMITER $

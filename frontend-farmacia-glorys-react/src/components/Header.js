@@ -9,7 +9,7 @@ import Container from 'react-bootstrap/Container'; // Importa el componente Cont
 import { Link } from 'react-router-dom';
 
 
-function Header({ rol }) {
+function Header({ Rol }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -19,7 +19,7 @@ function Header({ rol }) {
   return (
 
     <div>
-      {rol === 'Administrador' && (
+      {Rol === 'Administrador' && (
     <div>
       {/* Navbar principal */}
       <Navbar className="navbar-color" variant="dark" expand="md">
@@ -32,16 +32,9 @@ function Header({ rol }) {
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-
-            <Nav.Link>
+                  <Nav.Link>
                     <Link to="/" className="link-unstyled">Inicio</Link>
                   </Nav.Link>
-
-              <NavDropdown title="Crear Cuenta" id="empleados">
-                <NavDropdown.Item>
-                  <Link to="/empleado" className="link-unstyled">Crear Cuenta</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
 
               <NavDropdown title="Marcas" id="marcas">
                 <NavDropdown.Item>
@@ -119,12 +112,6 @@ function Header({ rol }) {
                     <Link to="/" className="link-unstyled">Inicio</Link>
                   </Nav.Link>
 
-              <NavDropdown title="Crear Cuenta" id="empleados">
-                <NavDropdown.Item>
-                  <Link to="/empleado" className="link-unstyled">Crear Cuenta</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-
               <NavDropdown title="Marcas" id="marcas">
                 <NavDropdown.Item>
                   <Link to="/marca" className="link-unstyled">Nueva Marca</Link>
@@ -181,7 +168,7 @@ function Header({ rol }) {
     </div>
     )}
 
-    {rol === 'Vendedor' && (
+    {Rol === 'Vendedor' && (
       <div>
       {/* Navbar principal */}
       <Navbar className="navbar-color" variant="dark" expand="md">
@@ -198,12 +185,6 @@ function Header({ rol }) {
             <Nav.Link>
                     <Link to="/" className="link-unstyled">Inicio</Link>
                   </Nav.Link>
-
-              <NavDropdown title="Crear Cuenta" id="empleados">
-                <NavDropdown.Item>
-                  <Link to="/empleado" className="link-unstyled">Crear Cuenta</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
 
               <NavDropdown title="Marcas" id="marcas">
                 <NavDropdown.Item>
@@ -277,12 +258,6 @@ function Header({ rol }) {
           <Nav.Link>
                     <Link to="/" className="link-unstyled">Inicio</Link>
                   </Nav.Link>
-
-              <NavDropdown title="Crear Cuenta" id="empleados">
-                <NavDropdown.Item>
-                  <Link to="/empleado" className="link-unstyled">Crear Cuenta</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
 
               <NavDropdown title="Marcas" id="marcas">
                 <NavDropdown.Item>

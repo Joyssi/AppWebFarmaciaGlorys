@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
+import { FaPencil, FaTrashCan} from 'react-icons/fa6';
 
 function ProductoList() {
     const [productos, setProductos] = useState([]);
@@ -12,13 +13,31 @@ function ProductoList() {
         PrecioProducto: '',
         Estado: '',
         CantProducto: '',
-        NombreMarca: '',
-        NombreCategoria: '',
-        NombrePresentacion: '',
+        imagen: '',
+        IDMarca: '',
+        IDCategoria: '',
+        IDPresentacion: ''
     });
+
+    const handleImagenChange = (event) => {
+        const file = event.target.files[0]; // Obtener el primer archivo seleccionado
+        
+            const reader = new FileReader();
+            reader.onload = () => {
+            const base64String = reader.result; // Obtener la imagen en formato base64
+            setFormData({
+                ...formData,
+                imagen: base64String
+            });
+            }; 
+            if (file) {
+            reader.readAsDataURL(file); // Lee el contenido del archivo como base64
+            }
+        };
 
      //Variables de estado de marca
      const [marcas, setMarcas] = useState([]); // Estado para almacenar las marcas
+
 
        //Variables de estado de categoria
     const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorias
@@ -37,13 +56,19 @@ function ProductoList() {
         const nomproducto = producto.NomProducto.toLowerCase();
         const descripproducto = producto.DescripProducto.toLowerCase();
         const estado = producto.Estado.toLowerCase();
+        const marca = marcas.find((marca) => marca.IDMarca === producto.IDMarca)?.NombreMarca.toLowerCase();
+        const categoria = categorias.find((categoria) => categoria.IDCategoria === producto.IDCategoria)?.NombreCategoria.toLowerCase();
+        const presentacion = presentaciones.find((presentacion) => presentacion.IDPresentacion === producto.IDPresentacion)?.NombrePresentacion.toLowerCase();
         const search = searchQuery.toLowerCase();
     
         // Verifica si la cadena de búsqueda se encuentra en algún campo
         return (
         nomproducto.includes(search) ||
         descripproducto.includes(search) ||
-        estado.includes(search) 
+        estado.includes(search) ||
+        marca.includes(search) ||
+        categoria.includes(search) ||
+        presentacion.includes(search)
         );
     });
 
@@ -57,9 +82,10 @@ function ProductoList() {
         PrecioProducto: producto.PrecioProducto,
         Estado: producto.Estado,
         CantProducto: producto.CantProducto,
-        NombreMarca: producto.IDMarca,
-        NombreCategoria: producto.IDCategoria,
-        NombrePresentacion: producto.IDPresentacion,
+        imagen: producto.imagen,
+        IDMarca: producto.IDMarca,
+        IDCategoria: producto.IDCategoria,
+        IDPresentacion: producto.IDPresentacion
         });
         setShowModal(true);
     };
@@ -196,6 +222,7 @@ function ProductoList() {
                 <tr>
                     <th>ID</th>
                     <th>Nombre de Producto</th>
+                    <th>Imagen</th>
                     <th>Descripción</th>
                     <th>Precio</th>
                     <th>Estado</th>
@@ -203,6 +230,7 @@ function ProductoList() {
                     <th>Marca</th>
                     <th>Categoria</th>
                     <th>Presentación</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -210,16 +238,17 @@ function ProductoList() {
                     <tr key={producto.IDProducto}>
                     <td>{producto.IDProducto}</td>
                     <td>{producto.NomProducto}</td>
+                    <td><img src={producto.imagen} alt={producto.NomProducto} style={{ maxWidth: '100px' }} /></td>
                     <td>{producto.DescripProducto}</td>
                     <td>{producto.PrecioProducto}</td>
                     <td>{producto.Estado}</td>
                     <td>{producto.CantProducto}</td>
-                    <td>{producto.NombreMarca}</td>
-                    <td>{producto.NombreCategoria}</td>
-                    <td>{producto.NombrePresentacion}</td>
+                    <td>{marcas.find((marca) => marca.IDMarca === producto.IDMarca)?.NombreMarca}</td>
+                    <td>{categorias.find((categoria) => categoria.IDCategoria === producto.IDCategoria)?.NombreCategoria}</td>
+                    <td>{presentaciones.find((presentacion) => presentacion.IDPresentacion === producto.IDPresentacion)?.NombrePresentacion}</td>
                     <td>
-                        <Button variant="primary" onClick={() => openModal(producto)}>Actualizar</Button>
-                        <Button variant="danger" onClick={() => handleDelete(producto.IDProducto)}>Eliminar</Button>
+                        <Button variant="primary" onClick={() => openModal(producto)}><FaPencil/></Button>
+                        <Button variant="danger" onClick={() => handleDelete(producto.IDProducto)}><FaTrashCan/></Button>
                     </td>
                     </tr>
                 ))}
@@ -300,6 +329,18 @@ function ProductoList() {
                             onChange={handleFormChange}
                         />
                         </FloatingLabel>
+                    </Col>
+
+                    <Col sm="12" md="12" lg="12">
+                    <Form.Group controlId="imagen" className="" >
+                        <Form.Control 
+                            type="file" 
+                            accept=".jpg, .png, .jpeg"
+                            size="lg"
+                            name="imagen"
+                            onChange={handleImagenChange}
+                        />
+                        </Form.Group>
                     </Col>
 
                     <Col sm="12" md="6" lg="4">

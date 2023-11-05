@@ -23,55 +23,75 @@ function CreateProducto() {
     //Variables de estado de presentacion
     const [presentaciones, setPresentaciones] = useState([]); // Estado para almacenar las presentaciones
     const [IDPresentacion, setIDPresentacion] = useState(''); // Estado para el valor seleccionado
+                
 
-    // Función para manejar el envío del formulario
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
-        // Crear un objeto con los datos del formulario
-        const formData = {
-        NomProducto,
-        DescripProducto,
-        PrecioProducto,
-        Estado,
-        CantProducto,
-        IDMarca,
-        IDCategoria,
-        IDPresentacion,
+       //Variables de estado de una imagen
+        const [imagen, setImagen] = useState('');
+
+        const handleImagenChange = (event) => {
+            const file = event.target.files[0]; // Obtener el primer archivo seleccionado
+        
+            const reader = new FileReader();
+            reader.onload = () => {
+              const base64String = reader.result; // Obtener la imagen en formato base64
+              setImagen(base64String); // Puedes visualizar la imagen en base64 en la consola para asegurarte de que la conversión se hizo correctamente
+            }; 
+            if (file) {
+              reader.readAsDataURL(file); // Lee el contenido del archivo como base64
+            }
         };
 
-        try {
-        // Realizar una solicitud HTTP al backend para enviar los datos
-        const response = await fetch('http://localhost:5000/crud/createProducto', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
+ // Función para manejar el envío del formulario
+    const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        if (response.ok) {
-            // El registro se creó exitosamente
-            alert('Registro exitoso');
-            // Reiniciar los campos del formulario
-            setNomProducto('');
-            setDescripProducto('');
-            setPrecioProducto('');
-            setEstado('');
-            setCantProducto('');
-            setIDMarca('');
-            setIDCategoria('');
-            setIDPresentacion('');
-        } else {
-            alert('Error al registrar el Producto');
-        }
-        } catch (error) {
-        console.error('Error en la solicitud:', error);
-        alert('Error en la solicitud al servidor');
-        }
+    // Crear un objeto con los datos del formulario
+    const formData = {
+    NomProducto,
+    DescripProducto,
+    PrecioProducto,
+    Estado,
+    CantProducto,
+    imagen,
+    IDMarca,
+    IDCategoria,
+    IDPresentacion
     };
 
-    //petición al servidor y almacenar los daros en la variable de estado de la tabla categoria
+    try {
+    // Realizar una solicitud HTTP al backend para enviar los datos
+    const response = await fetch('http://localhost:5000/crud/createProducto', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+        // El registro se creó exitosamente
+        alert('Producto Registrado');
+        // Reiniciar los campos del formulario
+        setNomProducto('');
+        setDescripProducto('');
+        setPrecioProducto('');
+        setEstado('');
+        setCantProducto('');
+        setIDMarca('');
+        setIDCategoria('');
+        setIDPresentacion('');
+    } else {
+        alert('Error al registrar el producto');
+    }
+    } catch (error) {
+    console.error('Error en la solicitud:', error);
+    alert('Error en la solicitud al servidor');
+    }
+};
+
+
+    //petición al servidor y almacenar los datos en la variable de estado de la tabla categoria
     useEffect(() => {
         // Realiza una solicitud a tu ruta para obtener las categorias
         fetch('http://localhost:5000/crud/readCategoria')
@@ -182,9 +202,20 @@ function CreateProducto() {
                         />
                     </FloatingLabel>
                     </Col>
+
+                    <Col sm="12" md="6" lg="6">
+                    <Form.Group controlId="imagen" className="" >
+                        <Form.Control 
+                        type="file" 
+                        accept=".jpg, .png, .jpeg"
+                        size="lg"
+                        onChange={handleImagenChange}
+                        />
+                    </Form.Group>
+                    </Col>
                     
                     <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="Marca" label="Marca">
+                    <FloatingLabel controlId="IDMarca" label="Marca">
                         <Form.Select
                         aria-label="Marca"
                         value={IDMarca}
@@ -201,7 +232,7 @@ function CreateProducto() {
                     </Col>
 
                     <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="Categoria" label="Categoria">
+                    <FloatingLabel controlId="IDCategoria" label="Categoria">
                         <Form.Select
                         aria-label="Categoria"
                         value={IDCategoria}
@@ -218,7 +249,7 @@ function CreateProducto() {
                     </Col>
 
                     <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="Presentacion" label="Presentacion">
+                    <FloatingLabel controlId="IDPresentacion" label="Presentacion">
                         <Form.Select
                         aria-label="Presentacion"
                         value={IDPresentacion}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
+import { FaPencil, FaTrashCan} from 'react-icons/fa6';
 
 function ServicioList() {
     const [servicios, setServicios] = useState([]);
@@ -10,9 +11,26 @@ function ServicioList() {
         NombreS: '',
         EstadoS: '',
         Descripcion: '',
+        imagen: ''
     });
 
     const [searchQuery, setSearchQuery] = useState('');
+
+    const handleImagenChange = (event) => {
+        const file = event.target.files[0]; // Obtener el primer archivo seleccionado
+        
+            const reader = new FileReader();
+            reader.onload = () => {
+            const base64String = reader.result; // Obtener la imagen en formato base64
+            setFormData({
+                ...formData,
+                imagen: base64String
+            });
+            }; 
+            if (file) {
+            reader.readAsDataURL(file); // Lee el contenido del archivo como base64
+            }
+        };
     
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -41,6 +59,7 @@ function ServicioList() {
         NombreS: servicio.NombreS,
         EstadoS: servicio.EstadoS,
         Descripcion: servicio.Descripcion,
+        imagen: servicio.imagen
         });
         setShowModal(true);
     };
@@ -134,8 +153,10 @@ function ServicioList() {
                 <tr>
                     <th>ID</th>
                     <th>Nombre del Servicio</th>
+                    <th>Imagen</th>
                     <th>Estado</th>
                     <th>Descripción</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -143,11 +164,12 @@ function ServicioList() {
                     <tr key={servicio.IDServicio}>
                     <td>{servicio.IDServicio}</td>
                     <td>{servicio.NombreS}</td>
+                    <td><img src={servicio.imagen} alt={servicio.NombreS} style={{ maxWidth: '100px' }} /></td>
                     <td>{servicio.EstadoS}</td>
                     <td>{servicio.Descripcion}</td>
                     <td>
-                        <Button variant="primary" onClick={() => openModal(servicio)}>Actualizar</Button>
-                        <Button variant="danger" onClick={() => handleDelete(servicio.IDServicio)}>Eliminar</Button>
+                        <Button variant="primary" onClick={() => openModal(servicio)}><FaPencil/></Button>
+                        <Button variant="danger" onClick={() => handleDelete(servicio.IDServicio)}><FaTrashCan/></Button>
                     </td>
                     </tr>
                 ))}
@@ -204,6 +226,18 @@ function ServicioList() {
                             onChange={handleFormChange}
                         />
                         </FloatingLabel>
+                    </Col>
+
+                    <Col sm="12" md="12" lg="12">
+                    <Form.Group controlId="imagen" className="" >
+                        <Form.Control 
+                            type="file" 
+                            accept=".jpg, .png, .jpeg"
+                            size="lg"
+                            name="imagen"
+                            onChange={handleImagenChange}
+                        />
+                        </Form.Group>
                     </Col>
 
                     </Row>

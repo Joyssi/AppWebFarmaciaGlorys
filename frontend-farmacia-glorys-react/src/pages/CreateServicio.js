@@ -10,7 +10,23 @@ function CreateServicio() {
     const [EstadoS, setEstadoS] = useState('');
     const [Descripcion, setDescripcion] = useState('');
 
-    // Función para manejar el envío del formulario
+       //Variables de estado de una imagen
+    const [imagen, setImagen] = useState('');
+
+    const handleImagenChange = (event) => {
+        const file = event.target.files[0]; // Obtener el primer archivo seleccionado
+    
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64String = reader.result; // Obtener la imagen en formato base64
+          setImagen(base64String); // Puedes visualizar la imagen en base64 en la consola para asegurarte de que la conversión se hizo correctamente
+        }; 
+        if (file) {
+          reader.readAsDataURL(file); // Lee el contenido del archivo como base64
+        }
+    };
+
+  // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -19,6 +35,7 @@ function CreateServicio() {
         NombreS,
         EstadoS,
         Descripcion,
+        imagen
         };
 
         try {
@@ -33,20 +50,21 @@ function CreateServicio() {
 
         if (response.ok) {
             // El registro se creó exitosamente
-            alert('Registro exitoso');
+            alert('Servicio Registrado');
             // Reiniciar los campos del formulario
             setNombreS('');
             setEstadoS('');
             setDescripcion('');
+            setDescripcion('');
         } else {
-            alert('Error al registrar el Servicio');
+            alert('Error al registrar el servicio');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);
         alert('Error en la solicitud al servidor');
         }
     };
-
+    
     return(
         <div>
         <Header />
@@ -92,6 +110,17 @@ function CreateServicio() {
                         onChange={(e) => setDescripcion(e.target.value)}
                         />
                     </FloatingLabel>
+                    </Col>
+
+                    <Col sm="12" md="6" lg="6">
+                    <Form.Group controlId="imagen" className="" >
+                        <Form.Control 
+                        type="file" 
+                        accept=".jpg, .png, .jpeg"
+                        size="lg"
+                        onChange={handleImagenChange}
+                        />
+                    </Form.Group>
                     </Col>
 
                 </Row>

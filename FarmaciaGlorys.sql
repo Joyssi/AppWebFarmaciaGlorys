@@ -63,6 +63,7 @@ CREATE TABLE Empleado (
  PrecioProducto DECIMAL(8,2) NOT NULL,
  Estado VARCHAR(10) NOT NULL,
  CantProducto INT NOT NULL,
+ imagen LONGTEXT, /*Imagen*/
  IDMarca INT NOT NULL,	
  IDCategoria INT NOT NULL,
  IDPresentacion INT NOT NULL,
@@ -78,6 +79,7 @@ CREATE TABLE Empleado (
  NombreS  VARCHAR(30) NOT NULL,
  EstadoS VARCHAR(30) NOT NULL,
  Descripcion VARCHAR(100) NOT NULL,
+ imagen LONGTEXT, /*Imagen*/
  PRIMARY KEY (IDServicio) /*Clave Primaria*/
  );
  
@@ -87,7 +89,7 @@ CREATE TABLE Empleado (
  IDCliente INT NOT NULL,
  IDServicio INT NOT NULL,
  FechaSolicitud TIMESTAMP DEFAULT CURRENT_TIMESTAMP, /*Fecha y hora predeterminada del sistema*/
- FechaCita DATETIME NOT NULL,
+ FechaCita DATETIME NULL,
  FOREIGN KEY (IDCliente) REFERENCES Cliente (IDCliente), /*Relaciones*/
  FOREIGN KEY (IDServicio) REFERENCES Servicio (IDServicio), /*Relaciones*/
  PRIMARY KEY (IDServicioCliente) /*Clave Primaria*/

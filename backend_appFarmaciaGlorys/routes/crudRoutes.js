@@ -20,8 +20,8 @@ module.exports = (db) => {
       }
 
       if (result.length === 1) {
-        const { rol } = result[0];
-        res.json({ rol }); // Devolver el rol si las credenciales son correctas
+        const { Rol } = result[0];
+        res.json({ Rol }); // Devolver el rol si las credenciales son correctas
       } else {
         res.status(401).json({ error: 'Credenciales incorrectas' });
       }
@@ -631,20 +631,22 @@ module.exports = (db) => {
   // Ruta para leer registros
   // Ruta para leer la tabla Producto de la Base de Datos, empleando sentencias SQL
   router.get('/readProducto', (req, res) => {
-    // Nombre del procedimiento almacenado
-    const storedProcedure = 'MostrarProducto';
-  
-    // Llama al procedimiento almacenado
-    db.query(`CALL ${storedProcedure}`, (err, result) => {
+    // Utiliza la instancia de la base de datos pasada como parámetro
+    // Realizar una consulta SQL para seleccionar todos los registros
+    const sql = 'SELECT * FROM producto';
+
+    // Ejecutar la consulta
+    db.query(sql, (err, result) => {
       if (err) {
-        console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
-        res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
+        console.error('Error al leer los registros de la tabla producto:', err);
+        res.status(500).json({ error: 'Error al leer los registros de la tabla producto' });
       } else {
         // Devolver los registros en formato JSON como respuesta
-        res.status(200).json(result[0]); // Los resultados están en el primer elemento del array result
+        res.status(200).json(result);
       }
     });
   });
+
 
   //Sentencia
   //curl http://localhost:5000/crud/readProducto
@@ -653,16 +655,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Producto------------
   router.post('/createProducto', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion } = req.body;
+    const {NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, imagen, IDMarca, IDCategoria, IDPresentacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!NomProducto || !DescripProducto || !PrecioProducto || !Estado || !CantProducto || !IDMarca || !IDCategoria || !IDPresentacion) {
+    if (!NomProducto || !DescripProducto || !PrecioProducto || !Estado || !CantProducto || !imagen || !IDMarca || !IDCategoria || !IDPresentacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO producto (NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-    const values = [NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion];
+    const sql = `INSERT INTO producto (NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, imagen, IDMarca, IDCategoria, IDPresentacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const values = [NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, imagen, IDMarca, IDCategoria, IDPresentacion];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -686,21 +688,21 @@ module.exports = (db) => {
     const IDProducto = req.params.IDProducto;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion } = req.body;
+    const { NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, imagen, IDMarca, IDCategoria, IDPresentacion } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!NomProducto || !DescripProducto || !PrecioProducto || !Estado || !CantProducto || !IDMarca || !IDCategoria || !IDPresentacion) {
+    if (!NomProducto || !DescripProducto || !PrecioProducto || !Estado || !CantProducto || !imagen || !IDMarca || !IDCategoria || !IDPresentacion) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para actualizar el registro por ID
     const sql = `
       UPDATE producto
-      SET NomProducto = ?, DescripProducto = ?, PrecioProducto = ?, Estado = ?, CantProducto = ?, IDMarca = ?, IDCategoria = ?, IDPresentacion = ?
+      SET NomProducto = ?, DescripProducto = ?, PrecioProducto = ?, Estado = ?, CantProducto = ?, imagen = ?, IDMarca = ?, IDCategoria = ?, IDPresentacion = ?
       WHERE IDProducto = ?
     `;
 
-    const values = [NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion, IDProducto];
+    const values = [NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, imagen, IDMarca, IDCategoria, IDPresentacion, IDProducto];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -768,16 +770,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Servicio------------
   router.post('/createServicio', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {NombreS, EstadoS, Descripcion } = req.body;
+    const {NombreS, EstadoS, Descripcion, imagen } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!NombreS || !EstadoS || !Descripcion) {
+    if (!NombreS || !EstadoS || !Descripcion || !imagen) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO  servicio (NombreS, EstadoS, Descripcion) VALUES (?, ?, ?)`;
-    const values = [NombreS, EstadoS, Descripcion];
+    const sql = `INSERT INTO  servicio (NombreS, EstadoS, Descripcion, imagen) VALUES (?, ?, ?, ?)`;
+    const values = [NombreS, EstadoS, Descripcion, imagen];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -801,21 +803,21 @@ module.exports = (db) => {
     const IDServicio = req.params.IDServicio;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { NombreS, EstadoS, Descripcion } = req.body;
+    const { NombreS, EstadoS, Descripcion, imagen } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!NombreS || !EstadoS || !Descripcion) {
+    if (!NombreS || !EstadoS || !Descripcion || !imagen) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para actualizar el registro por ID
     const sql = `
       UPDATE servicio
-      SET NombreS = ?, EstadoS = ?, Descripcion = ?
+      SET NombreS = ?, EstadoS = ?, Descripcion = ?, imagen = ?
       WHERE IDServicio = ?
     `;
 
-    const values = [NombreS, EstadoS, Descripcion, IDServicio];
+    const values = [NombreS, EstadoS, Descripcion, imagen, IDServicio];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {

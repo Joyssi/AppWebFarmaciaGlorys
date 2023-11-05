@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Card, Container, Row, Col, FloatingLabel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import '../styles/App.css';
 
 const Login = ({ setRol }) => {
     const navigate = useNavigate();
@@ -27,9 +28,9 @@ const Login = ({ setRol }) => {
         });
     
         if (response.ok) {
-            const { rol } = await response.json();
+            const { Rol } = await response.json();
     
-            setRol(rol); // Actualiza el estado del rol solo si las credenciales son correctas
+            setRol(Rol); // Actualiza el estado del rol solo si las credenciales son correctas
             navigate('/home');
         } else {
             console.log('Credenciales incorrectas');
@@ -41,12 +42,16 @@ const Login = ({ setRol }) => {
     };
 
     return (
+        <div class="section">
         <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
         <Row className="justify-content-md-center">
             <Col md={12}>
             <Card>
                 <Card.Body>
+                <div class="h2">
                 <Card.Title className="mb-3">Incio de Sesión</Card.Title>
+                </div>
+                <div class="form-box">
                 <Form onSubmit={handleSubmit}>
 
                     <Row>
@@ -72,17 +77,20 @@ const Login = ({ setRol }) => {
                     </Col>
                     </Row>
 
-                    <div className="center-button">
+                    <div className="center">
                     <Button variant="primary" type="submit" block className="mt-3">
                         Iniciar Sesión
                     </Button>
                     </div>
+
                 </Form>
+                </div>
                 </Card.Body>
             </Card>
-            </Col>
+            </Col>   
         </Row>
         </Container>
+        </div>
     );
 };
 
