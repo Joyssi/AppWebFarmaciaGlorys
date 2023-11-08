@@ -22,7 +22,7 @@ function Header({ Rol }) {
       {Rol === 'Administrador' && (
     <div>
       {/* Navbar principal */}
-      <Navbar className="navbar-color" variant="dark" expand="md">
+      <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
         <Container>
           <Navbar.Brand href="#home">Farmacia Glorys</Navbar.Brand>
           <Navbar.Toggle
@@ -86,6 +86,12 @@ function Header({ Rol }) {
                 </NavDropdown.Item>
                 </NavDropdown>
 
+                <NavDropdown title="Gestión de compras" id="compras">
+                <NavDropdown.Item>
+                  <Link to="/compras" className="link-unstyled">Gestión de Compra</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+
             </Nav>
           </Navbar.Collapse>
           <Button
@@ -162,6 +168,12 @@ function Header({ Rol }) {
                 </NavDropdown.Item>
                 </NavDropdown>
 
+                <NavDropdown title="Gestión de compras" id="compras">
+                <NavDropdown.Item>
+                  <Link to="/compras" className="link-unstyled">Gestión de Compra</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
@@ -171,7 +183,7 @@ function Header({ Rol }) {
     {Rol === 'Vendedor' && (
       <div>
       {/* Navbar principal */}
-      <Navbar className="navbar-color" variant="dark" expand="md">
+      <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
         <Container>
           <Navbar.Brand href="#home">Farmacia Glorys</Navbar.Brand>
           <Navbar.Toggle
@@ -227,9 +239,9 @@ function Header({ Rol }) {
                 </NavDropdown>
 
 
-              <NavDropdown title="Carrito" id="compras">
+              <NavDropdown title="Gestión de compras" id="compras">
                 <NavDropdown.Item>
-                  <Link to="/compra" className="link-unstyled">Nueva Compra</Link>
+                  <Link to="/compras" className="link-unstyled">Gestión de Compra</Link>
                 </NavDropdown.Item>
               </NavDropdown>
 
@@ -299,15 +311,109 @@ function Header({ Rol }) {
                 </NavDropdown.Item>
                 </NavDropdown>
 
+                <NavDropdown title="Gestión de compras" id="compras">
+                <NavDropdown.Item>
+                  <Link to="/compras" className="link-unstyled">Gestión de Compra</Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
     </div>
 
     )}
-    </div>
 
-  );
-}
+  {Rol === 'Cliente' && (
+        <div>
+        {/* Navbar principal */}
+        <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
+          <Container>
+            <Navbar.Brand href="#home">Farmacia Glorys</Navbar.Brand>
+            <Navbar.Toggle
+              aria-controls="basic-navbar-nav"
+              style={{ display: 'none' }}
+              className="d-sm-none d-xs-none"
+            />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="ml-auto">
 
-export default Header;
+              <Nav.Link>
+                      <Link to="/" className="link-unstyled">Inicio</Link>
+                    </Nav.Link>
+
+                <NavDropdown title="Productos" id="productos">
+                  <NavDropdown.Item>
+                    <Link to="/productos" className="link-unstyled">Productos</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Servicios" id="servicios">
+                  <NavDropdown.Item>
+                    <Link to="/servicios" className="link-unstyled">Servicios</Link>
+                  </NavDropdown.Item>
+                  </NavDropdown>
+
+                <NavDropdown title="Carrito" id="compras">
+                  <NavDropdown.Item>
+                    <Link to="/compra" className="link-unstyled">Carrito</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+              </Nav>
+            </Navbar.Collapse>
+            <Button
+              variant="outline-light"
+              onClick={toggleMenu}
+              className="d-md-none d-block"
+              aria-controls="basic-navbar-nav"
+              aria-expanded={showMenu ? 'true' : 'false'}
+            >
+              Menú
+            </Button>
+          </Container>
+        </Navbar>
+
+        {/* Menú lateral (Offcanvas) */}
+        <Offcanvas show={showMenu} onHide={toggleMenu} placement="start">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Menú</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Nav className="flex-column">
+
+            <Nav.Link>
+                      <Link to="/" className="link-unstyled">Inicio</Link>
+                    </Nav.Link>
+
+                <NavDropdown title="Productos" id="productos">
+                  <NavDropdown.Item>
+                    <Link to="/productos" className="link-unstyled">Productos</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Servicios" id="servicios">
+                  <NavDropdown.Item>
+                    <Link to="/servicios" className="link-unstyled">Servicios</Link>
+                  </NavDropdown.Item>
+                  </NavDropdown>
+
+                <NavDropdown title="Carrito" id="compras">
+                  <NavDropdown.Item>
+                    <Link to="/compra" className="link-unstyled">Carrito</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+            </Nav>
+          </Offcanvas.Body>
+        </Offcanvas>
+      </div>
+
+      )}
+      </div>
+      
+
+    );
+  }
+
+  export default Header;

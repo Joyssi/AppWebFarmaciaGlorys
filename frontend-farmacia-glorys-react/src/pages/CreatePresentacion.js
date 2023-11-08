@@ -3,7 +3,7 @@ import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bo
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function CreatePresentacion() {
+function CreatePresentacion({Rol}) {
 
   // Crear un estado para cada campo del formulario
     const [NombrePresentacion, setNombrePresentacion] = useState('');
@@ -42,10 +42,10 @@ function CreatePresentacion() {
     };
 
     return(
-        <div>
-        <Header />
+        <div className='formulario-1'>
+        <Header Rol={Rol} />
         
-        <Container>
+        <Container responsive>
             <Card className="mt-3">
             <Card.Body>
                 <Card.Title>Registro de Presentación</Card.Title>

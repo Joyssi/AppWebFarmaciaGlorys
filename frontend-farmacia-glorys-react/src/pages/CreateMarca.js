@@ -3,7 +3,7 @@ import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bo
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function CreateMarca() {
+function CreateMarca({Rol}) {
 
   // Crear un estado para cada campo del formulario
     const [NombreMarca, setNombreMarca] = useState('');
@@ -42,10 +42,10 @@ function CreateMarca() {
     };
 
     return(
-        <div>
-        <Header />
+        <div className='formulario-1'>
+        <Header Rol={Rol}/>
         
-        <Container>
+        <Container responsive>
             <Card className="mt-3">
             <Card.Body>
                 <Card.Title>Registro de Marca</Card.Title>

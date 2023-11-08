@@ -7,8 +7,16 @@
   color: inherit; /* Usa el color heredado (generalmente, el color predeterminado) */
 }
 
-.center {
+.center-button {
   text-align: center;
+}
+
+.botones {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  
 }
 
 .h2{
@@ -37,3 +45,27 @@
   backdrop-filter: blur(5px);
   display: flex;
 }
+
+.form{
+  width: 300px;
+  height: 420px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  display: flex;
+}
+
+.options{
+  text-align: left;
+}
+
+.formulario{
+position: center;
+margin-top: 100px;
+}
+
+.formulario-1{
+  position: center;
+  margin-top: 200px;
+  }

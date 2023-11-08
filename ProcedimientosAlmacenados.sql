@@ -139,6 +139,8 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
   VALUES (nombreCat);
   END $
   
+  CALL InsertarCategoria ('Analgésicos');
+  
   /*Procedimiento almacenado para actualizar un registro de la tabla Categoría*/
   DELIMITER $
   CREATE PROCEDURE ActualizarCategoria (IN idCategoria INT ,IN nombreCat VARCHAR(20))
@@ -146,7 +148,9 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
   UPDATE categoria
   SET NombreCategoria = nombreCat
   WHERE IDCategoria = idCategoria;
-  END $
+  END $ 
+  
+  CALL ActualizarCategoria (1, 'Biológico');
   
   /*Procedimiento almacenado para eliminar un registro de la tabla Categoria*/
  DELIMITER $
@@ -155,6 +159,8 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
  DELETE FROM categoria
  WHERE IDCategoria = idCategoria;
  END $
+ 
+ CALL EliminarCategoria (1);
  
  /*Procedimiento almacenado para mostrar los registro de la tabla Categoria*/
  DELIMITER $
@@ -236,7 +242,7 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
  DELIMITER $
  CREATE PROCEDURE MostrarProducto()
  BEGIN
- SELECT IDProducto, NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, NombreMarca, NombreCategoria, NombrePresentacion
+ SELECT IDProducto, NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, imagen, NombreMarca, NombreCategoria, NombrePresentacion
  FROM producto AS prod
  INNER JOIN marca AS mrc
  ON prod.IDMarca = mrc.IDMarca

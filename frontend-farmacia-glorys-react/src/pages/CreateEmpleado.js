@@ -37,7 +37,7 @@ function CreateEmpleado() {
 
         if (response.ok) {
             // El registro se creó exitosamente
-            alert('Registro exitoso');
+            alert('Cuenta Creada');
             // Reiniciar los campos del formulario
             setNombreUsuario('');
             setContraseña('');
@@ -45,7 +45,7 @@ function CreateEmpleado() {
             setCorreo('');
             setTelefono('');
         } else {
-            alert('Error al registrar el Empleado');
+            alert('Error al crear cuenta');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);
@@ -53,40 +53,61 @@ function CreateEmpleado() {
         }
     };
 
-    return(
-        <div>
-        <Header />
-        
-        <Container>
-            <Card className="mt-3">
-            <Card.Body>
-                <Card.Title>Crear Cuenta</Card.Title>
-                <Form className="mt-3" onSubmit={handleSubmit}>
-                <Row className="g-3">
+    return (
+        <div class="section">
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <Row className="justify-content-md-center">
+            <Col md={12}>
+            <Card>
+                <Card.Body>
+                <div class="h2">
+                <Card.Title className="mb-3">Crear Cuenta</Card.Title>
+                </div>
+                <div class="form">
+                <Form onSubmit={handleSubmit}>
 
-                    <Col sm="6" md="6" lg="6">
-                    <FloatingLabel controlId="NombreUsuario" label="Nombre de Usuario">
+                    <Row>
+                    <Col sm="12" md="12" lg="12" className="mb-3">
+                        <FloatingLabel controlId="NombreUsuario" label="Ingrese su usuario">
                         <Form.Control
-                        type="text"
-                        placeholder="Ingrese el nombre de usuario"
-                        value={NombreUsuario}
-                        onChange={(e) => setNombreUsuario(e.target.value)}
+                            placeholder="Ingrese su usuario"
+                            type="text"
+                            value={NombreUsuario}
+                            onChange={(e) => setNombreUsuario(e.target.value)}
                         />
-                    </FloatingLabel>
+                        </FloatingLabel>
                     </Col>
-
-                    <Col sm="6" md="6" lg="6">
-                    <FloatingLabel controlId="Contraseña" label="Contraseña de Usuario">
+                    <Col sm="12" md="12" lg="12" className="mb-3">
+                        <FloatingLabel controlId="Contraseña" label="Ingrese su contraseña">
                         <Form.Control
-                        type="text"
-                        placeholder="Ingrese su contraseña"
-                        value={Contraseña}
-                        onChange={(e) => setContraseña(e.target.value)}
+                            placeholder="Ingrese su contraseña"
+                            type="password"
+                            value={Contraseña}
+                            onChange={(e) => setContraseña(e.target.value)}
                         />
-                    </FloatingLabel>
+                        </FloatingLabel>
                     </Col>
-
-                    <Col sm="12" md="6" lg="4">
+                    <Col sm="12" md="12" lg="12" className="mb-3">
+                        <FloatingLabel controlId="Correo" label="Ingrese su correo">
+                        <Form.Control
+                            placeholder="Ingrese su correo"
+                            type="text"
+                            value={Correo}
+                            onChange={(e) => setCorreo(e.target.value)}
+                        />
+                        </FloatingLabel>
+                    </Col>
+                    <Col sm="12" md="12" lg="12" className="mb-3">
+                        <FloatingLabel controlId="Telefono" label="Ingrese su número">
+                        <Form.Control
+                            placeholder="Ingrese su número"
+                            type="text"
+                            value={Telefono}
+                            onChange={(e) => setTelefono(e.target.value)}
+                        />
+                        </FloatingLabel>
+                    </Col>
+                    <Col sm="12" md="12" lg="12">
                     <FloatingLabel controlId="Rol" label="Rol">
                         <Form.Select 
                         aria-label="Rol"
@@ -94,47 +115,28 @@ function CreateEmpleado() {
                         onChange={(e) => setRol(e.target.value)}
                         >
                         <option>Seleccione el rol</option>
-                        <option value="Administrador">Administrador</option>
                         <option value="Vendedor">Vendedor</option>
+                        <option value="Contador">Contador</option>
                         </Form.Select>
                     </FloatingLabel>
                     </Col>
+                    </Row>
 
-                    <Col sm="6" md="6" lg="8">
-                    <FloatingLabel controlId="Correo" label="Correo">
-                        <Form.Control
-                        type="text"
-                        placeholder="Ingrese su correo"
-                        value={Correo}
-                        onChange={(e) => setCorreo(e.target.value)}
-                        />
-                    </FloatingLabel>
-                    </Col>
-
-                    <Col sm="6" md="6" lg="4">
-                    <FloatingLabel controlId="Telefono" label="Telefono">
-                        <Form.Control
-                        type="number"
-                        placeholder="Ingrese su número de teléfono"
-                        value={Telefono}
-                        onChange={(e) => setTelefono(e.target.value)}
-                        />
-                    </FloatingLabel>
-                    </Col>
-
-                </Row>
-                <div className="center-button">
-                    <Button variant="primary" type="submit" className="mt-3" size="lg">
-                    Registrar
+                    <div className="center-button">
+                    <Button variant="primary" type="submit" block className="mt-3">
+                        Crear Cuenta
                     </Button>
-                </div>
-                </Form>
-            </Card.Body>
-            </Card>
-        </Container>
+                    </div>
 
+                </Form>
+                </div>
+                </Card.Body>
+            </Card>
+            </Col>   
+        </Row>
+        </Container>
         </div>
     );
-}
+};
 
 export default CreateEmpleado;

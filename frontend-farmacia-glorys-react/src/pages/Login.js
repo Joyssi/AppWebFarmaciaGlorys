@@ -77,7 +77,7 @@ const Login = ({ setRol }) => {
                     </Col>
                     </Row>
 
-                    <div className="center">
+                    <div className="center-button">
                     <Button variant="primary" type="submit" block className="mt-3">
                         Iniciar Sesión
                     </Button>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bootstrap';
+import { Button, Container, Card, Row, Col, Form, Modal, FloatingLabel } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../styles/App.css';
+import { FaPlus } from 'react-icons/fa6';
 
-function CreateProducto() {
+function CreateProducto({Rol}) {
 
   // Crear un estado para cada campo del formulario
     const [NomProducto, setNomProducto] = useState('');
@@ -23,8 +24,10 @@ function CreateProducto() {
     //Variables de estado de presentacion
     const [presentaciones, setPresentaciones] = useState([]); // Estado para almacenar las presentaciones
     const [IDPresentacion, setIDPresentacion] = useState(''); // Estado para el valor seleccionado
-                
-
+            
+    const [showCategoriaModal, setShowCategoriaModal] = useState(false);
+    const [showMarcaModal, setShowMarcaModal] = useState(false);
+    const [showPresentacionModal, setShowPresentacionModal] = useState(false);
 
        //Variables de estado de una imagen
         const [imagen, setImagen] = useState('');
@@ -41,6 +44,57 @@ function CreateProducto() {
               reader.readAsDataURL(file); // Lee el contenido del archivo como base64
             }
         };
+
+        const loadMarca = () => {
+            fetch('http://localhost:5000/crud/readMarca')
+                .then((response) => response.json())
+                .then((data) => setMarcas(data))
+                .catch((error) => console.error('Error al obtener las marcas:', error));
+            };
+    
+            const loadCategoria = () => {
+                fetch('http://localhost:5000/crud/readCategoria')
+                    .then((response) => response.json())
+                    .then((data) => setCategorias(data))
+                    .catch((error) => console.error('Error al obtener las categorias:', error));
+                };
+            
+            const loadPresentacion = () => {
+                    fetch('http://localhost:5000/crud/readPresentacion')
+                    .then((response) => response.json())
+                    .then((data) => setPresentaciones(data))
+                    .catch((error) => console.error('Error al obtener las presentaciones:', error));
+                };
+    
+                useEffect(() => {
+                    loadMarca();
+                    loadCategoria();
+                    loadPresentacion();
+                }, []);
+
+                const openMarcaModal = () => {
+                    setShowMarcaModal(true);
+                    };
+                    
+                    const closeMarcaModal = () => {
+                        setShowMarcaModal(false);
+                    };
+                    
+                    const openCategoriaModal = () => {
+                        setShowCategoriaModal(true);
+                    };
+                    
+                    const closeCategoriaModal = () => {
+                        setShowCategoriaModal(false);
+                    };
+                
+                    const openPresentacionModal = () => {
+                        setShowPresentacionModal(true);
+                    };
+                    
+                    const closePresentacionModal = () => {
+                        setShowPresentacionModal(false);
+                    };
 
  // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
@@ -90,59 +144,110 @@ function CreateProducto() {
     }
 };
 
+const [NombreMarca, setNombreMarca] = useState('');
 
-    //petición al servidor y almacenar los datos en la variable de estado de la tabla categoria
-    useEffect(() => {
-        // Realiza una solicitud a tu ruta para obtener las categorias
-        fetch('http://localhost:5000/crud/readCategoria')
-            .then(response => response.json())
-            .then(data => {
-            // Actualiza el estado con las categorias obtenidas
-            setCategorias(data);
-            })
-            .catch(error => {
-            console.error('Error al obtener las categorias', error);
-            });
-        }, []);
+const handleSubmitMarca = async (e) => {
+    e.preventDefault();
 
-        //petición al servidor y almacenar los daros en la variable de estado de la tabla marca
-        useEffect(() => {
-        // Realiza una solicitud a tu ruta para obtener las marcas
-        fetch('http://localhost:5000/crud/readMarca')
-            .then(response => response.json())
-            .then(data => {
-            // Actualiza el estado con las marcas obtenidas
-            setMarcas(data);
-            })
-            .catch(error => {
-            console.error('Error al obtener las marcas', error);
-            });
-        }, []);
+    const formData = {
+        NombreMarca,
+        };
 
-        //petición al servidor y almacenar los daros en la variable de estado de la tabla presentacion
-        useEffect(() => {
-        // Realiza una solicitud a tu ruta para obtener las presentaciones
-        fetch('http://localhost:5000/crud/readPresentacion')
-            .then(response => response.json())
-            .then(data => {
-            // Actualiza el estado con las presentaciones obtenidas
-            setPresentaciones(data);
-            })
-            .catch(error => {
-            console.error('Error al obtener las presentaciones', error);
-            });
-        }, []);
+        try {
+        const response = await fetch('http://localhost:5000/crud/createMarca', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            alert('Marca Registrada');
+            loadMarca();
+            setNombreMarca('');
+        } else {
+            alert('Error al registrar la marca');
+        }
+        } catch (error) {
+        console.error('Error en la solicitud:', error);
+        alert('Error en la solicitud al servidor');
+        }
+    };
+
+    const [NombreCategoria, setNombreCategoria] = useState('');
+
+const handleSubmitCategoria = async (e) => {
+    e.preventDefault();
+
+    const formData = {
+        NombreCategoria,
+        };
+
+        try {
+        const response = await fetch('http://localhost:5000/crud/createCategoria', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            alert('Categoria Registrada');
+            loadCategoria();
+            setNombreCategoria('');
+        } else {
+            alert('Error al registrar la categoria');
+        }
+        } catch (error) {
+        console.error('Error en la solicitud:', error);
+        alert('Error en la solicitud al servidor');
+        }
+    };
+
+    const [NombrePresentacion, setNombrePresentacion] = useState('');
+
+const handleSubmitPresentacion = async (e) => {
+    e.preventDefault();
+
+    const formData = {
+        NombrePresentacion,
+        };
+
+        try {
+        const response = await fetch('http://localhost:5000/crud/createPresentacion', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            alert('Presentacion Registrada');
+            loadPresentacion();
+            setNombrePresentacion('');
+        } else {
+            alert('Error al registrar la presentacion');
+        }
+        } catch (error) {
+        console.error('Error en la solicitud:', error);
+        alert('Error en la solicitud al servidor');
+        }
+    };
 
 
     return(
-        <div>
-        <Header />
+        <div className='formulario'>
+        <Header Rol={Rol} />
         
-        <Container>
-            <Card className="mt-3">
+        <Container responsive>
+            <Card className="mt-5">
             <Card.Body>
-                <Card.Title>Nuevo Producto</Card.Title>
-                <Form className="mt-3" onSubmit={handleSubmit}>
+                <Card.Title className="mt-3">Nuevo Producto</Card.Title>
+                <div className='form-1'>
+                <Form className="mt-4" onSubmit={handleSubmit}>
                 <Row className="g-3">
 
                     <Col sm="6" md="6" lg="8">
@@ -181,7 +286,7 @@ function CreateProducto() {
                     </FloatingLabel>
                     </Col>
 
-                    <Col sm="6" md="6" lg="6">
+                    <Col sm="6" md="6" lg="4">
                     <FloatingLabel controlId="PrecioProducto" label="Precio del producto">
                         <Form.Control
                         type="number"
@@ -192,7 +297,7 @@ function CreateProducto() {
                     </FloatingLabel>
                     </Col>
 
-                    <Col sm="6" md="6" lg="6">
+                    <Col sm="6" md="6" lg="4">
                     <FloatingLabel controlId="CantProducto" label="Cantidad">
                         <Form.Control
                         type="number"
@@ -203,7 +308,7 @@ function CreateProducto() {
                     </FloatingLabel>
                     </Col>
 
-                    <Col sm="12" md="6" lg="6">
+                    <Col sm="12" md="6" lg="4">
                     <Form.Group controlId="imagen" className="" >
                         <Form.Control 
                         type="file" 
@@ -228,6 +333,11 @@ function CreateProducto() {
                             </option>
                         ))}
                         </Form.Select>
+                        <div className="button-container">
+                        <Button className="botones" variant="primary" onClick={openMarcaModal}>
+                            <FaPlus />
+                        </Button>
+                    </div>
                     </FloatingLabel>
                     </Col>
 
@@ -245,6 +355,11 @@ function CreateProducto() {
                             </option>
                         ))}
                         </Form.Select>
+                        <div className="button-container">
+                        <Button className="botones" variant="primary" onClick={openCategoriaModal}>
+                            <FaPlus />
+                        </Button>
+                    </div>
                     </FloatingLabel>
                     </Col>
 
@@ -262,6 +377,11 @@ function CreateProducto() {
                             </option>
                         ))}
                         </Form.Select>
+                        <div className="button-container">
+                        <Button className="botones" variant="primary" onClick={openPresentacionModal}>
+                            <FaPlus />
+                        </Button>
+                    </div>
                     </FloatingLabel>
                     </Col>
 
@@ -273,9 +393,79 @@ function CreateProducto() {
                     </Button>
                 </div>
                 </Form>
+                </div>
             </Card.Body>
             </Card>
         </Container>
+
+        <Modal show={showMarcaModal} onHide={closeMarcaModal} responsive>
+        <Modal.Header closeButton>
+            <Modal.Title>Nueva Marca</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <Form onSubmit={handleSubmitMarca}>
+                <FloatingLabel controlId="NombreMarca" label="Marca">
+                <Form.Control
+                    type="text"
+                    placeholder="Ingrese la marca"
+                    value={NombreMarca}
+                    onChange={(e) => setNombreMarca(e.target.value)}
+                />
+                </FloatingLabel>
+                <div className="center-button">
+                <Button variant="primary" type="submit" className="mt-3">
+                    Registrar
+                </Button>
+                </div>
+            </Form>
+            </Modal.Body>
+        </Modal>
+
+        <Modal show={showCategoriaModal} onHide={closeCategoriaModal} responsive>
+        <Modal.Header closeButton>
+            <Modal.Title>Nueva Categoria</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <Form onSubmit={handleSubmitCategoria}>
+                <FloatingLabel controlId="NombreCategoria" label="Categoria">
+                <Form.Control
+                    type="text"
+                    placeholder="Ingrese la categoria"
+                    value={NombreCategoria}
+                    onChange={(e) => setNombreCategoria(e.target.value)}
+                />
+                </FloatingLabel>
+                <div className="center-button">
+                <Button variant="primary" type="submit" className="mt-3">
+                    Registrar
+                </Button>
+                </div>
+            </Form>
+            </Modal.Body>
+        </Modal>
+
+        <Modal show={showPresentacionModal} onHide={closePresentacionModal} responsive>
+        <Modal.Header closeButton>
+            <Modal.Title>Nueva Presentacion</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <Form onSubmit={handleSubmitPresentacion}>
+                <FloatingLabel controlId="NombrePresentacion" label="Presentacion">
+                <Form.Control
+                    type="text"
+                    placeholder="Ingrese la presentacion"
+                    value={NombrePresentacion}
+                    onChange={(e) => setNombrePresentacion(e.target.value)}
+                />
+                </FloatingLabel>
+                <div className="center-button">
+                <Button variant="primary" type="submit" className="mt-3">
+                    Registrar
+                </Button>
+                </div>
+            </Form>
+            </Modal.Body>
+        </Modal>
 
         </div>
     );

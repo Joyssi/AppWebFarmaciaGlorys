@@ -14,6 +14,9 @@ import ListaServicio from './pages/ServicioList';
 import Cliente from './pages/CreateCliente';
 import ListCliente from './pages/ClienteList';
 import Login from './pages/Login';
+import Empleado from './pages/CreateEmpleado';
+import Catalogo from './pages/Catálogo';
+import Inicio from './pages/Inicio';
 
 function App() {
 
@@ -22,7 +25,9 @@ function App() {
   return (
     <Router>
     <Routes>
-    <Route path="/" element={<Login Rol={userRol} setRol={setUserRol} />} />
+    <Route path="/" element={<Inicio Rol={userRol}/>} />
+    <Route path="/registrarse" element={<Empleado Rol={userRol} />} />
+    <Route path="/inicio" element={<Login Rol={userRol} setRol={setUserRol} />} />
     <Route path="/home" element={<Home Rol={userRol} />} />
       <Route path="/marca" element={<Marca Rol={userRol} />} />
       <Route path="/actualizar-marca" element={<ListMarca Rol={userRol} />} />
@@ -36,6 +41,7 @@ function App() {
       <Route path="/actualizar-servicio" element={<ListaServicio Rol={userRol} />} />
       <Route path="/cliente" element={<Cliente Rol={userRol} />} />
       <Route path="/actualizar-cliente" element={<ListCliente Rol={userRol} />} />
+      <Route path="/productos" element={<Catalogo Rol={userRol} />} />
     </Routes>
   </Router>
   );

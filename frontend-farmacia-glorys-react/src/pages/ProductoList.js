@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
-import { FaPencil, FaTrashCan} from 'react-icons/fa6';
+import { FaSistrix, FaPencil, FaTrashCan} from 'react-icons/fa6';
 
-function ProductoList() {
+function ProductoList({Rol}) {
     const [productos, setProductos] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedProducto, setSelectedProducto] = useState({});
@@ -35,17 +35,17 @@ function ProductoList() {
             }
         };
 
-     //Variables de estado de marca
-     const [marcas, setMarcas] = useState([]); // Estado para almacenar las marcas
-
-
-       //Variables de estado de categoria
-    const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorias
-
-    //Variables de estado de presentacion
-    const [presentaciones, setPresentaciones] = useState([]); // Estado para almacenar las presentaciones
-
     const [searchQuery, setSearchQuery] = useState('');
+
+    const [marcas, setMarcas] = useState([]);
+    const [categorias, setCategorias] = useState([]);
+    const [presentaciones, setPresentaciones] = useState([]);
+    const [selectedCategoria, setSelectedCategory] = useState(null);
+    const [selectedMarca, setSelectedMarca] = useState(null);
+    const [showCategoriaModal, setShowCategoryModal] = useState(false);
+    const [showMarcaModal, setShowMarcaModal] = useState(false);
+    const [selectedPresentacion, setSelectedPresentacion] = useState(null);
+    const [showPresentacionModal, setShowPresentacionModal] = useState(false);
     
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -55,7 +55,9 @@ function ProductoList() {
         // Convierte los valores de los campos a minúsculas para realizar una búsqueda insensible a mayúsculas y minúsculas
         const nomproducto = producto.NomProducto.toLowerCase();
         const descripproducto = producto.DescripProducto.toLowerCase();
+        const precioproducto = producto.PrecioProducto;
         const estado = producto.Estado.toLowerCase();
+        const cantproducto = producto.CantProducto;
         const marca = marcas.find((marca) => marca.IDMarca === producto.IDMarca)?.NombreMarca.toLowerCase();
         const categoria = categorias.find((categoria) => categoria.IDCategoria === producto.IDCategoria)?.NombreCategoria.toLowerCase();
         const presentacion = presentaciones.find((presentacion) => presentacion.IDPresentacion === producto.IDPresentacion)?.NombrePresentacion.toLowerCase();
@@ -65,7 +67,9 @@ function ProductoList() {
         return (
         nomproducto.includes(search) ||
         descripproducto.includes(search) ||
+        precioproducto === (search) ||
         estado.includes(search) ||
+        cantproducto === (search) ||
         marca.includes(search) ||
         categoria.includes(search) ||
         presentacion.includes(search)
@@ -90,14 +94,22 @@ function ProductoList() {
         setShowModal(true);
     };
 
-    // Función para manejar cambios en el formulario
+      // Función para manejar cambios en el formulario
     const handleFormChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-        ...formData,
-        [name]: value,
-        });
-    };
+    
+        if (name === 'IDCategoria' || name === 'IDMarca' || name === 'IDPresentacion') {
+            setFormData({
+                ...formData,
+                [name]: value,
+            });
+            } else {
+            setFormData({
+                ...formData,
+                [name]: value,
+            });
+            }
+        };
 
     const loadProductos = () => {
         fetch('http://localhost:5000/crud/readProducto')
@@ -106,48 +118,34 @@ function ProductoList() {
         .catch((error) => console.error('Error al obtener los productos:', error));
     };
 
-    //petición al servidor y almacenar los datos en la variable de estado de la tabla marca
-    useEffect(() => {
-        // Realiza una solicitud a tu ruta para obtener las marcas
+    const loadMarcas = () => {
         fetch('http://localhost:5000/crud/readMarca')
-            .then(response => response.json())
-            .then(data => {
-            // Actualiza el estado con las marcas obtenidas
-            setMarcas(data);
-            })
-            .catch(error => {
-            console.error('Error al obtener las marcas', error);
-            });
-        }, []);
+            .then((response) => response.json())
+            .then((data) => setMarcas(data))
+            .catch((error) => console.error('Error al obtener las marcas:', error));
+        };
 
-        //petición al servidor y almacenar los daros en la variable de estado de la tabla categoria
-    useEffect(() => {
-        // Realiza una solicitud a tu ruta para obtener las categorias
-        fetch('http://localhost:5000/crud/readCategoria')
-            .then(response => response.json())
-            .then(data => {
-            // Actualiza el estado con las categorias obtenidas
-            setCategorias(data);
-            })
-            .catch(error => {
-            console.error('Error al obtener las categorias', error);
-            });
-        }, []);
+        const loadCategorias = () => {
+            fetch('http://localhost:5000/crud/readCategoria')
+            .then((response) => response.json())
+            .then((data) => setCategorias(data))
+            .catch((error) => console.error('Error al obtener las categorias:', error));
+        };
 
-        //petición al servidor y almacenar los daros en la variable de estado de la tabla presentacion
-        useEffect(() => {
-            // Realiza una solicitud a tu ruta para obtener las presentaciones
+        const loadPresentaciones = () => {
             fetch('http://localhost:5000/crud/readPresentacion')
-                .then(response => response.json())
-                .then(data => {
-                // Actualiza el estado con las presentaciones obtenidas
-                setPresentaciones(data);
-                })
-                .catch(error => {
-                console.error('Error al obtener las presentaciones', error);
-                });
-            }, []);
+            .then((response) => response.json())
+            .then((data) => setPresentaciones(data))
+            .catch((error) => console.error('Error al obtener las presentaciones:', error));
+        };
 
+        // Realiza una solicitud GET al servidor para obtener los datos
+        useEffect(() => {
+            loadProductos();
+            loadMarcas();
+            loadCategorias();
+            loadPresentaciones();
+        }, []);
 
     // Función para enviar el formulario de actualización
     const handleUpdate = () => {
@@ -187,22 +185,64 @@ function ProductoList() {
         }
     };
 
-    // Realiza una solicitud GET al servidor para obtener los productos
-    useEffect(() => {
-        fetch('http://localhost:5000/crud/readProducto')
-        .then((response) => response.json())
-        .then((data) => setProductos(data))
-        .catch((error) => console.error('Error al obtener los productos:', error));
-    }, []);
+    const openCategoriaModal = () => {
+        setShowCategoryModal(true);
+        };
+        
+        const closeCategoriaModal = () => {
+            setShowCategoryModal(false);
+        };
+        
+        const selectCategoria = (categoria) => {
+            setSelectedCategory(categoria);
+            setFormData({
+            ...formData,
+            IDCategoria: categoria.IDCategoria,
+            });
+            closeCategoriaModal();
+        };
+        
+        const openMarcaModal = () => {
+            setShowMarcaModal(true);
+        };
+        
+        const closeMarcaModal = () => {
+            setShowMarcaModal(false);
+        };
+        
+        const selectMarca = (marca) => {
+            setSelectedMarca(marca);
+            setFormData({
+            ...formData,
+            IDMarca: marca.IDMarca,
+            });
+            closeMarcaModal();
+        };
 
+        const openPresentacionModal = () => {
+            setShowPresentacionModal(true);
+            };
+            
+            const closePresentacionModal = () => {
+                setShowPresentacionModal(false);
+            };
+            
+            const selectPresentacion = (presentacion) => {
+                setSelectedPresentacion(presentacion);
+                setFormData({
+                ...formData,
+                IDPresentacion: presentacion.IDPresentacion,
+                });
+                closePresentacionModal();
+            };
 
     return (
         <div>
-        <Header />
+        <Header Rol={Rol} />
 
-        <Card className="m-3">
+        <Card className="mt-5" responsive>
             <Card.Body>
-            <Card.Title className="mb-3">Productos</Card.Title>
+            <Card.Title className="mt-2">Productos</Card.Title>
             
             <Row className="mb-3">
             <Col sm="6" md="6" lg="12">
@@ -257,14 +297,14 @@ function ProductoList() {
             </Card.Body>
         </Card>
 
-        <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
+        <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" responsive>
             <Modal.Header closeButton>
             <Modal.Title>Actualizar Producto</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Card className="mt-3">
                 <Card.Body>
-                <Card.Title>Registro de Producto</Card.Title>
+                <Card.Title>Producto</Card.Title>
                 <Form className="mt-3">
                     <Row className="g-3">
 
@@ -331,7 +371,7 @@ function ProductoList() {
                         </FloatingLabel>
                     </Col>
 
-                    <Col sm="12" md="12" lg="12">
+                    <Col sm="12" md="12" lg="6">
                     <Form.Group controlId="imagen" className="" >
                         <Form.Control 
                             type="file" 
@@ -343,57 +383,49 @@ function ProductoList() {
                         </Form.Group>
                     </Col>
 
-                    <Col sm="12" md="6" lg="4">
+                    <Col sm="12" md="6" lg="6">
                     <FloatingLabel controlId="IDMarca" label="Marca">
-                        <Form.Select 
-                            aria-label="Marca"
-                            value={formData.IDMarca}
-                            onChange={handleFormChange}
-                            name="Marca"
-                        >
-                            <option>Seleccione la marca</option>
-                        {marcas.map((marca) => (
-                            <option key={marca.IDMarca} value={marca.IDMarca}>
-                            {marca.NombreMarca}
-                            </option>
-                        ))}
-                        </Form.Select>
+                        <Form.Control
+                            type="text"
+                            placeholder="Marca seleccionada"
+                            name="marca"
+                            value={selectedMarca ? selectedMarca.NombreMarca : ''}
+                            readOnly
+                        />
+                        <Button className='botones' variant="primary" onClick={openMarcaModal}>
+                        <FaSistrix/>
+                        </Button>
+                        </FloatingLabel>
+
+                    </Col>
+
+                    <Col sm="12" md="6" lg="6">
+                    <FloatingLabel controlId="IDCcategoria" label="Categoría">
+                        <Form.Control
+                            type="text"
+                            placeholder="Categoría seleccionada"
+                            name="categoria"
+                            value={selectedCategoria ? selectedCategoria.NombreCategoria : ''}
+                            readOnly
+                        />
+                        <Button className='botones' variant="primary" onClick={openCategoriaModal}>
+                        <FaSistrix/>
+                        </Button>
                         </FloatingLabel>
                     </Col>
 
-                    <Col sm="12" md="6" lg="4">
-                    <FloatingLabel controlId="IDCategoria" label="Categoria">
-                        <Form.Select 
-                            aria-label="Categoria"
-                            value={formData.IDCategoria}
-                            onChange={handleFormChange}
-                            name="Categoria"
-                        >
-                            <option>Seleccione la categoria</option>
-                        {categorias.map((categoria) => (
-                            <option key={categoria.IDCategoria} value={categoria.IDCategoria}>
-                            {categoria.NombreCategoria}
-                            </option>
-                        ))}
-                        </Form.Select>
-                        </FloatingLabel>
-                    </Col>
-
-                    <Col sm="12" md="6" lg="4">
+                    <Col sm="12" md="6" lg="6">
                     <FloatingLabel controlId="IDPresentacion" label="Presentacion">
-                        <Form.Select 
-                            aria-label="Presentacion"
-                            value={formData.IDPresentacion}
-                            onChange={handleFormChange}
-                            name="Presentacion"
-                        >
-                            <option>Seleccione la presentacion</option>
-                        {presentaciones.map((presentacion) => (
-                            <option key={presentacion.IDPresentacion} value={presentacion.IDPresentacion}>
-                            {presentacion.NombrePresentacion}
-                            </option>
-                        ))}
-                        </Form.Select>
+                        <Form.Control
+                            type="text"
+                            placeholder="Presentacion seleccionada"
+                            name="presentacion"
+                            value={selectedPresentacion ? selectedPresentacion.NombrePresentacion : ''}
+                            readOnly
+                        />
+                        <Button className='botones' variant="primary" onClick={openPresentacionModal}>
+                        <FaSistrix/>
+                        </Button>
                         </FloatingLabel>
                     </Col>
 
@@ -410,6 +442,43 @@ function ProductoList() {
                 Actualizar
             </Button>
             </Modal.Footer>
+        </Modal>
+
+        <Modal show={showCategoriaModal} onHide={closeCategoriaModal} responsive>
+        <Modal.Header closeButton>
+            <Modal.Title>Seleccionar Categoría</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            {categorias.map((categoria) => (
+                <div className='Seleccion' key={categoria.IDCategoria} onClick={() => selectCategoria(categoria)}>
+                {categoria.NombreCategoria}
+                </div>
+            ))}
+            </Modal.Body>
+        </Modal>
+        <Modal show={showPresentacionModal} onHide={closePresentacionModal} responsive>
+        <Modal.Header closeButton>
+            <Modal.Title>Seleccionar Presentacion</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            {presentaciones.map((presentacion) => (
+                <div className='Seleccion' key={presentacion.IDPresentacion} onClick={() => selectPresentacion(presentacion)}>
+                {presentacion.NombrePresentacion}
+                </div>
+            ))}
+            </Modal.Body>
+        </Modal>
+        <Modal show={showMarcaModal} onHide={closeMarcaModal} responsive>
+            <Modal.Header closeButton>
+            <Modal.Title>Seleccionar Marca</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            {marcas.map((marca) => (
+                <div className='Seleccion' key={marca.IDMarca} onClick={() => selectMarca(marca)}>
+                {marca.NombreMarca}
+                </div>
+            ))}
+            </Modal.Body>
         </Modal>
 
         </div>
