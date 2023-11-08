@@ -11,6 +11,7 @@ function ServicioList() {
         NombreS: '',
         EstadoS: '',
         Descripcion: '',
+        PrecioS: '',
         imagen: ''
     });
 
@@ -59,6 +60,7 @@ function ServicioList() {
         NombreS: servicio.NombreS,
         EstadoS: servicio.EstadoS,
         Descripcion: servicio.Descripcion,
+        PrecioS: servicio.PrecioS,
         imagen: servicio.imagen
         });
         setShowModal(true);
@@ -154,6 +156,7 @@ function ServicioList() {
                     <th>ID</th>
                     <th>Nombre del Servicio</th>
                     <th>Imagen</th>
+                    <th>Precio</th>
                     <th>Estado</th>
                     <th>Descripción</th>
                     <th>Acciones</th>
@@ -165,6 +168,7 @@ function ServicioList() {
                     <td>{servicio.IDServicio}</td>
                     <td>{servicio.NombreS}</td>
                     <td><img src={servicio.imagen} alt={servicio.NombreS} style={{ maxWidth: '100px' }} /></td>
+                    <td>{servicio.PrecioS}</td>
                     <td>{servicio.EstadoS}</td>
                     <td>{servicio.Descripcion}</td>
                     <td>
@@ -216,7 +220,7 @@ function ServicioList() {
                         </FloatingLabel>
                     </Col>
 
-                    <Col sm="6" md="6" lg="8">
+                    <Col sm="6" md="6" lg="12">
                         <FloatingLabel controlId="Descripcion" label="Descripción">
                         <Form.Control
                             type="text"
@@ -228,7 +232,7 @@ function ServicioList() {
                         </FloatingLabel>
                     </Col>
 
-                    <Col sm="12" md="12" lg="12">
+                    <Col sm="12" md="12" lg="6">
                     <Form.Group controlId="imagen" className="" >
                         <Form.Control 
                             type="file" 
@@ -238,6 +242,18 @@ function ServicioList() {
                             onChange={handleImagenChange}
                         />
                         </Form.Group>
+                    </Col>
+
+                    <Col sm="6" md="6" lg="6">
+                        <FloatingLabel controlId="PrecioS" label="Precio del servicio">
+                        <Form.Control
+                            type="number"
+                            placeholder="Ingrese el precio del servicio"
+                            name="PrecioS"
+                            value={formData.PrecioS}
+                            onChange={handleFormChange}
+                        />
+                        </FloatingLabel>
                     </Col>
 
                     </Row>
