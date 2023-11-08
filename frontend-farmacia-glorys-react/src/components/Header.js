@@ -180,7 +180,7 @@ function Header({ Rol }) {
     </div>
     )}
 
-    {Rol === 'Vendedor' && (
+    {Rol === 'Vendedor' && (3
       <div>
       {/* Navbar principal */}
       <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
