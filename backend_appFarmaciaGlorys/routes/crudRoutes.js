@@ -770,16 +770,16 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Servicio------------
   router.post('/createServicio', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {NombreS, EstadoS, Descripcion, imagen } = req.body;
+    const {NombreS, EstadoS, Descripcion, PrecioS, imagen } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!NombreS || !EstadoS || !Descripcion || !imagen) {
+    if (!NombreS || !EstadoS || !Descripcion || !PrecioS || !imagen) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO  servicio (NombreS, EstadoS, Descripcion, imagen) VALUES (?, ?, ?, ?)`;
-    const values = [NombreS, EstadoS, Descripcion, imagen];
+    const sql = `INSERT INTO  servicio (NombreS, EstadoS, Descripcion, PrecioS, imagen) VALUES (?, ?, ?, ?)`;
+    const values = [NombreS, EstadoS, Descripcion, PrecioS, imagen];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -803,21 +803,21 @@ module.exports = (db) => {
     const IDServicio = req.params.IDServicio;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { NombreS, EstadoS, Descripcion, imagen } = req.body;
+    const { NombreS, EstadoS, Descripcion, PrecioS, imagen } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!NombreS || !EstadoS || !Descripcion || !imagen) {
+    if (!NombreS || !EstadoS || !Descripcion || !PrecioS || !imagen) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para actualizar el registro por ID
     const sql = `
       UPDATE servicio
-      SET NombreS = ?, EstadoS = ?, Descripcion = ?, imagen = ?
+      SET NombreS = ?, EstadoS = ?, Descripcion = ?, PrecioS = ?, imagen = ?
       WHERE IDServicio = ?
     `;
 
-    const values = [NombreS, EstadoS, Descripcion, imagen, IDServicio];
+    const values = [NombreS, EstadoS, Descripcion, PrecioS, imagen, IDServicio];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {

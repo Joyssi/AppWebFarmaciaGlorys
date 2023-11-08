@@ -79,6 +79,7 @@ CREATE TABLE Empleado (
  NombreS  VARCHAR(30) NOT NULL,
  EstadoS VARCHAR(30) NOT NULL,
  Descripcion VARCHAR(100) NOT NULL,
+ PrecioS DECIMAL(8,2) NOT NULL,
  imagen LONGTEXT, /*Imagen*/
  PRIMARY KEY (IDServicio) /*Clave Primaria*/
  );
