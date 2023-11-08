@@ -9,6 +9,7 @@ function CreateServicio() {
     const [NombreS, setNombreS] = useState('');
     const [EstadoS, setEstadoS] = useState('');
     const [Descripcion, setDescripcion] = useState('');
+    const [PrecioS, setPrecioS] = useState('');
 
        //Variables de estado de una imagen
     const [imagen, setImagen] = useState('');
@@ -35,6 +36,7 @@ function CreateServicio() {
         NombreS,
         EstadoS,
         Descripcion,
+        PrecioS,
         imagen
         };
 
@@ -55,7 +57,7 @@ function CreateServicio() {
             setNombreS('');
             setEstadoS('');
             setDescripcion('');
-            setDescripcion('');
+            setPrecioS('');
         } else {
             alert('Error al registrar el servicio');
         }
@@ -121,6 +123,17 @@ function CreateServicio() {
                         onChange={handleImagenChange}
                         />
                     </Form.Group>
+                    </Col>
+
+                    <Col sm="6" md="6" lg="6">
+                    <FloatingLabel controlId="PrecioS" label="Precio del Servicio">
+                        <Form.Control
+                        type="number"
+                        placeholder="Ingrese el precio del Servicio"
+                        value={PrecioS}
+                        onChange={(e) => setPrecioS(e.target.value)}
+                        />
+                    </FloatingLabel>
                     </Col>
 
                 </Row>
