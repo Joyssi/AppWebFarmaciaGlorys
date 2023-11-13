@@ -74,6 +74,11 @@ function Header({ Rol }) {
                 <NavDropdown.Item>
                   <Link to="/actualizar-producto" className="link-unstyled">Listar Productos</Link>
                 </NavDropdown.Item>
+
+                <NavDropdown.Item>
+                  <Link to="/producto-reporte" className="link-unstyled">Estadisticas</Link>
+                </NavDropdown.Item>
+
                 </NavDropdown>
 
                 <NavDropdown title="Gestión de Servicios" id="servicios">
@@ -180,7 +185,7 @@ function Header({ Rol }) {
     </div>
     )}
 
-    {Rol === 'Vendedor' && (3
+    {Rol === 'Vendedor' && (
       <div>
       {/* Navbar principal */}
       <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>

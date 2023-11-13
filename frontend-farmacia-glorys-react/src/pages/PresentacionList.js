@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
+import {FaPencil, FaTrashCan} from 'react-icons/fa6';
 
-function PresentacionList() {
+function PresentacionList({Rol}) {
     const [presentaciones, setPresentaciones] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedPresentacion, setSelectedPresentacion] = useState({});
@@ -102,9 +103,9 @@ function PresentacionList() {
 
     return (
         <div>
-        <Header />
+        <Header Rol={Rol} />
 
-        <Card className="m-3">
+        <Card className="margen">
             <Card.Body>
             <Card.Title className="mb-3">Presentaciones</Card.Title>
 
@@ -134,8 +135,8 @@ function PresentacionList() {
                     <td>{presentacion.IDPresentacion}</td>
                     <td>{presentacion.NombrePresentacion}</td>
                     <td>
-                        <Button variant="primary" onClick={() => openModal(presentacion)}>Actualizar</Button>
-                        <Button variant="danger" onClick={() => handleDelete(presentacion.IDPresentacion)}>Eliminar</Button>
+                        <Button variant="primary" onClick={() => openModal(presentacion)}><FaPencil/></Button>
+                        <Button variant="danger" onClick={() => handleDelete(presentacion.IDPresentacion)}><FaTrashCan/></Button>
                     </td>
                     </tr>
                 ))}

@@ -3,7 +3,7 @@ import { Form, Row, Col, Container, FloatingLabel, Card, Button } from 'react-bo
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function CreateServicio() {
+function CreateServicio({Rol}) {
 
   // Crear un estado para cada campo del formulario
     const [NombreS, setNombreS] = useState('');
@@ -59,7 +59,7 @@ function CreateServicio() {
             setDescripcion('');
             setPrecioS('');
         } else {
-            alert('Error al registrar el servicio');
+            alert('Los campos están vacíos');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);
@@ -69,10 +69,10 @@ function CreateServicio() {
     
     return(
         <div>
-        <Header />
+        <Header Rol={Rol}/>
         
         <Container>
-            <Card className="mt-3">
+            <Card className="formulario">
             <Card.Body>
                 <Card.Title>Nuevo Servicio</Card.Title>
                 <Form className="mt-3" onSubmit={handleSubmit}>
@@ -114,7 +114,7 @@ function CreateServicio() {
                     </FloatingLabel>
                     </Col>
 
-                    <Col sm="12" md="6" lg="6">
+                    <Col sm="12" md="6" lg="8">
                     <Form.Group controlId="imagen" className="" >
                         <Form.Control 
                         type="file" 
@@ -125,7 +125,7 @@ function CreateServicio() {
                     </Form.Group>
                     </Col>
 
-                    <Col sm="6" md="6" lg="6">
+                    <Col sm="6" md="6" lg="4">
                     <FloatingLabel controlId="PrecioS" label="Precio del Servicio">
                         <Form.Control
                         type="number"

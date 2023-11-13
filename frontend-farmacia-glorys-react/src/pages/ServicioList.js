@@ -3,7 +3,7 @@ import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'reac
 import Header from '../components/Header';
 import { FaPencil, FaTrashCan} from 'react-icons/fa6';
 
-function ServicioList() {
+function ServicioList({Rol}) {
     const [servicios, setServicios] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedServicio, setSelectedServicio] = useState({});
@@ -131,9 +131,9 @@ function ServicioList() {
 
     return (
         <div>
-        <Header />
+        <Header Rol={Rol}/>
 
-        <Card className="m-3">
+        <Card className="margen">
             <Card.Body>
             <Card.Title className="mb-3">Servicios</Card.Title>
 

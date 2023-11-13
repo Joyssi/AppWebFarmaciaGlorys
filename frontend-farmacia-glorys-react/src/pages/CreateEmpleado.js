@@ -45,7 +45,7 @@ function CreateEmpleado() {
             setCorreo('');
             setTelefono('');
         } else {
-            alert('Error al crear cuenta');
+            alert('Los campos son obligatorios');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);

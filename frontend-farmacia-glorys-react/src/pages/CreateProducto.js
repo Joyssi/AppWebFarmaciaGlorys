@@ -136,7 +136,7 @@ function CreateProducto({Rol}) {
         setIDCategoria('');
         setIDPresentacion('');
     } else {
-        alert('Error al registrar el producto');
+        alert('Los campos están vacíos');
     }
     } catch (error) {
     console.error('Error en la solicitud:', error);
@@ -167,7 +167,7 @@ const handleSubmitMarca = async (e) => {
             loadMarca();
             setNombreMarca('');
         } else {
-            alert('Error al registrar la marca');
+            alert('Campo vacío');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);
@@ -198,7 +198,7 @@ const handleSubmitCategoria = async (e) => {
             loadCategoria();
             setNombreCategoria('');
         } else {
-            alert('Error al registrar la categoria');
+            alert('Campo vacío');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);
@@ -229,7 +229,7 @@ const handleSubmitPresentacion = async (e) => {
             loadPresentacion();
             setNombrePresentacion('');
         } else {
-            alert('Error al registrar la presentacion');
+            alert('Campo vacío');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);
@@ -398,7 +398,7 @@ const handleSubmitPresentacion = async (e) => {
             </Card>
         </Container>
 
-        <Modal show={showMarcaModal} onHide={closeMarcaModal} responsive>
+        <Modal show={showMarcaModal} onHide={closeMarcaModal} responsive centered scrollable size='md'>
         <Modal.Header closeButton>
             <Modal.Title>Nueva Marca</Modal.Title>
             </Modal.Header>
@@ -413,7 +413,7 @@ const handleSubmitPresentacion = async (e) => {
                 />
                 </FloatingLabel>
                 <div className="center-button">
-                <Button variant="primary" type="submit" className="mt-3">
+                <Button variant="primary" type="submit" className="mt-3" onClick={closeMarcaModal}>
                     Registrar
                 </Button>
                 </div>
@@ -421,7 +421,7 @@ const handleSubmitPresentacion = async (e) => {
             </Modal.Body>
         </Modal>
 
-        <Modal show={showCategoriaModal} onHide={closeCategoriaModal} responsive>
+        <Modal show={showCategoriaModal} onHide={closeCategoriaModal} responsive centered scrollable size='md'>
         <Modal.Header closeButton>
             <Modal.Title>Nueva Categoria</Modal.Title>
             </Modal.Header>
@@ -436,7 +436,7 @@ const handleSubmitPresentacion = async (e) => {
                 />
                 </FloatingLabel>
                 <div className="center-button">
-                <Button variant="primary" type="submit" className="mt-3">
+                <Button variant="primary" type="submit" className="mt-3" onClick={closeCategoriaModal}>
                     Registrar
                 </Button>
                 </div>
@@ -444,7 +444,7 @@ const handleSubmitPresentacion = async (e) => {
             </Modal.Body>
         </Modal>
 
-        <Modal show={showPresentacionModal} onHide={closePresentacionModal} responsive>
+        <Modal show={showPresentacionModal} onHide={closePresentacionModal} responsive centered scrollable size='md'>
         <Modal.Header closeButton>
             <Modal.Title>Nueva Presentacion</Modal.Title>
             </Modal.Header>
@@ -459,7 +459,7 @@ const handleSubmitPresentacion = async (e) => {
                 />
                 </FloatingLabel>
                 <div className="center-button">
-                <Button variant="primary" type="submit" className="mt-3">
+                <Button variant="primary" type="submit" className="mt-3" onClick={closePresentacionModal}>
                     Registrar
                 </Button>
                 </div>

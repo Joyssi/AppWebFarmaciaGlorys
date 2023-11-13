@@ -33,7 +33,7 @@ function CreateMarca({Rol}) {
             // Reiniciar los campos del formulario
             setNombreMarca('');
         } else {
-            alert('Error al registrar la Marca');
+            alert('Campo vacío');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);

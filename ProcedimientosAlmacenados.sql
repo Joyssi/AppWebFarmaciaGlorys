@@ -129,35 +129,34 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
  END $
  
  CALL MostrarMarca;
-  
+ 
   /*Procedimientos almacenados de la tabla Categoría------------------------------------------------*/
   /*Procedimiento almacenado para insertar un nuevo registro*/
   DELIMITER $
-  CREATE PROCEDURE InsertarCategoria (IN nombreCat VARCHAR(20))
+  CREATE PROCEDURE InsertarCategoria (IN NombreCategoria VARCHAR(20))
   BEGIN
   INSERT INTO categoria (NombreCategoria)
-  VALUES (nombreCat);
+  VALUES (NombreCategoria);
   END $
-  
   CALL InsertarCategoria ('Analgésicos');
   
   /*Procedimiento almacenado para actualizar un registro de la tabla Categoría*/
   DELIMITER $
-  CREATE PROCEDURE ActualizarCategoria (IN idCategoria INT ,IN nombreCat VARCHAR(20))
+  CREATE PROCEDURE ActualizarCategoria (IN IDCategoria INT ,IN NombreCategoria VARCHAR(20))
   BEGIN
   UPDATE categoria
-  SET NombreCategoria = nombreCat
-  WHERE IDCategoria = idCategoria;
+  SET NombreCategoria = NombreCategoria
+  WHERE IDCategoria = IDCategoria;
   END $ 
   
   CALL ActualizarCategoria (1, 'Biológico');
-  
+
   /*Procedimiento almacenado para eliminar un registro de la tabla Categoria*/
  DELIMITER $
- CREATE PROCEDURE EliminarCategoria (IN idCategoria INT)
+ CREATE PROCEDURE EliminarCategoria (IN IDCategoria INT)
  BEGIN
  DELETE FROM categoria
- WHERE IDCategoria = idCategoria;
+ WHERE IDCategoria = IDCategoria;
  END $
  
  CALL EliminarCategoria (1);

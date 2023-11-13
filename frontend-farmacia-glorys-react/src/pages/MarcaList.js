@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
+import {FaPencil, FaTrashCan} from 'react-icons/fa6';
 
-function MarcaList() {
+function MarcaList({Rol}) {
     const [marcas, setMarcas] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedMarca, setSelectedMarca] = useState({});
@@ -102,9 +103,9 @@ function MarcaList() {
 
     return (
         <div>
-        <Header />
+        <Header Rol={Rol} />
 
-        <Card className="m-3">
+        <Card className="margen">
             <Card.Body>
             <Card.Title className="mb-3">Marcas</Card.Title>
 
@@ -126,6 +127,7 @@ function MarcaList() {
                 <tr>
                     <th>ID</th>
                     <th>Nombre de Marca</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -134,8 +136,8 @@ function MarcaList() {
                     <td>{marca.IDMarca}</td>
                     <td>{marca.NombreMarca}</td>
                     <td>
-                        <Button variant="primary" onClick={() => openModal(marca)}>Actualizar</Button>
-                        <Button variant="danger" onClick={() => handleDelete(marca.IDMarca)}>Eliminar</Button>
+                        <Button variant="primary" onClick={() => openModal(marca)}><FaPencil/></Button>
+                        <Button variant="danger" onClick={() => handleDelete(marca.IDMarca)}><FaTrashCan/></Button>
                     </td>
                     </tr>
                 ))}

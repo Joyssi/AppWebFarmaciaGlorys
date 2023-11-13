@@ -17,6 +17,8 @@ import Login from './pages/Login';
 import Empleado from './pages/CreateEmpleado';
 import Catalogo from './pages/Catálogo';
 import Inicio from './pages/Inicio';
+import CatalogoServicio from './pages/CatalogoServicios';
+import Estadistica1 from './pages/EstadisticaProducto';
 
 function App() {
 
@@ -42,6 +44,8 @@ function App() {
       <Route path="/cliente" element={<Cliente Rol={userRol} />} />
       <Route path="/actualizar-cliente" element={<ListCliente Rol={userRol} />} />
       <Route path="/productos" element={<Catalogo Rol={userRol} />} />
+      <Route path="/servicios" element={<CatalogoServicio Rol={userRol} />} />
+      <Route path="/producto-reporte" element={<Estadistica1 Rol={userRol} />} />
     </Routes>
   </Router>
   );

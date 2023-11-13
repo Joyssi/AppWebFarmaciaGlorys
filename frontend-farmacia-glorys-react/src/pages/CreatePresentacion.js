@@ -33,7 +33,7 @@ function CreatePresentacion({Rol}) {
             // Reiniciar los campos del formulario
             setNombrePresentacion('');
         } else {
-            alert('Error al registrar la Presentación');
+            alert('Campo vacío');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);

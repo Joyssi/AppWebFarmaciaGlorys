@@ -240,7 +240,7 @@ function ProductoList({Rol}) {
         <div>
         <Header Rol={Rol} />
 
-        <Card className="mt-5" responsive>
+        <Card className="margen" responsive>
             <Card.Body>
             <Card.Title className="mt-2">Productos</Card.Title>
             
@@ -392,7 +392,7 @@ function ProductoList({Rol}) {
                             value={selectedMarca ? selectedMarca.NombreMarca : ''}
                             readOnly
                         />
-                        <Button className='botones' variant="primary" onClick={openMarcaModal}>
+                        <Button className='botones' variant="outline-primary" onClick={openMarcaModal}>
                         <FaSistrix/>
                         </Button>
                         </FloatingLabel>
@@ -408,7 +408,7 @@ function ProductoList({Rol}) {
                             value={selectedCategoria ? selectedCategoria.NombreCategoria : ''}
                             readOnly
                         />
-                        <Button className='botones' variant="primary" onClick={openCategoriaModal}>
+                        <Button className='botones' variant="outline-primary" onClick={openCategoriaModal}>
                         <FaSistrix/>
                         </Button>
                         </FloatingLabel>
@@ -423,7 +423,7 @@ function ProductoList({Rol}) {
                             value={selectedPresentacion ? selectedPresentacion.NombrePresentacion : ''}
                             readOnly
                         />
-                        <Button className='botones' variant="primary" onClick={openPresentacionModal}>
+                        <Button className='botones' variant="outline-primary" onClick={openPresentacionModal}>
                         <FaSistrix/>
                         </Button>
                         </FloatingLabel>
@@ -444,7 +444,7 @@ function ProductoList({Rol}) {
             </Modal.Footer>
         </Modal>
 
-        <Modal show={showCategoriaModal} onHide={closeCategoriaModal} responsive>
+        <Modal show={showCategoriaModal} onHide={closeCategoriaModal} responsive centered scrollable size='md'>
         <Modal.Header closeButton>
             <Modal.Title>Seleccionar Categoría</Modal.Title>
             </Modal.Header>
@@ -456,7 +456,7 @@ function ProductoList({Rol}) {
             ))}
             </Modal.Body>
         </Modal>
-        <Modal show={showPresentacionModal} onHide={closePresentacionModal} responsive>
+        <Modal show={showPresentacionModal} onHide={closePresentacionModal} responsive centered scrollable size='md'>
         <Modal.Header closeButton>
             <Modal.Title>Seleccionar Presentacion</Modal.Title>
             </Modal.Header>
@@ -468,7 +468,7 @@ function ProductoList({Rol}) {
             ))}
             </Modal.Body>
         </Modal>
-        <Modal show={showMarcaModal} onHide={closeMarcaModal} responsive>
+        <Modal show={showMarcaModal} onHide={closeMarcaModal} responsive centered scrollable size='md'>
             <Modal.Header closeButton>
             <Modal.Title>Seleccionar Marca</Modal.Title>
             </Modal.Header>

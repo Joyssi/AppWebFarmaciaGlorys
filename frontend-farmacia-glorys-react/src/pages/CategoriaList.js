@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Card, Row, Col, Form, Modal, FloatingLabel  } from 'react-bootstrap';
 import Header from '../components/Header';
+import {FaPencil, FaTrashCan} from 'react-icons/fa6';
 
-function CategoriaList() {
+function CategoriaList({Rol}) {
     const [categorias, setCategorias] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedCategoria, setSelectedCategoria] = useState({});
@@ -102,9 +103,9 @@ function CategoriaList() {
 
     return (
         <div>
-        <Header />
+        <Header Rol={Rol} />
 
-        <Card className="m-3">
+        <Card className="margen">
             <Card.Body>
             <Card.Title className="mb-3">Categorias</Card.Title>
             
@@ -134,8 +135,8 @@ function CategoriaList() {
                     <td>{categoria.IDCategoria}</td>
                     <td>{categoria.NombreCategoria}</td>
                     <td>
-                        <Button variant="primary" onClick={() => openModal(categoria)}>Actualizar</Button>
-                        <Button variant="danger" onClick={() => handleDelete(categoria.IDCategoria)}>Eliminar</Button>
+                        <Button variant="primary" onClick={() => openModal(categoria)}><FaPencil/></Button>
+                        <Button variant="danger" onClick={() => handleDelete(categoria.IDCategoria)}><FaTrashCan/></Button>
                     </td>
                     </tr>
                 ))}
