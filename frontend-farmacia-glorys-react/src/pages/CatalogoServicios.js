@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';  // Importa las funciones us
 import { Row, Col, Container, Card, Badge, Form, Button, Modal, FloatingLabel } from 'react-bootstrap';  // Importa componentes de react-bootstrap
 import Header from '../components/Header';  // Importa el componente Header desde su ubicación relativa
 import '../styles/App.css';  // Importa estilos CSS del archivo App.css
+import { BsCardText } from 'react-icons/bs';
 
 function CatalogoServicio({ Rol }) {  // Define un componente funcional Galeria que recibe props
 
@@ -82,24 +83,12 @@ function CatalogoServicio({ Rol }) {  // Define un componente funcional Galeria 
 
         <div className='contenedor'>
         <Container className="margen1" responsive>
-
-        <Row className="mb-3">
-            <Col sm="6" md="6" lg="12">
-            <FloatingLabel controlId="search" label="Buscar">
-                <Form.Control
-                type="text"
-                placeholder="Buscar"
-                value={searchQuery}
-                onChange={handleSearchChange}
-                />
-            </FloatingLabel>
-            </Col>
-        </Row>
-        
+        <Card.Title className="titulo">Algunos Servicios</Card.Title>
         <Row className="g-3">
             {filteredServicios.map((servicio) => (
             <Col sm="12" md="12" lg="6">
                 <Card className='producto'>
+                <Badge className='estado' bg="success">{servicio.EstadoS}</Badge>
                 <Card.Img className="image-card1" variant="top" src={servicio.imagen} alt={servicio.NombreS} />
                 <Card.Body>
                     <Card.Title className='title'>{servicio.NombreS}</Card.Title>
@@ -107,16 +96,18 @@ function CatalogoServicio({ Rol }) {  // Define un componente funcional Galeria 
                     {servicio.Descripcion}
                     </Card.Text>
                     <div>
-                    <Badge bg="success">Estado: {servicio.EstadoS}</Badge>
-                    <Badge bg="warning" text="dark" className='precio-precio'>
-                    <div className='precio'>
+                    <Badge bg="warning" text="dark" className='precio-precio1'>
+                    <div className='precio1'>
                         C$ {servicio.PrecioS.toFixed(2)}
                         </div>
                     </Badge>
                     </div>
                 </Card.Body>
                 <Card.Body>
-                <Button variant="primary">Solicitar</Button>
+                <Button className='boton1' variant="primary">Solicitar servicio</Button>
+                <Button className="detalles1" variant="primary">
+                            <BsCardText/>
+                        </Button>
                 </Card.Body>
                 </Card>
             </Col>            

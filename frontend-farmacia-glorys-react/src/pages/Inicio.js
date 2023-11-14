@@ -8,7 +8,8 @@ import Container from 'react-bootstrap/Container'; // Importa el componente Cont
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import '../styles/App.css';
-
+import { FaCartPlus} from 'react-icons/fa6';
+import { BsCardText } from 'react-icons/bs';
 
 function Inicio() {
     const [showMenu, setShowMenu] = useState(false);
@@ -158,6 +159,7 @@ const toggleMenu = () => {
             {filteredProductos.map((producto) => (
             <Col sm="12" md="4" lg="3">
                 <Card className='producto'>
+                <Badge className='estado' bg="success">{producto.Estado}</Badge>
                 <Card.Img className="image-card" variant="top" src={producto.imagen} alt={producto.NomProducto} />
                 <Card.Body>
                     <Card.Title className='title'>{producto.NomProducto}</Card.Title>
@@ -168,7 +170,6 @@ const toggleMenu = () => {
                     <Badge bg="primary">Marca: {marcas.find((marca) => marca.IDMarca === producto.IDMarca)?.NombreMarca}</Badge>
                     <Badge bg="primary">Categoría: {categorias.find((categoria) => categoria.IDCategoria === producto.IDCategoria)?.NombreCategoria}</Badge>
                     <Badge bg="primary">Presentación: {presentaciones.find((presentacion) => presentacion.IDPresentacion === producto.IDPresentacion)?.NombrePresentacion}</Badge>
-                    <Badge className='estado' bg="success">{producto.Estado}</Badge>
                     <Badge bg="warning" text="dark" className='precio-precio'> 
                         <div className='precio'>
                         C$ {producto.PrecioProducto.toFixed(2)}
@@ -179,8 +180,11 @@ const toggleMenu = () => {
                 <Card.Body>
                 <div className="button-container">
                         <div className="button-container">
+                        <Button className="detalles" variant="primary">
+                            <BsCardText/>
+                        </Button>
                         <Button className="boton-1" variant="primary">
-                            Detalles
+                            <FaCartPlus/> Agregar al carrito
                         </Button>
                     </div>
                     </div>
@@ -197,6 +201,7 @@ const toggleMenu = () => {
             {filteredServicios.map((servicio) => (
             <Col sm="12" md="12" lg="6">
                 <Card className='producto'>
+                <Badge className='estado' bg="success">{servicio.EstadoS}</Badge>
                 <Card.Img className="image-card1" variant="top" src={servicio.imagen} alt={servicio.NombreS} />
                 <Card.Body>
                     <Card.Title className='title'>{servicio.NombreS}</Card.Title>
@@ -204,16 +209,18 @@ const toggleMenu = () => {
                     {servicio.Descripcion}
                     </Card.Text>
                     <div>
-                    <Badge bg="success">Estado: {servicio.EstadoS}</Badge>
-                    <Badge bg="warning" text="dark" className='precio-precio'>
-                    <div className='precio'>
+                    <Badge bg="warning" text="dark" className='precio-precio1'>
+                    <div className='precio1'>
                         C$ {servicio.PrecioS.toFixed(2)}
                         </div>
                     </Badge>
                     </div>
                 </Card.Body>
                 <Card.Body>
-                <Button variant="primary">Solicitar</Button>
+                <Button className='boton1' variant="primary">Solicitar servicio</Button>
+                <Button className="detalles1" variant="primary">
+                            <BsCardText/>
+                        </Button>
                 </Card.Body>
                 </Card>
             </Col>            
