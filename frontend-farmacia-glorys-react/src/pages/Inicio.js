@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav'; // Importa el componente Nav de Bootstrap
 import Button from 'react-bootstrap/Button'; // Importa el componente Button de Bootstrap
 import Container from 'react-bootstrap/Container'; // Importa el componente Container de Bootstrap
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 
 function Inicio() {
@@ -218,6 +219,8 @@ const toggleMenu = () => {
             ))}
         </Row>
         </Container>
+
+        <Footer/>
 
     </div>
 

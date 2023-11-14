@@ -1,10 +1,10 @@
 .navbar-color {
-  background-color: #55038ba4; /* Color de fondo personalizado */
+  background-color: #55038ba4; 
 }
 
 .link-unstyled {
-  text-decoration: none; /* Elimina el subrayado */
-  color: inherit; /* Usa el color heredado (generalmente, el color predeterminado) */
+  text-decoration: none; 
+  color: inherit; 
 }
 
 .center-button {
@@ -117,12 +117,12 @@ background-size: cover;
 }
 
 .precio{
-  text-align: center; /* Centra el precio */ /* Tamaño de letra más grande para el precio */
-  color: black; /* Color de texto negro */
-  background-color: transparent; /* Fondo transparente */
-  display: block; /* Mostrar en bloque para centrar */
-  font-size: 1.5rem; /* Tamaño de letra más grande para el precio */
-  text-align: center; /* Centra el precio */
+  text-align: center; 
+  color: black; 
+  background-color: transparent; 
+  display: block; 
+  font-size: 1.5rem; 
+  text-align: center;
   position: center;
   margin: 5px;
 }
@@ -139,4 +139,19 @@ background-size: cover;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.267);
   margin-bottom: 20px;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 2px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.social-icon {
+  text-align: center;
+  font-size: 24px;
+  margin: 2px 0;
 }
