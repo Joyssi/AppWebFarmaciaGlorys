@@ -135,7 +135,7 @@ function ServicioList({Rol}) {
 
         <Card className="margen">
             <Card.Body>
-            <Card.Title className="mb-3">Servicios</Card.Title>
+            <Card.Title className="titulo-2">Servicios</Card.Title>
 
             <Row className="mb-3">
             <Col sm="6" md="6" lg="12">
@@ -150,13 +150,13 @@ function ServicioList({Rol}) {
                 </Col>
             </Row>
 
-            <Table striped bordered hover>
+            <Table striped bordered hover className='table'>
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nombre del Servicio</th>
                     <th>Imagen</th>
-                    <th>Precio</th>
+                    <th>C$</th>
                     <th>Estado</th>
                     <th>Descripción</th>
                     <th>Acciones</th>

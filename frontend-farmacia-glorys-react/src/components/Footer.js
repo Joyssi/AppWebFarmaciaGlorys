@@ -5,7 +5,7 @@ import '../styles/App.css';
 
 const Footer = () => {
     return (
-        <footer className="footer">
+        <footer className="footer" responsive>
         <Container>
             <Row>
             <Col md={4} className="social-icon">

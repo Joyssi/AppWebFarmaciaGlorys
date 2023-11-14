@@ -242,7 +242,7 @@ function ProductoList({Rol}) {
 
         <Card className="margen" responsive>
             <Card.Body>
-            <Card.Title className="mt-2">Productos</Card.Title>
+            <Card.Title className="titulo-2">Productos</Card.Title>
             
             <Row className="mb-3">
             <Col sm="6" md="6" lg="12">
@@ -257,16 +257,16 @@ function ProductoList({Rol}) {
                 </Col>
             </Row>
 
-            <Table striped bordered hover>
+            <Table striped bordered hover className='table'>
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nombre de Producto</th>
                     <th>Imagen</th>
                     <th>Descripción</th>
-                    <th>Precio</th>
+                    <th>C$</th>
                     <th>Estado</th>
-                    <th>Cantidad</th>
+                    <th>Almacen</th>
                     <th>Marca</th>
                     <th>Categoria</th>
                     <th>Presentación</th>

@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'; // Importa el componente Button de 
 import Container from 'react-bootstrap/Container'; // Importa el componente Container de Bootstrap
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import '../styles/App.css';
 
 
 function Inicio() {
@@ -152,7 +153,7 @@ const toggleMenu = () => {
         </Navbar>
 
         <Container className="margen1" responsive>
-        <Card.Title className="mb-3">Algunos Productos</Card.Title>
+        <Card.Title className="titulo">Algunos Productos</Card.Title>
         <Row className="g-3">
             {filteredProductos.map((producto) => (
             <Col sm="12" md="4" lg="3">
@@ -165,9 +166,9 @@ const toggleMenu = () => {
                     </Card.Text>
                     <div>
                     <Badge bg="primary">Marca: {marcas.find((marca) => marca.IDMarca === producto.IDMarca)?.NombreMarca}</Badge>
-                    <Badge bg="primary">Categoria: {categorias.find((categoria) => categoria.IDCategoria === producto.IDCategoria)?.NombreCategoria}</Badge>
-                    <Badge bg="primary">Presentacion: {presentaciones.find((presentacion) => presentacion.IDPresentacion === producto.IDPresentacion)?.NombrePresentacion}</Badge>
-                    <Badge bg="success">Estado: {producto.Estado}</Badge>
+                    <Badge bg="primary">Categoría: {categorias.find((categoria) => categoria.IDCategoria === producto.IDCategoria)?.NombreCategoria}</Badge>
+                    <Badge bg="primary">Presentación: {presentaciones.find((presentacion) => presentacion.IDPresentacion === producto.IDPresentacion)?.NombrePresentacion}</Badge>
+                    <Badge className='estado' bg="success">{producto.Estado}</Badge>
                     <Badge bg="warning" text="dark" className='precio-precio'> 
                         <div className='precio'>
                         C$ {producto.PrecioProducto.toFixed(2)}
@@ -191,7 +192,7 @@ const toggleMenu = () => {
         </Container>
 
         <Container className="margen1" responsive>
-        <Card.Title className="mb-3">Algunos Servicios</Card.Title>
+        <Card.Title className="titulo">Algunos Servicios</Card.Title>
         <Row className="g-3">
             {filteredServicios.map((servicio) => (
             <Col sm="12" md="12" lg="6">

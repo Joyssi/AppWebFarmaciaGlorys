@@ -105,9 +105,9 @@ function CategoriaList({Rol}) {
         <div>
         <Header Rol={Rol} />
 
-        <Card className="margen">
+        <Card className="margen" responsive>
             <Card.Body>
-            <Card.Title className="mb-3">Categorias</Card.Title>
+            <Card.Title className="titulo-2">Categorias</Card.Title>
             
             <Row className="mb-3">
             <Col sm="6" md="6" lg="12">
@@ -122,7 +122,7 @@ function CategoriaList({Rol}) {
                 </Col>
             </Row>
 
-            <Table striped bordered hover>
+            <Table striped bordered hover className='table'>
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -145,7 +145,7 @@ function CategoriaList({Rol}) {
             </Card.Body>
         </Card>
 
-        <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
+        <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" responsive>
             <Modal.Header closeButton>
             <Modal.Title>Actualizar Categoria</Modal.Title>
             </Modal.Header>
