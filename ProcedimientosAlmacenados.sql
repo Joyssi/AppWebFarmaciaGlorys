@@ -4,32 +4,42 @@
  /*Procedimientos almacenados de la tabla Empleado--------------------------------------------------*/
  /*Procedimiento almacenado para insertar un nuevo registro*/
  DELIMITER $
- CREATE PROCEDURE InsertarEmpleado (IN correo NVARCHAR(30), IN telefono VARCHAR(8))
+ CREATE PROCEDURE InsertarEmpleado (IN NombreUsuario VARCHAR(20), IN Contraseña VARCHAR(8), IN Rol VARCHAR(20),
+ IN Correo NVARCHAR(30), IN Telefono VARCHAR(8))
  BEGIN
- INSERT INTO empleado (NombreUsuario, Contraseña, Correo, Telefono)
- VALUES (nombre, contraseña, correo, telefono);
+ INSERT INTO usuario (NombreUsuario, Contraseña, Rol)
+ VALUES (NombreUsuario, Contraseña, Rol);
+ 
+ INSERT INTO empleado (IDUsuario, Correo, Telefono)
+ VALUES (LAST_INSERT_ID(), Correo, Telefono);
  END $
  
- CALL InsertarEmpleado ( 'Heysel', '123H', 'heysel@gmail.com', '86962747');
+ CALL InsertarEmpleado ( 'Heysel', '123H', 'Vendedor', 'heysel@gmail.com', '86962747');
  
  /*Procedimiento almacenado para actualizar un registro de la tabla Empleado*/
  DELIMITER $
- CREATE PROCEDURE ActualizarEmpleado (IN idEmpleado INT ,IN nombre VARCHAR(18), IN contraseña VARCHAR(8),
- IN correo NVARCHAR(30), IN telefono VARCHAR(8))
+ CREATE PROCEDURE ActualizarEmpleado (IN IDUsuario INT ,IN NombreUsuario VARCHAR(20), IN Contraseña VARCHAR(8),
+ IN Correo NVARCHAR(30), IN Telefono VARCHAR(8))
  BEGIN
+ UPDATE usuario
+ SET NombreUsuario = NombreUsuario, Contraseña = Contraseña
+ WHERE IDUsuario = IDUsuario;
+ 
  UPDATE empleado
- SET NombreUsuario = nombre, Contraseña = contraseña, Correo = correo, Telefono = telefono
- WHERE IDEmpleado = idEmpleado;
+ SET Correo = Correo, Telefono = Telefono
+ WHERE IDUsuario = IDUsuario;
  END $
  
 CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
  
  /*Procedimiento almacenado para eliminar un registro de la tabla Empleado*/
  DELIMITER $
- CREATE PROCEDURE EliminarEmpleado (IN idEmpleado INT)
+ CREATE PROCEDURE EliminarEmpleado (IN IDUsuario INT)
  BEGIN
  DELETE FROM empleado 
- WHERE IDEmpleado = idEmpleado;
+ WHERE IDUsuario = IDUsuario;
+ DELETE FROM usuario
+ WHERE IDUsuario = IDUsuario;
  END $
  
  CALL EliminarEmpleado (1);
@@ -38,52 +48,63 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
  DELIMITER $
  CREATE PROCEDURE MostrarEmpleado()
  BEGIN
- SELECT IDEmpleado, NombreUsuario, Contraseña, Correo, Telefono
- FROM empleado;
+ SELECT U.IDUsuario, U.NombreUsuario, U.Contraseña, U.Rol, E.Correo, E.Telefono
+ FROM usuario U
+ INNER JOIN empleado E ON U.IDUsuario = E.IDUsuario;
  END $
  
  CALL MostrarEmpleado;
  
  /*Procedimientos almacenados de la tabla Cliente---------------------------------------------------*/
  /*Procedimiento almacenado para insertar un nuevo registro*/
-  DELIMITER $
-  CREATE PROCEDURE InsertarCliente (IN nombreC VARCHAR(18), IN contraseñaC VARCHAR(8),
-  IN correoC NVARCHAR(30), IN telefonoC VARCHAR(8))
-  BEGIN
-  INSERT INTO cliente (NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC)
-  VALUES (nombreC, contraseñaC, correoC, telefonoC);
-  END $
+DELIMITER $
+ CREATE PROCEDURE InsertarCliente (IN NombreUsuario VARCHAR(20), IN Contraseña VARCHAR(8), IN Rol VARCHAR(20),
+ IN CorreoC NVARCHAR(30), IN TelefonoC VARCHAR(8))
+ BEGIN
+ INSERT INTO usuario (NombreUsuario, Contraseña, Rol)
+ VALUES (NombreUsuario, Contraseña, Rol);
+ 
+ INSERT INTO cliente (IDUsuario, CorreoC, TelefonoC)
+ VALUES (LAST_INSERT_ID(), CorreoC, TelefonoC);
+ END $
   
-  CALL InsertarCliente ('María', 'my456', 'mariaS@gmail.com', '88569875');
+  CALL InsertarCliente ('María', 'my456', 'Cliente', 'mariaS@gmail.com', '88569875');
   
   /*Procedimiento almacenado para actualizar un registro de la tabla Cliente*/
-  DELIMITER $
-  CREATE PROCEDURE ActualizarCliente (IN idCliente INT ,IN nombreC VARCHAR(18), IN contraseñaC VARCHAR(8),
-  IN correoC NVARCHAR(30), IN telefonoC VARCHAR(8))
-  BEGIN
-  UPDATE cliente
-  SET NombreUsuario = nombreC, ContraseñaC = contraseñaC, CorreoC = correoC, TelefonoC = telefonoC
-  WHERE IDCliente = idCliente;
-  END $
+DELIMITER $
+ CREATE PROCEDURE ActualizarCliente (IN IDUsuario INT ,IN NombreUsuario VARCHAR(20), IN Contraseña VARCHAR(8),
+ IN CorreoC NVARCHAR(30), IN TelefonoC VARCHAR(8))
+ BEGIN
+ UPDATE usuario
+ SET NombreUsuario = NombreUsuario, Contraseña = Contraseña
+ WHERE IDUsuario = IDUsuario;
+ 
+ UPDATE cliente
+ SET CorreoC = CorreoC, TelefonoC = TelefonoC
+ WHERE IDUsuario = IDUsuario;
+ END $
   
-  CALL ActualizarCliente (1, 'julio', '43267J', 'julito23@gmail.com', '43568790');
+  CALL ActualizarCliente (2, 'julio', '43267J', 'julito23@gmail.com', '43568790');
   
   /*Procedimiento almacenado para eliminar un registro de la tabla Cliente*/
- DELIMITER $
- CREATE PROCEDURE EliminarCliente (IN idCliente INT)
+DELIMITER $
+ CREATE PROCEDURE EliminarCliente (IN IDUsuario INT)
  BEGIN
- DELETE FROM cliente
- WHERE IDCliente = idCliente;
+ DELETE FROM cliente 
+ WHERE IDUsuario = IDUsuario;
+ DELETE FROM usuario
+ WHERE IDUsuario = IDUsuario;
  END $
  
  CALL EliminarCliente (1);
  
  /*Procedimiento almacenado para mostrar los registro de la tabla Cliente*/
- DELIMITER $
+DELIMITER $
  CREATE PROCEDURE MostrarCliente()
  BEGIN
- SELECT IDCliente, NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC
- FROM cliente;
+ SELECT U.IDUsuario, U.NombreUsuario, U.Contraseña, U.Rol, C.Correo, C.Telefono
+ FROM usuario U
+ INNER JOIN clienteC ON U.IDUsuario = C.IDUsuario;
  END $
  
  CALL MostrarCliente;
@@ -91,31 +112,31 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
   /*Procedimientos almacenados de la tabla Marca----------------------------------------------------*/
   /*Procedimiento almacenado para insertar un nuevo registro*/
   DELIMITER $
-  CREATE PROCEDURE InsertarMarca (IN nombreM VARCHAR(20))
+  CREATE PROCEDURE InsertarMarca (IN NombreMarca VARCHAR(20))
   BEGIN
   INSERT INTO marca (NombreMarca)
-  VALUES (nombreM);
+  VALUES (NombreMarca);
   END $
   
   CALL InsertarMarca ('RAMOS');
   
   /*Procedimiento almacenado para actualizar un registro de la tabla Marca*/
   DELIMITER $
-  CREATE PROCEDURE ActualizarMarca (IN idMarca INT ,IN nombreM VARCHAR(20))
+  CREATE PROCEDURE ActualizarMarca (IN IDMarca INT ,IN NombreMarca VARCHAR(20))
   BEGIN
   UPDATE marca
-  SET NombreMarca = nombreM
-  WHERE IDMarca = idMarca;
+  SET NombreMarca = NombreMarca
+  WHERE IDMarca = IDMarca;
   END $ 
   
-  CALL ActualizarMarca (1, 'REMOX');
+  CALL ActualizarMarca (1, 'PASHA S.A');
   
   /*Procedimiento almacenado para eliminar un registro de la tabla Marca*/
  DELIMITER $
- CREATE PROCEDURE EliminarMarca (IN idMarca INT)
+ CREATE PROCEDURE EliminarMarca (IN IDMarca INT)
  BEGIN
  DELETE FROM marca
- WHERE IDMarca = idMarca;
+ WHERE IDMarca = IDMarca;
  END $
  
  CALL EliminarMarca (1);
@@ -174,28 +195,34 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
   /*Procedimientos almacenados de la tabla Presentación---------------------------------------------*/
   /*Procedimiento almacenado para insertar un nuevo registro*/
   DELIMITER $
-  CREATE PROCEDURE InsertarPresentacion (IN NomPresentacion VARCHAR(20))
+  CREATE PROCEDURE InsertarPresentacion (IN NombrePresentacion VARCHAR(20))
   BEGIN
   INSERT INTO presentacion (NombrePresentacion)
-  VALUES (NomPresentacion);
+  VALUES (NombrePresentacion);
   END $
+  
+  CALL InsertarPresentacion ('Tableta');
   
   /*Procedimiento almacenado para actualizar un registro de la tabla Presentación*/
   DELIMITER $
-  CREATE PROCEDURE ActualizarPresentacion (IN idPresentacion INT ,IN NomPresentacion VARCHAR(20))
+  CREATE PROCEDURE ActualizarPresentacion (IN IDPresentacion INT ,IN NombrePresentacion VARCHAR(20))
   BEGIN
   UPDATE presentacion
-  SET NombrePresentacion = NomPresentacion
-  WHERE IDPresentacion = idPresentacion;
+  SET NombrePresentacion = NombrePresentacion
+  WHERE IDPresentacion = IDPresentacion;
   END $
+  
+  CALL ActualizarPresentacion (1, 'Jarabe');
   
   /*Procedimiento almacenado para eliminar un registro de la tabla Presentacion*/
  DELIMITER $
- CREATE PROCEDURE EliminarPresentacion (IN idPresentacion INT)
+ CREATE PROCEDURE EliminarPresentacion (IN IDPresentacion INT)
  BEGIN
  DELETE FROM presentacion
- WHERE IDPresentacion = idPresentacion;
+ WHERE IDPresentacion = IDPresentacion;
  END $
+ 
+ CALL EliminarPresentacion(1);
  
  /*Procedimiento almacenado para mostrar los registro de la tabla Presentación*/
  DELIMITER $
@@ -210,32 +237,39 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
   /*Procedimientos almacenados de la tabla Producto-------------------------------------------------*/
   /*Procedimiento almacenado para insertar un nuevo registro*/
   DELIMITER $
-  CREATE PROCEDURE InsertarProducto (IN nombreP VARCHAR(30), IN descrip VARCHAR(100),
-  IN precioP DECIMAL(8,2), estadoP VARCHAR(10), IN cantP INT, IN idMarca INT,
-  IN idCategoria INT, IN idPresentacion INT)
+  CREATE PROCEDURE InsertarProducto (IN NomProducto VARCHAR(30), IN DescripProducto VARCHAR(100),
+  IN PrecioProducto DECIMAL(8,2), Estado VARCHAR(10), IN CantProducto INT, IN IDMarca INT,
+  IN IDCategoria INT, IN IDPresentacion INT)
   BEGIN
   INSERT INTO producto (NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion)
-  VALUES (nombreP, descrip, precioP, estadoP, cantP, idMarca, idCategoria, idPresentacion);
+  VALUES (NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion);
   END $
+  
+  CALL InsertarProducto ('Ambroxol', 'Producto sabor a banana', 45.50, 'DISPONIBLE', 68, 1, 1, 1);
   
   /*Procedimiento almacenado para actualizar un registro de la tabla Producto*/
   DELIMITER $
-  CREATE PROCEDURE ActualizarProducto (IN idProducto INT ,IN nombreP VARCHAR(30), IN descrip VARCHAR(100),
-  IN precioP DECIMAL(8,2), estadoP VARCHAR(10), IN cantP INT, IN idMarca INT,
-  IN idCategoria INT, IN idPresentacion INT)
+  CREATE PROCEDURE ActualizarProducto (IN IDProducto INT ,IN NomProducto VARCHAR(30), IN DescripProducto VARCHAR(100),
+  IN PrecioProducto DECIMAL(8,2), Estado VARCHAR(10), IN CantProducto INT, IN IDMarca INT,
+  IN IDCategoria INT, IN IDPresentacion INT)
   BEGIN
   UPDATE Producto
-  SET NomProducto = nombreP, DescripProducto = descrip, PrecioProducto = precioP, Estado = estadoP, CantProducto = cantP, IDMarca = idMarca, IDCategoria = idCategoria, IDPresentacion = idPresentacion
-  WHERE IDProducto = idProducto;
+  SET NomProducto = NomProducto, DescripProducto = DescripProducto, PrecioProducto = PrecioProducto, Estado = Estado,
+  CantProducto = CantProducto, IDMarca = IDMarca, IDCategoria = IDCategoria, IDPresentacion = IDPresentacion
+  WHERE IDProducto = IDProducto;
   END $
+  
+    CALL ActualizarProducto ('Loratadina', 'Producto para el dolor', 55.45, 'DISPONIBLE', 500, 1, 1, 1);
   
   /*Procedimiento almacenado para eliminar un registro de la tabla Producto*/
  DELIMITER $
- CREATE PROCEDURE EliminarProducto (IN idProducto INT)
+ CREATE PROCEDURE EliminarProducto (IN IDProducto INT)
  BEGIN
  DELETE FROM producto
- WHERE IDProducto = idProducto;
+ WHERE IDProducto = IDProducto;
  END $
+ 
+ CALL EliminarProducto(1);
   
   /*Procedimiento almacenado para mostrar los registro de la tabla Producto*/
  DELIMITER $
@@ -256,36 +290,42 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
   /*Procedimientos almacenados de la tabla Servicio-------------------------------------------------*/
   /*Procedimiento almacenado para insertar un nuevo registro*/
   DELIMITER $
-  CREATE PROCEDURE InsertarServicio (IN nombreS VARCHAR(30), IN estadoS VARCHAR(30),
-  IN descripS VARCHAR(100))
+  CREATE PROCEDURE InsertarServicio (IN NombreS VARCHAR(30), IN EstadoS VARCHAR(30),
+  IN Descripcion VARCHAR(100), IN PrecioS DECIMAL(8,2))
   BEGIN
-  INSERT INTO servicio (NombreS, EstadoS, Descripcion)
-  VALUES (nombreS, estadoS, descripS);
+  INSERT INTO servicio (NombreS, EstadoS, Descripcion, PrecioS)
+  VALUES (NombreS, EstadoS, Descripcion, PrecioS);
   END $
+  
+  CALL InsertarServicio ('Ultrasonido de mama', 'DISPONIBLE', 'Aprovecha oferta ahora', 350);
   
   /*Procedimiento almacenado para actualizar un registro de la tabla Servicio*/
   DELIMITER $
-  CREATE PROCEDURE ActualizarServicio (IN idServicio INT ,IN nombreS VARCHAR(30), IN estadoS VARCHAR(30),
-  IN descripS VARCHAR(100))
+  CREATE PROCEDURE ActualizarServicio (IN IDServicio INT ,IN NombreS VARCHAR(30), IN EstadoS VARCHAR(30),
+  IN Descripcion VARCHAR(100), IN PrecioS DECIMAL(8,2))
   BEGIN
-  UPDATE Servicio
-  SET NombreS = nombreS, EstadoS = estadoS, Descripcion = descripS
-  WHERE IDServicio = idServicio;
+  UPDATE servicio
+  SET NombreS = NombreS, EstadoS = EstadoS, Descripcion = Descripcion, PrecioS = PrecioS
+  WHERE IDServicio = IDServicio;
   END $
+  
+   CALL ActualizarServicio (1, 'Consulta Médica', 'EN ESPERA', 'Aprovecha oferta ahora mismo, agenta tu cita ya', 500);
   
   /*Procedimiento almacenado para eliminar un registro de la tabla Servicio*/
  DELIMITER $
- CREATE PROCEDURE EliminarServicio (IN idServicio INT)
+ CREATE PROCEDURE EliminarServicio (IN IDServicio INT)
  BEGIN
  DELETE FROM servicio
- WHERE IDServicio = idServicio;
+ WHERE IDServicio = IDServicio;
  END $
+ 
+ CALL EliminarServicio(1);
  
   /*Procedimiento almacenado para mostrar los registro de la tabla Servicio*/
  DELIMITER $
  CREATE PROCEDURE MostrarServicio()
  BEGIN
- SELECT IDServicio, NombreS, EstadoS, Descripcion
+ SELECT IDServicio, NombreS, EstadoS, Descripcion, PrecioS
  FROM servicio;
  END $
  
@@ -294,30 +334,36 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
   /*Procedimientos almacenados de la tabla ServicioCliente------------------------------------------*/
   /*Procedimiento almacenado para insertar un nuevo registro*/
   DELIMITER $
-  CREATE PROCEDURE InsertarServicioCliente (IN idCliente INT, IN idServicio INT,
-  IN fechaCita DATE)
+  CREATE PROCEDURE InsertarServicioCliente (IN IDCliente INT, IN IDServicio INT,
+  IN FechaCita DATE)
   BEGIN
   INSERT INTO serviciocliente (IDCliente, IDServicio, FechaCita)
-  VALUES (idCliente, idServicio, fechaCita);
+  VALUES (IDCliente, IDServicio, FechaCita);
   END $
+  
+  CALL InsertarServicioCliente(1, 1, '2023-12-10');
   
   /*Procedimiento almacenado para actualizar un registro de la tabla ServicioCliente*/
   DELIMITER $
-  CREATE PROCEDURE ActualizarServicioCliente (IN idServicioC INT ,IN idCliente INT, IN idServicio INT,
-  IN fechaCita DATE)
+  CREATE PROCEDURE ActualizarServicioCliente (IN IDServicioCliente INT ,IN IDCliente INT, IN IDServicio INT,
+  IN FechaCita DATE)
   BEGIN 
   UPDATE serviciocliente
-  SET IDCliente = idCliente, IDServico = idServicio, FechaCita = fechaCita
-  WHERE IDServicioCliente = idServicioC;
+  SET IDCliente = IDCliente, IDServico = IDServicio, FechaCita = FechaCita
+  WHERE IDServicioCliente = IDServicioCliente;
   END $
+  
+  CALL InsertarServicioCliente(1, 1, 1, '2024-01-20');
   
   /*Procedimiento almacenado para eliminar un registro de la tabla ServicioCliente*/
  DELIMITER $
- CREATE PROCEDURE EliminarServicioCliente (IN idServicioC INT)
+ CREATE PROCEDURE EliminarServicioCliente (IN IDServicioCliente INT)
  BEGIN
  DELETE FROM serviciocliente
- WHERE IDServicioCliente = idServicioC;
+ WHERE IDServicioCliente = IDServicioCliente;
  END $
+ 
+ CALL EliminarServicioCliente(1);
   
    /*Procedimiento almacenado para mostrar los registro de la tabla ServicioCliente*/
  DELIMITER $
@@ -336,28 +382,34 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
   /*Procedimientos almacenados de la tabla Pago-----------------------------------------------------*/
   /*Procedimiento almacenado para insertar un nuevo registro*/
   DELIMITER $
-  CREATE PROCEDURE InsertarPago (IN totalPago DECIMAL(8,2))
+  CREATE PROCEDURE InsertarPago (IN TotalPago DECIMAL(8,2))
   BEGIN
   INSERT INTO pago (TotalPago)
-  VALUES (totalPago);
+  VALUES (TotalPago);
   END $
+  
+  CALL InsertarPago(200);
   
   /*Procedimiento almacenado para actualizar un registro de la tabla Pago*/
   DELIMITER $
-  CREATE PROCEDURE ActualizarPago (IN idPago INT ,IN totalPago DECIMAL(8,2))
+  CREATE PROCEDURE ActualizarPago (IN IDPago INT ,IN TotalPago DECIMAL(8,2))
   BEGIN
   UPDATE pago
-  SET TotalPago = totalPago
-  WHERE IDPago = idPago;
+  SET TotalPago = TotalPago
+  WHERE IDPago = IDPago;
   END $
+  
+  CALL ActualizarPago(1, 500);
   
   /*Procedimiento almacenado para eliminar un registro de la tabla Pago*/
  DELIMITER $
- CREATE PROCEDURE EliminarPago (IN idPago INT)
+ CREATE PROCEDURE EliminarPago (IN IDPago INT)
  BEGIN
  DELETE FROM pago
- WHERE IDPago = idPago;
+ WHERE IDPago = IDPago;
  END $
+ 
+ CALL EliminarPago(1);
   
    /*Procedimiento almacenado para mostrar los registro de la tabla Pago*/
  DELIMITER $
@@ -372,82 +424,39 @@ CALL ActualizarEmpleado (1, 'Flor', '123', 'florcita02@gmail,com', '23546756');
   /*Procedimientos almacenados de la tabla Compra---------------------------------------------------*/
   /*Procedimiento almacenado para insertar un nuevo registro*/
   DELIMITER $
-  CREATE PROCEDURE InsertarCompra (IN idEmpleado INT, IN idCliente INT,
-  IN direcC VARCHAR(100), IN idPago INT, IN estadoC VARCHAR(20))
-  BEGIN
-  INSERT INTO compra (IDEmpleado, IDCliente, DirecCompra, IDPago, EstadoC)
-  VALUES (idEmpleado, idCliente, direcC, idPago, estadoC);
-  END $
+ CREATE PROCEDURE InsertarCompra (IN TotalPago DECIMAL(8,2), IN IDEmpleado INT, IN IDCliente INT, IN DirecCompra VARCHAR(100),
+ IN IDPago INT, IN IDProducto INT, IN CantProductos INT)
+ BEGIN
+ INSERT INTO compra (IDPago, IDEmpleado, IDCliente, DirecCompra)
+ VALUES (IDPago, IDEmpleado, IDCliente, DirecCompra);
+ 
+ INSERT INTO compraproducto (IDCompra, IDProducto, CantProductos)
+ VALUES (LAST_INSERT_ID(), IDProducto, CantProductos);
+ END $
+  
+  CALL InsertarCompra (1, 1, 1, 'Frente al complejo judicial', 1, 1, 3);
   
   /*Procedimiento almacenado para actualizar un registro de la tabla Compra*/
-  DELIMITER $
-  CREATE PROCEDURE ActualizarCompra (IN idCompra INT ,IN idEmpleado INT, IN idCliente INT,
-  IN direcC VARCHAR(100), IN idPago INT, IN estadoC VARCHAR(20))
-  BEGIN
-  UPDATE compra
-  SET IDEmpleado = idEmpleado, IDCliente = idCliente, DirecCompra = direcC, IDPago = idPago, EstadoC = estadoC
-  WHERE IDCompra = idCompra;
-  END $
+ DELIMITER $
+ CREATE PROCEDURE ActualizarCompra (IN IDCompra INT ,IN IDEmpleado INT, EstadoC VARCHAR(20))
+ BEGIN
+ UPDATE compra
+ SET IDEmpleado = IDEmpleado, EstadoC = EstadoC
+ WHERE IDCompra = IDCompra;
+ END $
+  
+CALL ActualizarCompra(1, 1, 'ENTREGADA');
   
   /*Procedimiento almacenado para eliminar un registro de la tabla Compra*/
- DELIMITER $
- CREATE PROCEDURE EliminarCompra (IN idCompra INT)
+DELIMITER $
+ CREATE PROCEDURE EliminarCompra (IN IDCompra INT)
  BEGIN
+ DELETE FROM compra 
+ WHERE IDCompra = IDCompra;
  DELETE FROM compra
- WHERE IDCompra = idCompra;
+ WHERE IDCompra = IDCompra;
  END $
-  
-   /*Procedimiento almacenado para mostrar los registro de la tabla Compra*/
- DELIMITER $
- CREATE PROCEDURE MostrarCompra()
- BEGIN
- SELECT IDCompra, NombreUsuario, NombreUsuarioC, FechaHoraCompra, DirecCompra, IDPago, EstadoC
- FROM compra AS com
- INNER JOIN empleado AS emp
- ON com.IDEmpleado = emp.IDEmpleado
- INNER JOIN cliente AS cli
- ON com.IDCliente = cli.IDCliente;
- END $
+ 
+ CALL EliminarCompra(1);
 
- CALL MostrarCompra;
   
-  /*Procedimientos almacenados de la tabla CompraProducto-------------------------------------------*/
-  /*Procedimiento almacenado para insertar un nuevo registro*/
-  DELIMITER $
-  CREATE PROCEDURE InsertarCompraProducto (IN idProducto INT, IN idCompra INT,
-  IN cantPro INT, precio DECIMAL (8,2))
-  BEGIN 
-  INSERT INTO compraproducto (IDProducto, IDCompra, CantProductos, Precio)
-  VALUES (idProducto, idCompra, cantPro, precio);
-  END $
-  
-  /*Procedimiento almacenado para actualizar un registro de la tabla CompraProducto*/
-  DELIMITER $
-  CREATE PROCEDURE ActualizarCompraProducto (IN idCompraP INT ,IN idProducto INT, IN idCompra INT,
-  IN cantPro INT, precio DECIMAL (8,2))
-  BEGIN
-  UPDATE compraproducto
-  SET IDProducto = idProducto, IDCompra = idCompra, CantProductos = cantPro, Precio = precio
-  WHERE IDCompraProducto = idCompraP;
-  END $
-  
-  /*Procedimiento almacenado para eliminar un registro de la tabla CompraProducto*/
- DELIMITER $
- CREATE PROCEDURE EliminarCompraProducto (IN idCompraP INT)
- BEGIN
- DELETE FROM compraproducto
- WHERE IDCompraProducto = idCompraP;
- END $
- 
-  /*Procedimiento almacenado para mostrar los registro de la tabla CompraProducto*/
- DELIMITER $
- CREATE PROCEDURE MostrarCompraProducto()
- BEGIN
- SELECT IDCompraProducto, NomProducto, CantProductos, Precio
- FROM compraproducto AS cmp
- INNER JOIN producto AS prod
- ON cmp.IDProducto = prod.IDProducto;
- END $
- 
- CALL MostrarCompraProducto;
- DROP PROCEDURE MostrarCompraProducto

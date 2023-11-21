@@ -14,7 +14,6 @@ import ListaServicio from './pages/ServicioList';
 import Cliente from './pages/CreateCliente';
 import Login from './pages/Login';
 import Empleado from './pages/CreateEmpleado';
-import Catalogo from './pages/Catálogo';
 import Inicio from './pages/Inicio';
 import CatalogoServicio from './pages/CatalogoServicios';
 import Estadistica1 from './pages/EstadisticaProducto';
@@ -41,7 +40,6 @@ function App() {
       <Route path="/servicio" element={<Servicio Rol={userRol} />} />
       <Route path="/actualizar-servicio" element={<ListaServicio Rol={userRol} />} />
       <Route path="/cliente" element={<Cliente Rol={userRol} />} />
-      <Route path="/productos" element={<Catalogo Rol={userRol} />} />
       <Route path="/servicios" element={<CatalogoServicio Rol={userRol} />} />
       <Route path="/producto-reporte" element={<Estadistica1 Rol={userRol} />} />
     </Routes>

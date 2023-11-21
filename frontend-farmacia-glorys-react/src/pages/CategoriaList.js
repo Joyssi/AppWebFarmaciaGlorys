@@ -8,7 +8,7 @@ function CategoriaList({Rol}) {
     const [showModal, setShowModal] = useState(false);
     const [selectedCategoria, setSelectedCategoria] = useState({});
     const [formData, setFormData] = useState({
-        NombreMarca: '',
+        NombreCategoria: '',
     });
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -28,7 +28,7 @@ function CategoriaList({Rol}) {
         );
     });
 
-    // Función para abrir el modal y pasar los datos de la marca seleccionada
+    // Función para abrir el modal y pasar los datos de la categoria seleccionada
     const openModal = (categoria) => {
         setSelectedCategoria(categoria);
 

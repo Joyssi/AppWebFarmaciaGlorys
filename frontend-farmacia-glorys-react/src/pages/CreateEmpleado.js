@@ -12,9 +12,21 @@ function CreateEmpleado() {
     const [Correo, setCorreo] = useState('');   
     const [Telefono, setTelefono] = useState('');
 
+    //Validar el input telefono para que solo acepte números
+    const handleTelefonoChange = (e) => {
+        const telf = e.target.value.replace(/[^0-9]/g, ''); 
+        setTelefono(telf);
+    };
+
     // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+    //Validar campos
+    if (!NombreUsuario || !Contraseña || !Rol || !Correo || !Telefono) {
+        alert ('Debe completar los campos');
+        return;
+    }
 
         // Crear un objeto con los datos del formulario
         const formData = {
@@ -102,8 +114,9 @@ function CreateEmpleado() {
                         <Form.Control
                             placeholder="Ingrese su número"
                             type="text"
+                            min={8}
                             value={Telefono}
-                            onChange={(e) => setTelefono(e.target.value)}
+                            onChange={handleTelefonoChange}
                         />
                         </FloatingLabel>
                     </Col>

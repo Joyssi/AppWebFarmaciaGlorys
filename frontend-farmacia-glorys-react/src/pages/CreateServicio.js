@@ -27,9 +27,26 @@ function CreateServicio({Rol}) {
         }
     };
 
+      //Validar input del nombre del servicio
+        const handleNombreServicioChange = (e) => {
+        const nomS = e.target.value.replace(/[^a-zA-Z ]/g, ''); // Solo agrega letras
+        setNombreS(nomS);
+        };
+
+        const handleDescripServicioChange = (e) => {
+            const descrip = e.target.value.replace(/[^a-zA-Z ]/g, ''); // Solo agrega letras
+            setDescripcion(descrip);
+            };
+
   // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+              //Validar campos
+    if (!NombreS || !EstadoS || !Descripcion || !PrecioS || !imagen) {
+        alert ('Debe completar los campos');
+        return;
+    }
 
         // Crear un objeto con los datos del formulario
         const formData = {
@@ -84,7 +101,7 @@ function CreateServicio({Rol}) {
                         type="text"
                         placeholder="Ingrese el nombre del Servicio"
                         value={NombreS}
-                        onChange={(e) => setNombreS(e.target.value)}
+                        onChange={handleNombreServicioChange}
                         />
                     </FloatingLabel>
                     </Col>
@@ -109,7 +126,7 @@ function CreateServicio({Rol}) {
                         type="text"
                         placeholder="Escriba aquí"
                         value={Descripcion}
-                        onChange={(e) => setDescripcion(e.target.value)}
+                        onChange={handleDescripServicioChange}
                         />
                     </FloatingLabel>
                     </Col>
@@ -129,6 +146,7 @@ function CreateServicio({Rol}) {
                     <FloatingLabel controlId="PrecioS" label="Precio del Servicio">
                         <Form.Control
                         type="number"
+                        min={1}
                         placeholder="Ingrese el precio del Servicio"
                         value={PrecioS}
                         onChange={(e) => setPrecioS(e.target.value)}

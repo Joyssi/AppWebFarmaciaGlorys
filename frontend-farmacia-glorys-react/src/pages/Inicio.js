@@ -180,9 +180,6 @@ const toggleMenu = () => {
                 <Card.Body>
                 <div className="button-container">
                         <div className="button-container">
-                        <Button className="detalles" variant="primary">
-                            <BsCardText/>
-                        </Button>
                         <Button className="boton-1" variant="primary">
                             <FaCartPlus/> Agregar al carrito
                         </Button>
@@ -218,9 +215,6 @@ const toggleMenu = () => {
                 </Card.Body>
                 <Card.Body>
                 <Button className='boton1' variant="primary">Solicitar servicio</Button>
-                <Button className="detalles1" variant="primary">
-                            <BsCardText/>
-                        </Button>
                 </Card.Body>
                 </Card>
             </Col>            

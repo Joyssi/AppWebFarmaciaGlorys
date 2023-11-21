@@ -96,9 +96,23 @@ function CreateProducto({Rol}) {
                         setShowPresentacionModal(false);
                     };
 
+    
+    //Validar input de la descripción del producto
+    const handleDescripProductoChange = (e) => {
+    const descrip = e.target.value.replace(/[^a-zA-Z ]/g, ''); // Solo agrega letras
+    setDescripProducto(descrip);
+    };
+
+
  // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
     e.preventDefault();
+
+    //Validar los campos
+    if (!NomProducto || !DescripProducto || !PrecioProducto || !Estado || !CantProducto || !imagen || !IDMarca || !IDCategoria || !IDPresentacion) {
+        alert('Debe completar todos los campos');
+        return;
+    }
 
     // Crear un objeto con los datos del formulario
     const formData = {
@@ -149,6 +163,12 @@ const [NombreMarca, setNombreMarca] = useState('');
 const handleSubmitMarca = async (e) => {
     e.preventDefault();
 
+    //Validar campos
+    if (!NombreMarca) {
+        alert ('Debe completar los campos');
+        return;
+    }
+
     const formData = {
         NombreMarca,
         };
@@ -180,6 +200,12 @@ const handleSubmitMarca = async (e) => {
 const handleSubmitCategoria = async (e) => {
     e.preventDefault();
 
+    //Validar campos
+    if (!NombreCategoria) {
+        alert ('Debe completar los campos');
+        return;
+    }
+
     const formData = {
         NombreCategoria,
         };
@@ -210,6 +236,12 @@ const handleSubmitCategoria = async (e) => {
 
 const handleSubmitPresentacion = async (e) => {
     e.preventDefault();
+
+    //Validar campos
+    if (!NombrePresentacion) {
+        alert ('Debe completar los campos');
+        return;
+    }
 
     const formData = {
         NombrePresentacion,
@@ -281,7 +313,7 @@ const handleSubmitPresentacion = async (e) => {
                         type="text"
                         placeholder="Escriba aquí"
                         value={DescripProducto}
-                        onChange={(e) => setDescripProducto(e.target.value)}
+                        onChange={handleDescripProductoChange}
                         />
                     </FloatingLabel>
                     </Col>
@@ -290,6 +322,7 @@ const handleSubmitPresentacion = async (e) => {
                     <FloatingLabel controlId="PrecioProducto" label="Precio del producto">
                         <Form.Control
                         type="number"
+                        min={1} //mínimo de número
                         placeholder="Ingrese el precio del producto"
                         value={PrecioProducto}
                         onChange={(e) => setPrecioProducto(e.target.value)}
@@ -301,6 +334,7 @@ const handleSubmitPresentacion = async (e) => {
                     <FloatingLabel controlId="CantProducto" label="Cantidad">
                         <Form.Control
                         type="number"
+                        min={1} //mínimo de número
                         placeholder="Escriba aquí"
                         value={CantProducto}
                         onChange={(e) => setCantProducto(e.target.value)}

@@ -8,9 +8,21 @@ function CreatePresentacion({Rol}) {
   // Crear un estado para cada campo del formulario
     const [NombrePresentacion, setNombrePresentacion] = useState('');
 
+      //Validar input de nombre de la presentación
+        const handleNomPresentacionChange = (e) => {
+        const nomP = e.target.value.replace(/[^a-zA-Z ]/g, ''); // Solo agrega letras
+        setNombrePresentacion(nomP);
+        };
+
     // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        //Validar campos
+    if (!NombrePresentacion) {
+        alert ('Debe completar los campos');
+        return;
+    }
 
         // Crear un objeto con los datos del formulario
         const formData = {
@@ -29,7 +41,7 @@ function CreatePresentacion({Rol}) {
 
         if (response.ok) {
             // El registro se creó exitosamente
-            alert('Registro exitoso');
+            alert('Presentación Registrada');
             // Reiniciar los campos del formulario
             setNombrePresentacion('');
         } else {
@@ -58,7 +70,7 @@ function CreatePresentacion({Rol}) {
                         type="text"
                         placeholder="Ingrese el nombre de la Presentacion"
                         value={NombrePresentacion}
-                        onChange={(e) => setNombrePresentacion(e.target.value)}
+                        onChange={handleNomPresentacionChange}
                         />
                     </FloatingLabel>
                     </Col>

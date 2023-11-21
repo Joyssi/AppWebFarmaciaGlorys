@@ -20,16 +20,10 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'categoria');
 
-/*Insertar datos en la tabla Categoria*/
-INSERT INTO farmaciaglorys.categoria (NombreCategoria)
-VALUES ('Fitofármacos');
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
 
 /*Creación de trigger de actualizar un registro de la tabla Categoria*/
 CREATE TRIGGER TriggerUpdateCategoria
-  BEFORE UPDATE
+  AFTER UPDATE
   ON categoria
   FOR EACH ROW
   INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
@@ -41,12 +35,6 @@ AFTER DELETE ON categoria
 FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('DELETE', current_user(), NOW(), 'categoria');
-
-/*Eliminar un registro de la tabla Categoria*/
-DELETE FROM farmaciaglorys.categoria WHERE IDCategoria='1';
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
 /*----------------------------------------------------------------------------------------------------*/
 
 /*Creación de trigger de insersión de datos en la tabla Cliente---------------------------------------*/
@@ -56,16 +44,10 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'cliente');
 
-/*Insertar datos en la tabla Cliente*/
-INSERT INTO farmaciaglorys.cliente (NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC)
-VALUES ('Flor', '2345', 'flor12@gmail.com', '76897678');
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
 
 /*Creación de trigger de actualizar un registro de la tabla Cliente*/
 CREATE TRIGGER TriggerUpdateCliente
-  BEFORE UPDATE
+  AFTER UPDATE
   ON cliente
   FOR EACH ROW
   INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
@@ -86,12 +68,6 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'empleado');
 
-/*Insertar datos en la tabla Empleado*/
-INSERT INTO farmaciaglorys.empleado (NombreUsuario, Contraseña, Correo, Telefono)
-VALUES ('Heysel', '234565', 'Heysel13@gmail.com', '12345678');
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
 
 /*Creación de trigger de actualizar un registro de la tabla Empleado*/
 CREATE TRIGGER TupdateEmpleado
@@ -116,13 +92,6 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'marca');
 
-/*Insertar datos en la tabla Marca*/
-INSERT INTO farmaciaglorys.marca (NombreMarca)
-VALUES ('RAMOS');
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
-
 /*Creación de trigger de actualizar un registro de la tabla Marca*/
 CREATE TRIGGER TupdateMarca
   BEFORE UPDATE
@@ -145,13 +114,6 @@ AFTER INSERT ON presentacion
 FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'presentacion');
-
-/*Insertar datos en la tabla Presentación*/
-INSERT INTO farmaciaglorys.presentacion (FormaDosificacion)
-VALUES ('Jarabes');
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
 
 /*Creación de trigger de actualizar un registro de la tabla Presentación*/
 CREATE TRIGGER TupdatePresentacion
@@ -176,13 +138,6 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'producto');
 
-/*Insertar datos en la tabla Producto*/
-INSERT INTO farmaciaglorys.producto (NomProducto, DescripProducto, PrecioProducto, Estado, CantProducto, IDMarca, IDCategoria, IDPresentacion)
-VALUES ('Ambroxol', 'Producto sabor a banana', 40.5, 'DISPONIBLE', 500, 3, 3, 3);
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
-
 /*Creación trigger de actualizar un registro de la tabla Producto*/
 CREATE TRIGGER TupdateProducto
   BEFORE UPDATE
@@ -205,13 +160,6 @@ AFTER INSERT ON servicio
 FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'servicio');
-
-/*Insertar datos en la tabla Servicio*/
-INSERT INTO farmaciaglorys.servicio (NombreS, EstadoS, Descripcion)
-VALUES ('Ultrasonidos', 'DISPONIBLE', 'Aprochecha ya! oferta especial');
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
 
 /*Creación de trigger de actualizar un registro de la tabla Servicio*/
 CREATE TRIGGER TupdateServicio
@@ -236,13 +184,6 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'serviciocliente');
 
-/*Insertar datos en la tabla ServicioCliente*/
-INSERT INTO farmaciaglorys.serviciocliente (IDCliente, IDServicio, FechaCita)
-VALUES (3, 3, '2023-09-11 01:00:00');
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
-
 /*Creación de trigger de actualizar un registro de la tabla ServicioClient*/
 CREATE TRIGGER TupdateServicioCliente
   BEFORE UPDATE
@@ -265,13 +206,6 @@ AFTER INSERT ON pago
 FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'pago');
-
-/*Insertar datos en la tabla Pago*/
-INSERT INTO farmaciaglorys.pago (TotalPago)
-VALUES ( 8000 );
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
 
 /*Creación de trigger de actualizar un registro de la tabla Pago*/
 CREATE TRIGGER TupdatePago
@@ -296,13 +230,6 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'compra');
 
-/*Insertar datos en la tabla Compra*/
-INSERT INTO farmaciaglorys.compra (IDEmpleado, IDCliente, DirecCompra, IDPago, EstadoC)
-VALUES ( 1, 3, 'Frente al Complejo Judicial', 4, 'EN PROCESO');
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
-
 /*Creación de trigger de actualizar un registro de la tabla Compra*/
 CREATE TRIGGER TupdateCompra
   BEFORE UPDATE
@@ -326,13 +253,6 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('INSERT', current_user(), NOW(), 'compraproducto');
 
-/*Insertar datos en la tabla CompraProducto*/
-INSERT INTO farmaciaglorys.compraProducto (IDProducto, IDCompra, CantProductos, Precio)
-VALUES ( 3, 4, 4, 46.50);
-
-/*Verificar si se activó el trigger*/
-SELECT * FROM bitacora;
-
 /*Creación de trigger de actualizar un registro de la tabla CompraProducto*/
 CREATE TRIGGER TupdateCompraProducto
   BEFORE UPDATE
@@ -348,3 +268,45 @@ FOR EACH ROW
 INSERT INTO bitacora (transaccion, usuario, fecha, tabla)
 VALUES ('DELETE', current_user(), NOW(), 'compraproducto');
 /*----------------------------------------------------------------------------------------------------*/
+
+/*Trigger calculados*/
+/*Trigger para actualizar stock de la tabla producto según compras*/
+DELIMITER $$
+CREATE DEFINER = CURRENT_USER 
+TRIGGER ActualizacionStock
+BEFORE INSERT ON compraproducto
+FOR EACH ROW 
+BEGIN
+	DECLARE P INT DEFAULT 0;
+    DECLARE C INT DEFAULT 0;
+    
+    SET P=NEW.IDProducto;
+    SET C=NEW.CantProductos;
+    
+    IF ((SELECT CantProducto FROM producto WHERE producto.IDProducto=P) > CantProductos) THEN
+    UPDATE producto SET CantProducto=CantProducto - C
+    WHERE IDProducto = P;
+ELSE 
+SIGNAL SQLSTATE 'ERROR' SET MESSAGE_TEXT = 'Cantidad de producto no disponible';
+END IF;
+END$$
+
+/*Trigger para calcular el precio de compra de cada producto*/
+DELIMITER $$
+CREATE DEFINER	= CURRENT_USER
+TRIGGER PrecioCompra
+BEFORE INSERT ON compraproducto
+FOR EACH ROW
+BEGIN
+	SET NEW.Precio= (SELECT PrecioProducto FROM producto WHERE NEW.IDProducto=producto.IDProducto) * 1.1;
+END$$
+
+/*Trigger para calcular el total de compra*/
+DELIMITER $$
+CREATE DEFINER = CURRENT_USER
+TRIGGER TotalCompra
+BEFORE INSERT ON compraproducto
+FOR EACH ROW
+BEGIN
+	SET NEW.totalcompra=NEW.CantProductos * NEW.precio;
+END$$

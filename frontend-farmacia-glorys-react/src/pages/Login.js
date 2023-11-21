@@ -33,8 +33,8 @@ const Login = ({ setRol }) => {
             setRol(Rol); // Actualiza el estado del rol solo si las credenciales son correctas
             navigate('/home');
         } else {
-            console.log('Credenciales incorrectas');
-            alert('¡Credenciales incorrectas!');
+            console.log('Usuario o contraseña incorrecta');
+            alert('Usuario o contraseña incorrecta');
         }
         } catch (error) {
         console.error('Error en la solicitud: ', error);
