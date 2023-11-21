@@ -28,107 +28,94 @@ module.exports = (db) => {
     });
   });
 
-  // Ruta para leer registros
-  //Ruta para leer la tabla Categoria de la Base de Datos--------------------------------
-  router.get('/readCategoria', (req, res) => {
-    // Utiliza la instancia de la base de datos pasada como parámetro
-    // Realizar una consulta SQL para seleccionar todos los registros
-    const sql = 'SELECT * FROM categoria';
-
-    // Ejecutar la consulta
-    db.query(sql, (err, result) => {
+  //ruta categoria
+  router.get('/readcategoria', (req, res) => {
+    // Nombre del procedimiento almacenado
+    const storedProcedure = 'MostrarCategoria';
+  
+    // Llama al procedimiento almacenado
+    db.query(`CALL ${storedProcedure}`, (err, result) => {
       if (err) {
-        console.error('Error al leer registros:', err);
-        res.status(500).json({ error: 'Error al leer registros de la tabla categoria' });
+        console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
+        res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
       } else {
         // Devolver los registros en formato JSON como respuesta
-        res.status(200).json(result);
+        res.status(200).json(result[0]); // Los resultados están en el primer elemento del array result
       }
     });
   });
 
-  //Sentencia
-  //curl http://localhost:5000/crud/readCategoria
-  //--------------------------------------------------------------------------------------
-
-  // Ruta para crear un nuevo registro con ID específico en la tabla Categoria------------
-  router.post('/createCategoria', (req, res) => {
+  //Insertar categoria
+  router.post('/createcategoria', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {NombreCategoria } = req.body;
-
+    const { NombreCategoria } = req.body;
+  
     // Verifica si se proporcionaron los datos necesarios
     if (!NombreCategoria) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
-
-    // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO categoria (NombreCategoria) VALUES (?)`;
-    const values = [NombreCategoria];
-
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-      if (err) {
-        console.error('Error al insertar un registro en la tabla categoria:', err);
-        res.status(500).json({ error: 'Error al insertar un registro en la tabla categoria' });
-      } else {
-        // Devuelve un mensaje como respuesta
-        res.status(200).json({ message: 'Registro agregado exitosamente' });
-      }
-    });
-  });
   
-  //Sentencia
-  //curl -X POST -H "Content-Type: application/json" -d "{\"NombreCategoria\":\"Fitofármaco\"}" http://localhost:5000/crud/createCategoria
-  //----------------------------------------------------------------------------------------
-
-    // Ruta para actualizar un registro existente por ID en la tabla Categoria--------------
-    router.put('/updateCategoria/:IDCategoria', (req, res) => {
-      // Obtén el ID del registro a actualizar desde los parámetros de la URL
-      const IDCategoria = req.params.IDCategoria;
+    // Nombre del procedimiento almacenado
+    const storedProcedure = 'InsertarCategoria';
   
-      // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-      const { NombreCategoria } = req.body;
-  
-      // Verifica si se proporcionaron los datos necesarios
-      if (!NombreCategoria) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-      }
-  
-      // Realiza la consulta SQL para actualizar el registro por ID
-      const sql = `
-        UPDATE categoria
-        SET NombreCategoria = ?
-        WHERE IDCategoria = ?
-      `;
-  
-      const values = [NombreCategoria, IDCategoria];
-  
-      // Ejecuta la consulta
-      db.query(sql, values, (err, result) => {
+    // Llama al procedimiento almacenado
+    db.query(
+      `CALL ${storedProcedure}(?)`,
+      [NombreCategoria],
+      (err, result) => {
         if (err) {
-          console.error('Error al actualizar el registro de la tabla categoria:', err);
-          res.status(500).json({ error: 'Error al actualizar el registro de la tabla categoria' });
+          console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
+          res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
+        } else {
+          // Devuelve un mensaje como respuesta
+          res.status(200).json({ message: 'Registro agregado exitosamente' });
+        }
+      }
+    );
+  });
+
+  //Actualizar categoria
+  router.put('/updatecategoria/:IDCategoria', (req, res) => {
+    // Obtén el ID del registro a actualizar desde los parámetros de la URL
+    const IDCategoria = req.params.IDCategoria;
+  
+    // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
+    const { NombreCategoria } = req.body;
+  
+    // Verifica si se proporcionaron los datos necesarios
+    if (!NombreCategoria) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+  
+    // Nombre del procedimiento almacenado
+    const storedProcedure = 'ActualizarCategoria';
+  
+    // Llama al procedimiento almacenado
+    db.query(
+      `CALL ${storedProcedure}(?)`,
+      [IDCategoria, NombreCategoria],
+      (err, result) => {
+        if (err) {
+          console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
+          res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
         } else {
           // Devuelve un mensaje de éxito
           res.status(200).json({ message: 'Registro actualizado exitosamente' });
         }
-      });
-    });
-    
-  //Sentencia
-  //curl -X PUT -H "Content-Type: application/json" -d "{\"NombreCategoria\":\"Biológico\"}" http://localhost:5000/crud/updateCategoria/1
-  //-------------------------------------------------------------------------------------
+      }
+    );
+  });
 
-  // Ruta para eliminar un registro existente por ID en la tabla Categoria---------------
-  router.delete('/deleteCategoria/:idCategoria', (req, res) => {
+  //Eliminar categoria
+  router.delete('/deletecategoria/:idcategoria', (req, res) => {
     // Obtén el ID del registro a eliminar desde los parámetros de la URL
-    const IDCategoria = req.params.idCategoria;
+    const idcategoria = req.params.idcategoria;
   
     // Nombre del procedimiento almacenado
     const storedProcedure = 'EliminarCategoria';
   
     // Llama al procedimiento almacenado
-    db.query(`CALL ${storedProcedure}(?)`, [IDCategoria], (err, result) => {
+    db.query(`CALL ${storedProcedure}(?)`, [idcategoria], (err, result) => {
       if (err) {
         console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
         res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
@@ -138,10 +125,7 @@ module.exports = (db) => {
       }
     });
   });
-
-  //Sentencia
-  //curl -X DELETE http://localhost:5000/crud/deleteCategoria/1
-  //---------------------------------------------------------------------------------------
+  
 
   // Ruta para leer registros
   //Ruta para leer la tabla Marca de la Base de Datos--------------------------------
@@ -399,28 +383,53 @@ module.exports = (db) => {
   // Ruta para crear un nuevo registro con ID específico en la tabla Cliente------------
   router.post('/createCliente', (req, res) => {
     // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const {NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC } = req.body;
+    const {
+        NombreUsuario,
+        Contraseña,
+        Rol,
+        CorreoC,
+        TelefonoC,
+    } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!NombreUsuarioC || !ContraseñaC || !CorreoC || !TelefonoC) {
-      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    if (!NombreUsuario || !Contraseña || !Rol || !CorreoC || !TelefonoC) {
+        return res.status(400).json({ error: 'Los campos "NombreUsuario", "Contraseña", "Rol", "Correo" y "Telefono" son obligatorios' });
     }
 
-    // Realiza la consulta SQL para insertar un nuevo registro con ID específico
-    const sql = `INSERT INTO cliente (NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC) VALUES (?, ?, ?, ?)`;
-    const values = [NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC];
+    // Realiza la consulta SQL para insertar un nuevo registro en la tabla "Usuario"
+    const usuarioSql = `
+        INSERT INTO usuario (NombreUsuario, Contraseña, Rol)
+        VALUES (?, ?, ?)
+    `;
+    const usuarioValues = [NombreUsuario, Contraseña, Rol];
 
-    // Ejecuta la consulta
-    db.query(sql, values, (err, result) => {
-      if (err) {
-        console.error('Error al insertar un registro en la tabla cliente:', err);
-        res.status(500).json({ error: 'Error al insertar un registro en la tabla cliente' });
-      } else {
-        // Devuelve un mensaje como respuesta
-        res.status(200).json({ message: 'Registro agregado exitosamente' });
-      }
-    }); 
-  });
+    // Ejecuta la consulta para insertar en la tabla "Persona"
+    db.query(usuarioSql, usuarioValues, (err, usuarioResult) => {
+        if (err) {
+            console.error('Error al insertar registro de Usuario:', err);
+            res.status(500).json({ error: 'Error al insertar registro de Usuario' });
+        } else {
+            const IDUsuario = usuarioResult.insertId; // Obtenemos el IDUsuario recién insertado
+
+            // Realiza la consulta SQL para insertar un nuevo registro de cliente
+            const clienteSql = `INSERT INTO cliente (IDUsuario, CorreoC, TelefonoC)
+                VALUES (?, ?, ?)
+            `;
+            const clienteValues = [IDUsuario, CorreoC, TelefonoC];
+
+            // Ejecuta la consulta para insertar en la tabla "Cliente"
+            db.query(clienteSql, clienteValues, (err, clienteResult) => {
+                if (err) {
+                    console.error('Error al insertar registro de cliente:', err);
+                    res.status(500).json({ error: 'Error al insertar registro de cliente' });
+                } else {
+                    // Devuelve el ID del nuevo registro de Empleado como respuesta
+                    res.status(201).json({ IDCliente: clienteResult.insertId });
+                }
+            });
+        }
+    });
+});
 
   //Sentencia
   //curl -X POST -H "Content-Type: application/json" -d "{\"NombreUsuarioC\":\"Joy\",\"ContraseñaC\":\"123joy\",\"CorreoC\":\"joyssicruz5@gmail.com\",\"TelefonoC\":\"86962747\"}" http://localhost:5000/crud/createCliente
@@ -432,21 +441,21 @@ module.exports = (db) => {
     const IDCliente = req.params.IDCliente;
 
     // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC } = req.body;
+    const { NombreUsuario, Contraseña, CorreoC, TelefonoC } = req.body;
 
     // Verifica si se proporcionaron los datos necesarios
-    if (!NombreUsuarioC || !ContraseñaC || !CorreoC || !TelefonoC) {
+    if (!NombreUsuario || !Contraseña || !CorreoC || !TelefonoC) {
       return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
 
     // Realiza la consulta SQL para actualizar el registro por ID
     const sql = `
       UPDATE cliente
-      SET NombreUsuarioC = ?, ContraseñaC = ?, CorreoC = ?, TelefonoC = ?
+      SET NombreUsuario = ?, Contraseña = ?, CorreoC = ?, TelefonoC = ?
       WHERE IDCliente = ?
     `;
 
-    const values = [NombreUsuarioC, ContraseñaC, CorreoC, TelefonoC, IDCliente];
+    const values = [NombreUsuario, Contraseña, CorreoC, TelefonoC, IDCliente];
 
     // Ejecuta la consulta
     db.query(sql, values, (err, result) => {
@@ -548,7 +557,7 @@ module.exports = (db) => {
             `;
             const empleadoValues = [IDUsuario, Correo, Telefono];
 
-            // Ejecuta la consulta para insertar en la tabla "Cliente"
+            // Ejecuta la consulta para insertar en la tabla "Empleado"
             db.query(empleadoSql, empleadoValues, (err, empleadoResult) => {
                 if (err) {
                     console.error('Error al insertar registro de Empleado:', err);
@@ -1321,4 +1330,119 @@ module.exports = (db) => {
 
   return router;
 };
+
+ // Ruta para leer registros
+  //Ruta para leer la tabla Categoria de la Base de Datos--------------------------------
+  router.get('/readCategoria', (req, res) => {
+    // Utiliza la instancia de la base de datos pasada como parámetro
+    // Realizar una consulta SQL para seleccionar todos los registros
+    const sql = 'SELECT * FROM categoria';
+
+    // Ejecutar la consulta
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error('Error al leer registros:', err);
+        res.status(500).json({ error: 'Error al leer registros de la tabla categoria' });
+      } else {
+        // Devolver los registros en formato JSON como respuesta
+        res.status(200).json(result);
+      }
+    });
+  });
+
+  //Sentencia
+  //curl http://localhost:5000/crud/readCategoria
+  //--------------------------------------------------------------------------------------
+
+  // Ruta para crear un nuevo registro con ID específico en la tabla Categoria------------
+  router.post('/createCategoria', (req, res) => {
+    // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
+    const {NombreCategoria } = req.body;
+
+    // Verifica si se proporcionaron los datos necesarios
+    if (!NombreCategoria) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+
+    // Realiza la consulta SQL para insertar un nuevo registro con ID específico
+    const sql = `INSERT INTO categoria (NombreCategoria) VALUES (?)`;
+    const values = [NombreCategoria];
+
+    // Ejecuta la consulta
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error('Error al insertar un registro en la tabla categoria:', err);
+        res.status(500).json({ error: 'Error al insertar un registro en la tabla categoria' });
+      } else {
+        // Devuelve un mensaje como respuesta
+        res.status(200).json({ message: 'Registro agregado exitosamente' });
+      }
+    });
+  });
+  
+  //Sentencia
+  //curl -X POST -H "Content-Type: application/json" -d "{\"NombreCategoria\":\"Fitofármaco\"}" http://localhost:5000/crud/createCategoria
+  //----------------------------------------------------------------------------------------
+
+    // Ruta para actualizar un registro existente por ID en la tabla Categoria--------------
+    router.put('/updateCategoria/:IDCategoria', (req, res) => {
+      // Obtén el ID del registro a actualizar desde los parámetros de la URL
+      const IDCategoria = req.params.IDCategoria;
+  
+      // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
+      const { NombreCategoria } = req.body;
+  
+      // Verifica si se proporcionaron los datos necesarios
+      if (!NombreCategoria) {
+        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+      }
+  
+      // Realiza la consulta SQL para actualizar el registro por ID
+      const sql = `
+        UPDATE categoria
+        SET NombreCategoria = ?
+        WHERE IDCategoria = ?
+      `;
+  
+      const values = [NombreCategoria, IDCategoria];
+  
+      // Ejecuta la consulta
+      db.query(sql, values, (err, result) => {
+        if (err) {
+          console.error('Error al actualizar el registro de la tabla categoria:', err);
+          res.status(500).json({ error: 'Error al actualizar el registro de la tabla categoria' });
+        } else {
+          // Devuelve un mensaje de éxito
+          res.status(200).json({ message: 'Registro actualizado exitosamente' });
+        }
+      });
+    });
+    
+  //Sentencia
+  //curl -X PUT -H "Content-Type: application/json" -d "{\"NombreCategoria\":\"Biológico\"}" http://localhost:5000/crud/updateCategoria/1
+  //-------------------------------------------------------------------------------------
+
+  // Ruta para eliminar un registro existente por ID en la tabla Categoria---------------
+  router.delete('/deleteCategoria/:idCategoria', (req, res) => {
+    // Obtén el ID del registro a eliminar desde los parámetros de la URL
+    const IDCategoria = req.params.idCategoria;
+  
+    // Nombre del procedimiento almacenado
+    const storedProcedure = 'EliminarCategoria';
+  
+    // Llama al procedimiento almacenado
+    db.query(`CALL ${storedProcedure}(?)`, [IDCategoria], (err, result) => {
+      if (err) {
+        console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
+        res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
+      } else {
+        // Devuelve un mensaje de éxito
+        res.status(200).json({ message: 'Registro eliminado exitosamente' });
+      }
+    });
+  });
+
+  //Sentencia
+  //curl -X DELETE http://localhost:5000/crud/deleteCategoria/1
+  //---------------------------------------------------------------------------------------
 
