@@ -16,6 +16,12 @@ function Header({ Rol }) {
     setShowMenu(!showMenu);
   };
 
+    // Función para cerrar sesión
+    const cerrarSesion = () => {
+      // Eliminar el rol del localStorage al cerrar sesión
+      localStorage.removeItem('userRol');
+    };
+
   return (
 
     <div>
@@ -97,6 +103,10 @@ function Header({ Rol }) {
                 </NavDropdown.Item>
               </NavDropdown>
 
+              <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled">Cerrar Sesión</Link>
+                </Nav.Link>
+
             </Nav>
           </Navbar.Collapse>
           <Button
@@ -179,6 +189,10 @@ function Header({ Rol }) {
                 </NavDropdown.Item>
               </NavDropdown>
 
+              <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled">Cerrar Sesión</Link>
+                </Nav.Link>
+
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
@@ -249,6 +263,10 @@ function Header({ Rol }) {
                   <Link to="/compras" className="link-unstyled">Gestión de Compra</Link>
                 </NavDropdown.Item>
               </NavDropdown>
+
+              <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled">Cerrar Sesión</Link>
+                </Nav.Link>
 
             </Nav>
           </Navbar.Collapse>
@@ -322,6 +340,10 @@ function Header({ Rol }) {
                 </NavDropdown.Item>
               </NavDropdown>
 
+              <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled">Cerrar Sesión</Link>
+                </Nav.Link>
+
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
@@ -364,6 +386,10 @@ function Header({ Rol }) {
                     <Link to="/compra" className="link-unstyled">Carrito</Link>
                   </NavDropdown.Item>
                 </NavDropdown>
+
+                <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled">Cerrar Sesión</Link>
+                </Nav.Link>
 
               </Nav>
             </Navbar.Collapse>
@@ -408,6 +434,10 @@ function Header({ Rol }) {
                     <Link to="/compra" className="link-unstyled">Carrito</Link>
                   </NavDropdown.Item>
                 </NavDropdown>
+
+                <Nav.Link>
+                  <Link to="/" onClick={cerrarSesion} className="link-unstyled">Cerrar Sesión</Link>
+                </Nav.Link>
 
             </Nav>
           </Offcanvas.Body>
