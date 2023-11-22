@@ -102,7 +102,7 @@ function Estadisticas({ Rol }) {  // Declaración del componente Estadisticas co
         <div>
         <Header Rol={ Rol } />  
 
-        <Container className="margen-contenedor" responsive>
+        <Container className="margen-conten" responsive>
 
         <Row className="g-3">
 
@@ -110,7 +110,7 @@ function Estadisticas({ Rol }) {  // Declaración del componente Estadisticas co
                 <Card>
                 <Card.Body>
                     <Card.Title>Estado del almacen</Card.Title>
-                    <canvas id="myChart"  height="300"></canvas>
+                    <canvas id="myChart"  height="120"></canvas>
                 </Card.Body>
 
                 <Card.Body>

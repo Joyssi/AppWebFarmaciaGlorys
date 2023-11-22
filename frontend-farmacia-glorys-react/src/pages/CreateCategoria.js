@@ -45,7 +45,7 @@ function CreateCategoria({Rol}) {
             // Reiniciar los campos del formulario
             setNombreCategoria('');
         } else {
-            alert('Campo vacío');
+            alert('Error al registrar la categoría');
         }
         } catch (error) {
         console.error('Error en la solicitud:', error);

@@ -97,14 +97,14 @@ DELIMITER $
  END $
  
  CALL EliminarCliente (1);
- 
+
  /*Procedimiento almacenado para mostrar los registro de la tabla Cliente*/
 DELIMITER $
  CREATE PROCEDURE MostrarCliente()
  BEGIN
- SELECT U.IDUsuario, U.NombreUsuario, U.Contraseña, U.Rol, C.Correo, C.Telefono
+ SELECT U.IDUsuario, U.NombreUsuario, U.Contraseña, U.Rol, C.CorreoC, C.TelefonoC
  FROM usuario U
- INNER JOIN clienteC ON U.IDUsuario = C.IDUsuario;
+ INNER JOIN cliente C ON U.IDUsuario = C.IDUsuario;
  END $
  
  CALL MostrarCliente;

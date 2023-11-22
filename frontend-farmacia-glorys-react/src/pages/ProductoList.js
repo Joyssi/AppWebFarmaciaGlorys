@@ -235,6 +235,7 @@ function ProductoList({Rol}) {
                 });
                 closePresentacionModal();
             };
+            
 
     return (
         <div>

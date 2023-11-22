@@ -27,104 +27,6 @@ module.exports = (db) => {
       }
     });
   });
-
-  //ruta categoria
-  router.get('/readcategoria', (req, res) => {
-    // Nombre del procedimiento almacenado
-    const storedProcedure = 'MostrarCategoria';
-  
-    // Llama al procedimiento almacenado
-    db.query(`CALL ${storedProcedure}`, (err, result) => {
-      if (err) {
-        console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
-        res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
-      } else {
-        // Devolver los registros en formato JSON como respuesta
-        res.status(200).json(result[0]); // Los resultados están en el primer elemento del array result
-      }
-    });
-  });
-
-  //Insertar categoria
-  router.post('/createcategoria', (req, res) => {
-    // Recibe los datos del nuevo registro desde el cuerpo de la solicitud (req.body)
-    const { NombreCategoria } = req.body;
-  
-    // Verifica si se proporcionaron los datos necesarios
-    if (!NombreCategoria) {
-      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-  
-    // Nombre del procedimiento almacenado
-    const storedProcedure = 'InsertarCategoria';
-  
-    // Llama al procedimiento almacenado
-    db.query(
-      `CALL ${storedProcedure}(?)`,
-      [NombreCategoria],
-      (err, result) => {
-        if (err) {
-          console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
-          res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
-        } else {
-          // Devuelve un mensaje como respuesta
-          res.status(200).json({ message: 'Registro agregado exitosamente' });
-        }
-      }
-    );
-  });
-
-  //Actualizar categoria
-  router.put('/updatecategoria/:IDCategoria', (req, res) => {
-    // Obtén el ID del registro a actualizar desde los parámetros de la URL
-    const IDCategoria = req.params.IDCategoria;
-  
-    // Recibe los datos actualizados desde el cuerpo de la solicitud (req.body)
-    const { NombreCategoria } = req.body;
-  
-    // Verifica si se proporcionaron los datos necesarios
-    if (!NombreCategoria) {
-      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-  
-    // Nombre del procedimiento almacenado
-    const storedProcedure = 'ActualizarCategoria';
-  
-    // Llama al procedimiento almacenado
-    db.query(
-      `CALL ${storedProcedure}(?)`,
-      [IDCategoria, NombreCategoria],
-      (err, result) => {
-        if (err) {
-          console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
-          res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
-        } else {
-          // Devuelve un mensaje de éxito
-          res.status(200).json({ message: 'Registro actualizado exitosamente' });
-        }
-      }
-    );
-  });
-
-  //Eliminar categoria
-  router.delete('/deletecategoria/:idcategoria', (req, res) => {
-    // Obtén el ID del registro a eliminar desde los parámetros de la URL
-    const idcategoria = req.params.idcategoria;
-  
-    // Nombre del procedimiento almacenado
-    const storedProcedure = 'EliminarCategoria';
-  
-    // Llama al procedimiento almacenado
-    db.query(`CALL ${storedProcedure}(?)`, [idcategoria], (err, result) => {
-      if (err) {
-        console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
-        res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
-      } else {
-        // Devuelve un mensaje de éxito
-        res.status(200).json({ message: 'Registro eliminado exitosamente' });
-      }
-    });
-  });
   
 
   // Ruta para leer registros
@@ -1328,10 +1230,7 @@ module.exports = (db) => {
   //curl -X DELETE http://localhost:5000/crud/deleteCompraProducto/1
   //---------------------------------------------------------------------------------------
 
-  return router;
-};
-
- // Ruta para leer registros
+   // Ruta para leer registros
   //Ruta para leer la tabla Categoria de la Base de Datos--------------------------------
   router.get('/readCategoria', (req, res) => {
     // Utiliza la instancia de la base de datos pasada como parámetro
@@ -1422,27 +1321,31 @@ module.exports = (db) => {
   //curl -X PUT -H "Content-Type: application/json" -d "{\"NombreCategoria\":\"Biológico\"}" http://localhost:5000/crud/updateCategoria/1
   //-------------------------------------------------------------------------------------
 
-  // Ruta para eliminar un registro existente por ID en la tabla Categoria---------------
+
   router.delete('/deleteCategoria/:idCategoria', (req, res) => {
     // Obtén el ID del registro a eliminar desde los parámetros de la URL
-    const IDCategoria = req.params.idCategoria;
-  
-    // Nombre del procedimiento almacenado
-    const storedProcedure = 'EliminarCategoria';
-  
-    // Llama al procedimiento almacenado
-    db.query(`CALL ${storedProcedure}(?)`, [IDCategoria], (err, result) => {
+    const idMarca = req.params.idMarca;
+
+    // Realiza la consulta SQL para eliminar el registro por ID
+    const sql = 'DELETE FROM categoria WHERE IDCategoria = ?';
+
+    // Ejecuta la consulta
+    db.query(sql, [IDCategoria], (err, result) => {
       if (err) {
-        console.error(`Error al ejecutar el procedimiento almacenado ${storedProcedure}:`, err);
-        res.status(500).json({ error: `Error al ejecutar el procedimiento almacenado ${storedProcedure}` });
+        console.error('Error al eliminar un registro de la tabla categoria:', err);
+        res.status(500).json({ error: 'Error al eliminar un registro de la tabla ' });
       } else {
         // Devuelve un mensaje de éxito
         res.status(200).json({ message: 'Registro eliminado exitosamente' });
       }
     });
   });
-
   //Sentencia
   //curl -X DELETE http://localhost:5000/crud/deleteCategoria/1
   //---------------------------------------------------------------------------------------
+
+
+  return router;
+};
+
 
