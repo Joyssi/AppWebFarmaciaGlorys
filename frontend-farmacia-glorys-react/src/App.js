@@ -17,6 +17,7 @@ import Empleado from './pages/CreateEmpleado';
 import Inicio from './pages/Inicio';
 import CatalogoServicio from './pages/CatalogoServicios';
 import Estadistica1 from './pages/EstadisticaProducto';
+import Catalogo from './pages/CatalogoProductos';
 import SinAcceso from './pages/SinAcceso';
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
       <Route path="/cliente" element={userRol ? <Cliente Rol={userRol} /> : <Navigate to="/sinacceso" />} />
       <Route path="/servicios" element={userRol ? <CatalogoServicio Rol={userRol} /> : <Navigate to="/sinacceso" />} />
       <Route path="/producto-reporte" element={userRol ? <Estadistica1 Rol={userRol} /> : <Navigate to="/sinacceso" />} />
+      <Route path="/productos" element={userRol ? <Catalogo Rol={userRol} /> : <Navigate to="/sinacceso" />} />
       <Route path="/sinacceso" element={<SinAcceso />} />
     </Routes>
   </Router>

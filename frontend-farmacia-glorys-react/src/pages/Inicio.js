@@ -9,7 +9,9 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import '../styles/App.css';
 import { FaCartPlus} from 'react-icons/fa6';
-import { BsCardText } from 'react-icons/bs';
+import logo from '../components/logo.png';
+import { FaUser } from "react-icons/fa6";
+import { BsCartFill } from "react-icons/bs";
 
 function Inicio() {
     const [showMenu, setShowMenu] = useState(false);
@@ -118,7 +120,8 @@ const toggleMenu = () => {
     {/* Navbar principal */}
     <Navbar className="navbar-color" variant="dark" expand="md" fixed='top'>
     <Container>
-        <Navbar.Brand href="#home">Farmacia Glorys</Navbar.Brand>
+    <img src={logo} alt="Logo" className="brand-logo" style={{ maxWidth: '50px' }}/>
+            <Navbar.Brand href="#home" className='nombre'>Farmacia Glorys</Navbar.Brand>
         <Navbar.Toggle
         aria-controls="basic-navbar-nav"
         style={{ display: 'none' }}
@@ -132,11 +135,15 @@ const toggleMenu = () => {
                 </Nav.Link>
 
                 <Nav.Link>
-                <Link to="/inicio" className="link-unstyled">Iniciar Sesión</Link>
+                <Link to="/inicio" className="link-unstyled"><FaUser /> Iniciar Sesión</Link>
                 </Nav.Link>
 
                 <Nav.Link>
                 <Link to="/registrarse" className="link-unstyled">Registrarse</Link>
+                </Nav.Link>
+
+                <Nav.Link>
+                <Link to="/compra" className="link-unstyled"><BsCartFill /> Carrito</Link>
                 </Nav.Link>
 
                 </Nav>
